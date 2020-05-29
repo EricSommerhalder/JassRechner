@@ -27,7 +27,11 @@
   </div>
   <div class="leftside">
     <input #box (keyup) = "scoreEnter(box.value)">
-    <div (click) = "editButtonClicked()">Löschen</div>
+    <div (click) = "editButtonClicked()">
+      <p *ngIf = "correction_mode === false">
+      Löschen</p>
+      <p *ngIf = "correction_mode"> Neuen Wert eingeben</p>
+    </div>
     <p>{{edit_mode}}</p>
   </div>
   <div class="main">

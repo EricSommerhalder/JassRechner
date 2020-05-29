@@ -15,12 +15,14 @@ export class HomeComponent implements OnInit {
   player_names: string[]; // stores team 1 from 0-2, team 2 from 3-5
   ausgeber: number;
   team_done: boolean[];
+  correction_mode: boolean;
   constructor() {
     this.punkte = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
     this.punktzahl = -1;
     this.summe = [0, 0];
     this.match = [0, 0];
     this.edit_mode = false;
+    this.correction_mode = false;
     this.team_names = ['Männer', 'Frauen'];
     this.player_names = ['Heinz', 'Eric', 'Bob Dylan', 'Claudia', 'Anja', 'Tina Turner'];
     this.ausgeber = Math.floor(Math.random() * 6);
@@ -38,25 +40,25 @@ export class HomeComponent implements OnInit {
     if (this.edit_mode){
       this.punkte[diszi] = -1;
       this.edit_mode = false;
+      this.correction_mode = true;
     }
     else {
       if (this.punkte[diszi] !== -1 || this.punktzahl < 0){
          return; // TODO: Add dialog that entry was impossible, as the value was impossible or the discipline was already full
       }
       if (diszi > 9) {
-        if (this.ausgeber > 2){ // TODO add dialog that entry was impossible, as this is not the active team
-          return;
-        }
         this.punkte[diszi] = this.punktzahl * (diszi - 9);
       }
       else {
-        if (this.ausgeber < 3){ // TODO add dialog that entry was impossible, as this is not the active team
-          return;
-        }
         this.punkte[diszi] = this.punktzahl * (diszi + 1);
       }
       this.checkDone();
-      this.getNewAusgeber();
+      if (this.correction_mode){
+        this.correction_mode = false;
+      }
+      else {
+        this.getNewAusgeber();
+      }
     }
     this.summe = [0, 0];
     this.match = [0, 0];
