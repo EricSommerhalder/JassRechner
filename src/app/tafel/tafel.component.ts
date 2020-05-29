@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
+import {Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-tafel',
+  templateUrl: './tafel.component.html',
+  styleUrls: ['./tafel.component.css']
 })
-export class HomeComponent implements OnInit {
+export class TafelComponent implements OnInit {
   punkte: number[]; // stores team 1 from 0-9, team 2 from 10-19
   punktzahl: number;
   summe: number[];
@@ -38,9 +39,11 @@ export class HomeComponent implements OnInit {
   }
   disciplineEnter(diszi:number){
     if (this.edit_mode){
-      this.punkte[diszi] = -1;
-      this.edit_mode = false;
-      this.correction_mode = true;
+      if (this.punkte[diszi] !== -1) {
+        this.punkte[diszi] = -1;
+        this.edit_mode = false;
+        this.correction_mode = true;
+      }
     }
     else {
       if (this.punkte[diszi] !== -1 || this.punktzahl < 0){
@@ -90,7 +93,9 @@ export class HomeComponent implements OnInit {
     this.punktzahl = -1;
   }
   editButtonClicked(){
-    this.edit_mode = !this.edit_mode;
+    if (!this.correction_mode) {
+      this.edit_mode = !this.edit_mode;
+    }
   }
   checkDone(){
     let i = 0;
