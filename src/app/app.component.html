@@ -1,4 +1,22 @@
-<h1>
-  <app-tafel></app-tafel>
-</h1>
+<!--<nav>
+  <ul>
+    <li><a routerLink="/tafel" routerLinkActive="active">Tafel</a></li>
+    <li><a routerLink="/cockpit" routerLinkActive="active">Cockpit</a></li>
+    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+  </ul>
+</nav>
 
+<router-outlet></router-outlet>
+-->
+<mat-toolbar>
+  <a mat-button *ngIf="loggedin" (click)="logout()">{{ logininfo }}</a>
+  <span class="fill-remaining-space"></span>
+  <mat-icon appBackButton matTooltip="zurück" class="clickable">arrow_back</mat-icon>
+  <a mat-button routerLink="tafel">Tafel</a>
+  <a mat-button routerLink="cockpit">Cockpit</a>
+  <button mat-icon-button matTooltip="Benutzer an- und abmelden" (click)="account()"><mat-icon >account_box</mat-icon></button>
+  <button mat-icon-button matTooltip="Zurück zum Startbildschirm" routerLink="home"><mat-icon>home</mat-icon></button>
+</mat-toolbar>
+<router-outlet>
+
+</router-outlet>
