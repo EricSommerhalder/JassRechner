@@ -40,10 +40,8 @@ body {
   grid-area: main;
   background-color: darkseagreen;
   background-image: url(../../assets/images/mainBg.jpg);
-  border: 50px solid transparent;
-  border-radius: 80px;
-  -o-border-image: url(../../assets/images/borderBg.jpg);
-  border-image: url(../../assets/images/borderBg.png) 50 round;
+  border: 4px solid antiquewhite;
+  border-radius: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(13, 7.69%);
@@ -142,121 +140,150 @@ body {
 #a2 {
   grid-column: 2 / 3;
   grid-row: 1 /2;
+  align-self: center;
 }
 
 #a3 {
   grid-column: 3 / 4;
   grid-row: 1 /2;
+  align-self: center;
 }
 
 #b1 {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
+  align-self: center;
 }
 
 #b2 {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
+  align-self: center;
 }
 #b3 {
   grid-column: 3 / 4;
   grid-row: 2 / 3;
+  align-self: center;
 }
 #c1 {
   grid-column: 1 / 2;
   grid-row: 3 / 4;
+  align-self: center;
 }
 #c2 {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
+  align-self: center;
 }
 #c3 {
   grid-column: 3 / 4;
   grid-row: 3 / 4;
+  align-self: center;
 }
 #d1 {
   grid-column: 1 / 2;
   grid-row: 4 / 5;
+  align-self: center;
 }
 #d2 {
   grid-column: 2 / 3;
   grid-row: 4 / 5;
+  align-self: center;
 }
 #d3 {
   grid-column: 3 / 4;
   grid-row: 4 / 5;
+  align-self: center;
 }
 #e1 {
   grid-column: 1 / 2;
   grid-row: 5 / 6;
+  align-self: center;
 }
 #e2 {
   grid-column: 2 / 3;
   grid-row: 5 / 6;
+  align-self: center;
 }
 #e3 {
   grid-column: 3 / 4;
   grid-row: 5 / 6;
+  align-self: center;
 }
 #f1 {
   grid-column: 1 / 2;
   grid-row: 6 / 7;
+  align-self: center;
 }
 #f2 {
   grid-column: 2 / 3;
   grid-row: 6 / 7;
+  align-self: center;
 }
 #f3 {
   grid-column: 3 / 4;
   grid-row: 6 / 7;
+  align-self: center;
 }
 #g1 {
   grid-column: 1 / 2;
   grid-row: 7 / 8;
+  align-self: center;
 }
 #g2 {
   grid-column: 2 / 3;
   grid-row: 7 / 8;
+  align-self: center;
 }
 #g3 {
   grid-column: 3 / 4;
   grid-row: 7 / 8;
+  align-self: center;
 }
 #h1 {
   grid-column: 1 / 2;
   grid-row: 8 / 9;
+  align-self: center;
 }
 #h2 {
   grid-column: 2 / 3;
   grid-row: 8 / 9;
+  align-self: center;
 }
 #h3 {
   grid-column: 3 / 4;
   grid-row: 8 / 9;
+  align-self: center;
 }
 #i1 {
   grid-column: 1 / 2;
   grid-row: 9 / 10;
+  align-self: center;
 }
 #i2 {
   grid-column: 2 / 3;
   grid-row: 9 / 10;
+  align-self: center;
 }
 #i3 {
   grid-column: 3 / 4;
   grid-row: 9 / 10;
+  align-self: center;
 }
 #j1 {
   grid-column: 1 / 2;
   grid-row: 10 / 11;
+  align-self: center;
 }
 #j2 {
   grid-column: 2 / 3;
   grid-row: 10 / 11;
+  align-self: center;
 }
 #j3 {
   grid-column: 3 / 4;
   grid-row: 10 / 11;
+  align-self: center;
 }
 #k1 {
   grid-column: 1 / 2;
@@ -265,34 +292,42 @@ body {
 #k2 {
   grid-column: 2 / 3;
   grid-row: 11 / 12;
+  align-self: center;
 }
 #k3 {
   grid-column: 3 / 4;
   grid-row: 11 / 12;
+  align-self: center;
 }
 #l1 {
   grid-column: 1 / 2;
   grid-row: 12 / 13;
+  align-self: center;
 }
 #l2 {
   grid-column: 2 / 3;
   grid-row: 12 / 13;
+  align-self: center;
 }
 #l3 {
   grid-column: 3 / 4;
   grid-row: 12 / 13;
+  align-self: center;
 }
 #m1 {
   grid-column: 1 / 2;
   grid-row: 13 / 14;
+  align-self: center;
 }
 #m2 {
   grid-column: 2 / 3;
   grid-row: 13 / 14;
+  align-self: center;
 }
 #m3 {
   grid-column: 3 / 4;
   grid-row: 13 / 14;
+  align-self: center;
 }
 .rightside {
   grid-area: rightside;
