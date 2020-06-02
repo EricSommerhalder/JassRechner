@@ -34,7 +34,7 @@
     </mat-toolbar>
   </div>-->
   <div class="leftside">
-    <input #box (keyup) = "scoreEnter(box.value)">
+    <input class="eingabe" #box (keyup) = "scoreEnter(box.value)" placeholder="Pünggt">
     <div (click) = "editButtonClicked()">
       <p *ngIf = "correction_mode === false">
       Löschen</p>
@@ -97,7 +97,7 @@
     <div id="m2" *ngIf = "match[0]!== 0">{{match[0]}}</div>
     <div id="m3" *ngIf = "match[1]!== 0">{{match[1]}}</div>
   </div>
-  <div class="rightside">Right
+  <div class="rightside">
     <div> Ausgeben darf: {{player_names[ausgeber]}}</div>
   </div>
   <div class="footer">Footer</div>

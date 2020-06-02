@@ -29,7 +29,27 @@ body {
 
 .leftside {
   grid-area: leftside;
+  font-family: 'Patrick Hand SC', cursive;
+  font-size: 40px;
+  color: antiquewhite;
+  text-align: center;
   background-color: darksalmon;
+}
+
+.eingabe {
+  background-color: blueviolet;
+  width: 300px;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+input {
+  background-color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  text-align: center;
+  width: 120px;
+  border: 0;
 }
 
 .main {
@@ -45,6 +65,11 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(13, 7.69%);
+}
+
+.main p {
+  margin-bottom: 0;
+  align-self: center;
 }
 
 .item1 {
@@ -159,11 +184,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #b3 {
   grid-column: 3 / 4;
   grid-row: 2 / 3;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #c1 {
   grid-column: 1 / 2;
@@ -174,11 +203,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #c3 {
   grid-column: 3 / 4;
   grid-row: 3 / 4;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #d1 {
   grid-column: 1 / 2;
@@ -189,11 +222,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 4 / 5;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #d3 {
   grid-column: 3 / 4;
   grid-row: 4 / 5;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #e1 {
   grid-column: 1 / 2;
@@ -204,11 +241,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 5 / 6;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #e3 {
   grid-column: 3 / 4;
   grid-row: 5 / 6;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #f1 {
   grid-column: 1 / 2;
@@ -219,11 +260,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 6 / 7;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #f3 {
   grid-column: 3 / 4;
   grid-row: 6 / 7;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #g1 {
   grid-column: 1 / 2;
@@ -234,11 +279,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 7 / 8;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #g3 {
   grid-column: 3 / 4;
   grid-row: 7 / 8;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #h1 {
   grid-column: 1 / 2;
@@ -249,11 +298,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 8 / 9;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #h3 {
   grid-column: 3 / 4;
   grid-row: 8 / 9;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #i1 {
   grid-column: 1 / 2;
@@ -264,11 +317,15 @@ body {
   grid-column: 2 / 3;
   grid-row: 9 / 10;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #i3 {
   grid-column: 3 / 4;
   grid-row: 9 / 10;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #j1 {
   grid-column: 1 / 2;
@@ -279,25 +336,34 @@ body {
   grid-column: 2 / 3;
   grid-row: 10 / 11;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #j3 {
   grid-column: 3 / 4;
   grid-row: 10 / 11;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #k1 {
   grid-column: 1 / 2;
   grid-row: 11 / 12;
+  align-self: center;
 }
 #k2 {
   grid-column: 2 / 3;
   grid-row: 11 / 12;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #k3 {
   grid-column: 3 / 4;
   grid-row: 11 / 12;
   align-self: center;
+  display: grid;
+  height: 100%;
 }
 #l1 {
   grid-column: 1 / 2;
@@ -323,11 +389,13 @@ body {
   grid-column: 2 / 3;
   grid-row: 13 / 14;
   align-self: center;
+  display: grid;
 }
 #m3 {
   grid-column: 3 / 4;
   grid-row: 13 / 14;
   align-self: center;
+  display: grid;
 }
 .rightside {
   grid-area: rightside;
