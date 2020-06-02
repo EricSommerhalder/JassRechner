@@ -1,51 +1,36 @@
-import { Component } from '@angular/core';
-import { LoginComponent, LoginData } from './login/login.component';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { OktaAuthService } from '@okta/okta-angular';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'JassRechner';
   logininfo = '';
-  loggedin = false;
-  constructor(public dialog: MatDialog) {
+  isAuthenticated = false;
+  constructor(public oktaAuth: OktaAuthService) {
+    this.oktaAuth.$authenticationState.subscribe(
+      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+    );
   }
- public openLoginDialog(): void {
-    const loginConfig = new MatDialogConfig();
-    loginConfig.autoFocus = true;
-    loginConfig.width = '500px';
-    loginConfig.height = '600px';
-    loginConfig.data = {
-      user: 'Heinz',
-      password: ''
-    };
-
-    const dialogRef = this.dialog.open(LoginComponent, loginConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => {
-          console.log(data);
-          if (data.user === null || data.password === null ) { //here we can check if user matches password later
-            this.openLoginDialog();
-          } else {
-            this.logininfo = data.user;
-            this.loggedin = true;
-          }
-        });
+  ngOnInit(){
+    this.oktaAuth.isAuthenticated().then((auth) => {this.isAuthenticated = auth});
   }
-
-  public logout(): void {
-    this.loggedin = false;
-    this.logininfo = '';
+  login(){
+    console.log("login called");
+    this.oktaAuth.loginRedirect();
   }
-
+  logout() {
+    this.oktaAuth.logout('/');
+  }
   account(): void {
-    if (this.loggedin) {
+    console.log("account() called");
+    if (this.isAuthenticated) {
       this.logout();
     } else {
-      this.openLoginDialog();
+      this.login();
     }
   }
 }

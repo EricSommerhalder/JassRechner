@@ -35,7 +35,6 @@ export class TafelComponent implements OnInit {
       return;
     }
     this.punktzahl = neu;
-    console.log(this.punktzahl);
   }
   disciplineEnter(diszi:number){
     if (this.edit_mode){
