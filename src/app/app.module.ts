@@ -15,15 +15,24 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
-import { OktaAuthModule } from '@okta/okta-angular';
-import { TestComponent } from './test/test.component';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {environment} from '../environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import * as firebase from 'firebase';
+
+firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
     AppComponent,
     TafelComponent,
     CockpitComponent,
     HomeComponent,
-    TestComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +48,10 @@ import { TestComponent } from './test/test.component';
     ReactiveFormsModule,
     FormsModule,
     MatInputModule,
-    OktaAuthModule.initAuth({
-      issuer: 'https://dev-268424.okta.com/oauth2/default',
-      redirectUri: 'http://localhost:4200/implicit/callback',
-      clientId: '0oaduy0llgcsx8SBh4x6'
-    })
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

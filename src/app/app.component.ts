@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import { OktaAuthService } from '@okta/okta-angular';
+import {AuthService} from './auth.service';
+import {Router} from '@angular/router';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,30 +11,24 @@ import { OktaAuthService } from '@okta/okta-angular';
 })
 export class AppComponent implements OnInit{
   title = 'JassRechner';
-  logininfo = '';
-  isAuthenticated = false;
-  constructor(public oktaAuth: OktaAuthService) {
-    this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
-    );
+  user: firebase.User =  firebase.auth().currentUser;
+  constructor(private router: Router, public authService: AuthService) {
   }
   ngOnInit(){
-    this.oktaAuth.isAuthenticated().then((auth) => {this.isAuthenticated = auth});
   }
-  login(){
-    console.log("login called");
-    this.oktaAuth.loginRedirect();
-  }
-  logout() {
-    this.oktaAuth.logout('/');
-  }
+
   account(): void {
-    console.log("account() called");
-    if (this.isAuthenticated) {
-      this.logout();
-    } else {
-      this.login();
-    }
+    this.user = this.getUser();
+    if (this.user) {
+        this.authService.doLogout();
+      } else {
+        this.router.navigateByUrl('/login');
+      }
   }
+  getUser(){
+    return firebase.auth().currentUser;
+  }
+
+
 }
 
