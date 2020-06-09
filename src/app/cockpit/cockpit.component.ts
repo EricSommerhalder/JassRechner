@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../data.service';
 import {Game} from '../game.model';
+import * as firebase from "firebase";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cockpit',
@@ -9,10 +11,14 @@ import {Game} from '../game.model';
 })
 export class CockpitComponent implements OnInit {
   games: any[];
-  gameToAdd = { playernames: 'Heinz, Eric', teamnames: 'Männer, Frauen', gamestate: '-1, -1', matchpoints: '5', totalpoints: '15'};
-  constructor(public dataService: DataService) {}
+  gameToAdd = { playernames: ['Heinz', 'Eric'], teamnames: ['Männer, Frauen'], gamestate: [-1, -1],
+    matchpoints: [0, 0], totalpoints: [0, 0], edit_mode: false, ausgeber: 3, team_done:[false, false], correction_mode: false, user: 'hi'};
+  constructor(public dataService: DataService, public router: Router) {}
 
   ngOnInit() {
+    if (!firebase.auth().currentUser){
+      this.router.navigateByUrl('/login');
+    }
     this.getGames();
   }
   getGames(){

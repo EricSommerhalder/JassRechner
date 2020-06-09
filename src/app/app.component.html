@@ -12,11 +12,11 @@
 
   <a mat-button (click) = "authService.doLogout()" *ngIf="getUser()" >{{getUser().email}}</a>
   <span class="fill-remaining-space"></span>
-  <mat-icon appBackButton matTooltip="zurück" class="clickable">arrow_back</mat-icon>
-  <a mat-button routerLink="tafel">Tafel</a>
-  <a mat-button routerLink="cockpit">Cockpit</a>
+  <a mat-button routerLink="tafel" *ngIf="getUser()">Tafel</a>
+  <a mat-button routerLink="cockpit" *ngIf="getUser()">Cockpit</a>
   <button mat-icon-button matTooltip="Benutzer an- und abmelden" (click)="account()"><mat-icon >account_box</mat-icon></button>
   <button mat-icon-button matTooltip="Zurück zum Startbildschirm" routerLink="home"><mat-icon>home</mat-icon></button>
+
 </mat-toolbar>
 <router-outlet>
 

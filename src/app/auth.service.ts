@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(public afAuth: AngularFireAuth, public router: Router) { }
 
   doFacebookLogin(){
     return new Promise<any>((resolve, reject) => {
@@ -56,6 +57,7 @@ export class AuthService {
       if(firebase.auth().currentUser){
         this.afAuth.signOut();
         resolve();
+        this.router.navigateByUrl('/login');
       }
       else{
         reject();
