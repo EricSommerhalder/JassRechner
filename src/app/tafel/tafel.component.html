@@ -36,11 +36,11 @@
   <div class="leftside">
     <input class="eingabe" #box (keyup) = "scoreEnter(box.value)" placeholder="Pünggt">
     <div (click) = "editButtonClicked()">
-      <p *ngIf = "correction_mode === false">
+      <p *ngIf = "game.correction_mode === false">
       Löschen</p>
-      <p *ngIf = "correction_mode"> Neuen Wert eingeben</p>
+      <p *ngIf = "game.correction_mode"> Neuen Wert eingeben</p>
     </div>
-    <p>{{edit_mode}}</p>
+    <p>{{game.edit_mode}}</p>
   </div>
   <div class="main">
     <div class="item1"></div>
@@ -58,47 +58,47 @@
     <div class="itemk"></div>
     <div class="iteml"> </div>
     <div class="itemm"></div>
-    <div id="a2">{{team_names[0]}}</div>
-    <div id="a3">{{team_names[1]}}</div>
+    <div id="a2">{{game.teamnames[0]}}</div>
+    <div id="a3">{{game.teamnames[1]}}</div>
     <div id="b1">Schuufle</div>
-    <div id="b2"(click) = "disciplineEnter(0);box.value = '';" ><p *ngIf = "punkte[0]!== -1">{{punkte[0]}}</p></div>
-    <div id="b3"(click) = "disciplineEnter(10);box.value = '';" ><p *ngIf = "punkte[10]!== -1">{{punkte[10]}}</p></div>
+    <div id="b2"(click) = "disciplineEnter(0);box.value = '';" ><p *ngIf = "game.gamestate[0]!== -1">{{game.gamestate[0]}}</p></div>
+    <div id="b3"(click) = "disciplineEnter(10);box.value = '';" ><p *ngIf = "game.gamestate[10]!== -1">{{game.gamestate[10]}}</p></div>
     <div id="c1">Chrüüz</div>
-    <div id="c2"(click) = "disciplineEnter(1);box.value = ''" ><p *ngIf = "punkte[1]!== -1">{{punkte[1]}}</p></div>
-    <div id="c3"(click) = "disciplineEnter(11);box.value = ''" ><p *ngIf = "punkte[11]!== -1">{{punkte[11]}}</p></div>
+    <div id="c2"(click) = "disciplineEnter(1);box.value = ''" ><p *ngIf = "game.gamestate[1]!== -1">{{game.gamestate[1]}}</p></div>
+    <div id="c3"(click) = "disciplineEnter(11);box.value = ''" ><p *ngIf = "game.gamestate[11]!== -1">{{game.gamestate[11]}}</p></div>
     <div id="d1">Egge</div>
-    <div id="d2"(click) = "disciplineEnter(2);box.value = ''"><p *ngIf = "punkte[2]!== -1">{{punkte[2]}}</p></div>
-    <div id="d3"(click) = "disciplineEnter(12);box.value = ''"><p *ngIf = "punkte[12]!== -1">{{punkte[12]}}</p></div>
+    <div id="d2"(click) = "disciplineEnter(2);box.value = ''"><p *ngIf = "game.gamestate[2]!== -1">{{game.gamestate[2]}}</p></div>
+    <div id="d3"(click) = "disciplineEnter(12);box.value = ''"><p *ngIf = "game.gamestate[12]!== -1">{{game.gamestate[12]}}</p></div>
     <div id="e1">Härz</div>
-    <div id="e2"(click) = "disciplineEnter(3);box.value = ''" ><p *ngIf = "punkte[3]!== -1">{{punkte[3]}}</p></div>
-    <div id="e3"(click) = "disciplineEnter(13);box.value = ''" ><p *ngIf = "punkte[13]!== -1">{{punkte[13]}}</p></div>
+    <div id="e2"(click) = "disciplineEnter(3);box.value = ''" ><p *ngIf = "game.gamestate[3]!== -1">{{game.gamestate[3]}}</p></div>
+    <div id="e3"(click) = "disciplineEnter(13);box.value = ''" ><p *ngIf = "game.gamestate[13]!== -1">{{game.gamestate[13]}}</p></div>
     <div id="f1">Misere</div>
-    <div id="f2"(click) = "disciplineEnter(4);box.value = ''" ><p *ngIf = "punkte[4]!== -1">{{punkte[4]}}</p></div>
-    <div id="f3"(click) = "disciplineEnter(14);box.value = ''" ><p *ngIf = "punkte[14]!== -1">{{punkte[14]}}</p></div>
+    <div id="f2"(click) = "disciplineEnter(4);box.value = ''" ><p *ngIf = "game.gamestate[4]!== -1">{{game.gamestate[4]}}</p></div>
+    <div id="f3"(click) = "disciplineEnter(14);box.value = ''" ><p *ngIf = "game.gamestate[14]!== -1">{{game.gamestate[14]}}</p></div>
     <div id="g1">Obe</div>
-    <div id="g2"(click) = "disciplineEnter(5);box.value = ''" ><p *ngIf = "punkte[5]!== -1">{{punkte[5]}}</p></div>
-    <div id="g3"(click) = "disciplineEnter(15);box.value = ''" ><p *ngIf = "punkte[15]!== -1">{{punkte[15]}}</p></div>
+    <div id="g2"(click) = "disciplineEnter(5);box.value = ''" ><p *ngIf = "game.gamestate[5]!== -1">{{game.gamestate[5]}}</p></div>
+    <div id="g3"(click) = "disciplineEnter(15);box.value = ''" ><p *ngIf = "game.gamestate[15]!== -1">{{game.gamestate[15]}}</p></div>
     <div id="h1">Unde</div>
-    <div id="h2"(click) = "disciplineEnter(6);box.value = ''" ><p *ngIf = "punkte[6]!== -1">{{punkte[6]}}</p></div>
-    <div id="h3"(click) = "disciplineEnter(16);box.value = ''" ><p *ngIf = "punkte[16]!== -1">{{punkte[16]}}</p></div>
+    <div id="h2"(click) = "disciplineEnter(6);box.value = ''" ><p *ngIf = "game.gamestate[6]!== -1">{{game.gamestate[6]}}</p></div>
+    <div id="h3"(click) = "disciplineEnter(16);box.value = ''" ><p *ngIf = "game.gamestate[16]!== -1">{{game.gamestate[16]}}</p></div>
     <div id="i1">2-2-2</div>
-    <div id="i2"(click) = "disciplineEnter(7);box.value = ''" ><p *ngIf = "punkte[7]!== -1">{{punkte[7]}}</p></div>
-    <div id="i3"(click) = "disciplineEnter(17);box.value = ''" ><p *ngIf = "punkte[17]!== -1">{{punkte[17]}}</p></div>
+    <div id="i2"(click) = "disciplineEnter(7);box.value = ''" ><p *ngIf = "game.gamestate[7]!== -1">{{game.gamestate[7]}}</p></div>
+    <div id="i3"(click) = "disciplineEnter(17);box.value = ''" ><p *ngIf = "game.gamestate[17]!== -1">{{game.gamestate[17]}}</p></div>
     <div id="j1">Slalom</div>
-    <div id="j2"(click) = "disciplineEnter(8);box.value = ''" ><p *ngIf = "punkte[8]!== -1">{{punkte[8]}}</p></div>
-    <div id="j3"(click) = "disciplineEnter(18);box.value = ''" ><p *ngIf = "punkte[18]!== -1">{{punkte[18]}}</p></div>
+    <div id="j2"(click) = "disciplineEnter(8);box.value = ''" ><p *ngIf = "game.gamestate[8]!== -1">{{game.gamestate[8]}}</p></div>
+    <div id="j3"(click) = "disciplineEnter(18);box.value = ''" ><p *ngIf = "game.gamestate[18]!== -1">{{game.gamestate[18]}}</p></div>
     <div id="k1">Frei</div>
-    <div id="k2"(click) = "disciplineEnter(9);box.value = ''" ><p *ngIf = "punkte[9]!== -1">{{punkte[9]}}</p></div>
-    <div id="k3"(click) = "disciplineEnter(19);box.value = ''" ><p *ngIf = "punkte[19]!== -1">{{punkte[19]}}</p></div>
+    <div id="k2"(click) = "disciplineEnter(9);box.value = ''" ><p *ngIf = "game.gamestate[9]!== -1">{{game.gamestate[9]}}</p></div>
+    <div id="k3"(click) = "disciplineEnter(19);box.value = ''" ><p *ngIf = "game.gamestate[19]!== -1">{{game.gamestate[19]}}</p></div>
     <div id="l1">TOTAL</div>
     <div id="l2" *ngIf = "summe [0]!== 0">{{summe[0]}}</div>
     <div id="l3" *ngIf = "summe [1]!== 0">{{summe[1]}}</div>
     <div id="m1">Mätch</div>
-    <div id="m2" *ngIf = "match[0]!== 0">{{match[0]}}</div>
-    <div id="m3" *ngIf = "match[1]!== 0">{{match[1]}}</div>
+    <div id="m2" *ngIf = "match_this_game[0]!== 0">{{match_this_game[0]}}</div>
+    <div id="m3" *ngIf = "match_this_game[1]!== 0">{{match_this_game[1]}}</div>
   </div>
   <div class="rightside">
-    <div> Ausgeben darf: {{player_names[ausgeber]}}</div>
+    <div> Ausgeben darf: {{game.playernames[game.ausgeber]}}</div>
   </div>
   <div class="footer">Footer: Dass du öppis zfröögle hesch</div>
 </div>

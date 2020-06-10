@@ -24,27 +24,27 @@ export class LoginComponent {
   createForm() {
     this.loginForm = this.fb.group({
       email: ['', Validators.required ],
-      password: ['',Validators.required]
+      password: ['', Validators.required]
     });
   }
 
   tryFacebookLogin(){
     this.authService.doFacebookLogin()
       .then(res => {
-        this.router.navigate(['/user']);
+        this.router.navigate(['/cockpit']);
       });
   }
   tryGoogleLogin(){
     this.authService.doGoogleLogin()
       .then(res => {
-        this.router.navigate(['/user']);
+        this.router.navigate(['/cockpit']);
       });
   }
 
   tryLogin(value){
     this.authService.doLogin(value)
       .then(res => {
-        this.router.navigate(['/user']);
+        this.router.navigate(['/cockpit']);
       }, err => {
         console.log(err);
         this.errorMessage = err.message;
