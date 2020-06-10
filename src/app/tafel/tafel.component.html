@@ -7,7 +7,7 @@
 <input #box (keyup.enter) = "scoreEnter(box.value)">
 <p> {{score}}</p>
 <input #secondBox (keyup.enter) = "disciplineEnter(secondBox.value)">
-<p> {{diszi}}</p>
+<p> {{diszi}}</p>o
 -->
 <!DOCTYPE html>
 <html lang="de">
@@ -22,17 +22,17 @@
 
 <body>
 <div class="wrapper">
-  <!--<div class="header">
+  <div class="header">
     <mat-toolbar>
       <a mat-button *ngIf="loggedin" (click)="logout()">{{ logininfo }}</a>
       <span class="fill-remaining-space"></span>
-      <mat-icon appBackButton matTooltip="zurück" class="clickable">arrow_back</mat-icon>
+      <!--<mat-icon appBackButton matTooltip="zurück" class="clickable">arrow_back</mat-icon>-->
       <a mat-button routerLink="tafel">Tafel</a>
       <a mat-button routerLink="cockpit">Cockpit</a>
       <button mat-icon-button matTooltip="Benutzer an- und abmelden" (click)="account()"><mat-icon >account_box</mat-icon></button>
       <button mat-icon-button matTooltip="Zurück zum Startbildschirm" routerLink="home"><mat-icon>home</mat-icon></button>
     </mat-toolbar>
-  </div>-->
+  </div>
   <div class="leftside">
     <input class="eingabe" #box (keyup) = "scoreEnter(box.value)" placeholder="Pünggt">
     <div (click) = "editButtonClicked()">
@@ -100,7 +100,7 @@
   <div class="rightside">
     <div> Ausgeben darf: {{player_names[ausgeber]}}</div>
   </div>
-  <div class="footer">Footer</div>
+  <div class="footer">Footer: Dass du öppis zfröögle hesch</div>
 </div>
 </body>
 
