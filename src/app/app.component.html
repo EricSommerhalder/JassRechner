@@ -10,7 +10,7 @@
 -->
 <mat-toolbar>
 
-  <a mat-button (click) = "authService.doLogout()" *ngIf="getUser()" >{{getUser().email}}</a>
+  <p *ngIf="getUser()" >{{getUser().email}}</p>
   <span class="fill-remaining-space"></span>
   <a mat-button routerLink="tafel" *ngIf="getUser()">Tafel</a>
   <a mat-button routerLink="cockpit" *ngIf="getUser()">Cockpit</a>

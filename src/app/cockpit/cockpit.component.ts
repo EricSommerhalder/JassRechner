@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 export class CockpitComponent implements OnInit {
   games: any[];
   gameToAdd = { playernames: ['Heinz', 'Eric'], teamnames: ['Männer, Frauen'], gamestate: [-1, -1],
-    matchpoints: [0, 0], totalpoints: [0, 0], edit_mode: false, ausgeber: 3, team_done:[false, false], correction_mode: false, user: 'hi'};
+    matchpoints: [0, 0], totalpoints: [0, 0], edit_mode: false, ausgeber: 3, team_done:[false, false], correction_mode: false, user: 'schach94@gmx.ch', active: true};
   constructor(public dataService: DataService, public router: Router) {}
 
   ngOnInit() {

@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import * as firebase from "firebase";
 import {Game} from "../game.model";
+import {DataService} from "../data.service";
 
 @Component({
   selector: 'app-tafel',
@@ -14,7 +15,7 @@ export class TafelComponent implements OnInit {
   summe: number[];
   match_this_game: number[];
   game: Game;
-  constructor(public router: Router) {
+  constructor(public router: Router, public dataService: DataService) {
     this.game = new Game();
     this.punktzahl = -1;
     this.summe = [0, 0];
@@ -81,11 +82,13 @@ export class TafelComponent implements OnInit {
       i++;
     }
     this.punktzahl = -1;
+    this.storeGame();
   }
   editButtonClicked(){
     if (!this.game.correction_mode) {
       this.game.edit_mode = !this.game.edit_mode;
     }
+    this.storeGame();
   }
   checkDone(){
     let i = 0;
@@ -116,12 +119,22 @@ export class TafelComponent implements OnInit {
       this.getNewAusgeber();
     }
   }
+  storeGame(){
+    this.dataService.createGame(this.game);
+  }
   ngOnInit(): void {
     const user = firebase.auth().currentUser;
     if (!user){
       this.router.navigateByUrl('/login');
     }
     this.game.user = user.email;
+    let allGames: any = null;
+    this.dataService.getGames().subscribe(res => allGames = res);
+    console.log(allGames);
+    for (const game of allGames){
+      if (this.dataService.getPropertyOfObservable(game, 'user') === this.game.user && this.dataService.getPropertyOfObservable(game, 'active') ){
+        console.log('Found game');
+      }
+    }
   }
-
 }

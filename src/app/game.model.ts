@@ -9,6 +9,7 @@ export class Game {
   team_done: boolean[];
   correction_mode: boolean;
   user: string;
+  active: boolean;
   constructor() {
     this.gamestate = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
     this.edit_mode = false;
@@ -19,5 +20,6 @@ export class Game {
     this.team_done = [false, false];
     this.matchpoints = [0, 0];
     this.totalpoints = [0, 0];
+    this.active = true;
   }
 }

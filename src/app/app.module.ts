@@ -23,6 +23,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import * as firebase from 'firebase';
+import { PopupdialogComponent } from './popupdialog/popupdialog.component';
 
 firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
@@ -32,7 +33,8 @@ firebase.initializeApp(environment.firebaseConfig);
     CockpitComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PopupdialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ firebase.initializeApp(environment.firebaseConfig);
     AngularFireAuthModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PopupdialogComponent]
 })
 export class AppModule { }

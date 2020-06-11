@@ -93,12 +93,38 @@
     <div id="l1">TOTAL</div>
     <div id="l2" *ngIf = "summe [0]!== 0">{{summe[0]}}</div>
     <div id="l3" *ngIf = "summe [1]!== 0">{{summe[1]}}</div>
-    <div id="m1">Mätch</div>
-    <div id="m2" *ngIf = "match_this_game[0]!== 0">{{match_this_game[0]}}</div>
-    <div id="m3" *ngIf = "match_this_game[1]!== 0">{{match_this_game[1]}}</div>
+    <div id="m1">Differenz</div>
+    <div id="m2" *ngIf = "summe[0]>summe[1]">{{summe[0]-summe[1]}}</div>
+    <div id="m3" *ngIf = "summe[1]>summe[0]">{{summe[1]-summe[0]}}</div>
   </div>
   <div class="rightside">
     <div> Ausgeben darf: {{game.playernames[game.ausgeber]}}</div>
+    <table>
+      <thead>
+      <tr>
+        <td> </td>
+        <td>{{game.teamnames[0]}}</td>
+        <td>{{game.teamnames[1]}}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Bisherige Punkte</td>
+        <td>{{game.totalpoints[0]}}</td>
+        <td>{{game.totalpoints[1]}}</td>
+      </tr>
+      <tr>
+        <td>Matchpunkte in diesem Spiel</td>
+        <td>{{match_this_game[0]}}</td>
+        <td>{{match_this_game[1]}}</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td>{{match_this_game[0]+game.totalpoints[0]}}</td>
+        <td >{{match_this_game[1]+game.totalpoints[1]}}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
   <div class="footer">Footer</div>
 </div>

@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../auth.service'
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as firebase from "firebase";
+
 
 @Component({
   selector: 'app-login',
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginForm: FormGroup;
   errorMessage: string = '';
@@ -49,5 +51,7 @@ export class LoginComponent {
         console.log(err);
         this.errorMessage = err.message;
       });
+  }
+  ngOnInit(): void {
   }
 }
