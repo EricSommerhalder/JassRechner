@@ -7,7 +7,7 @@
 </nav>
 
 <router-outlet></router-outlet>
--->
+
 <mat-toolbar>
 
   <p *ngIf="getUser()" >{{getUser().email}}</p>
@@ -16,8 +16,12 @@
   <a mat-button routerLink="cockpit" *ngIf="getUser()">Cockpit</a>
   <button mat-icon-button matTooltip="Benutzer an- und abmelden" (click)="account()"><mat-icon >account_box</mat-icon></button>
   <button mat-icon-button matTooltip="Zurück zum Startbildschirm" routerLink="home"><mat-icon>home</mat-icon></button>
+<<<<<<< HEAD
+</mat-toolbar>-->
+=======
 
 </mat-toolbar>
+>>>>>>> cd1037a6d90e739a60dd46ce005e64b1f517b77b
 <router-outlet>
 
 </router-outlet>
