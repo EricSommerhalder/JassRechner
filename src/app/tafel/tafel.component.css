@@ -11,8 +11,8 @@ body {
 
 .wrapper {
   display: grid;
-  grid-template-rows: 50px auto 50px;
-  grid-template-columns: 1.5fr 2fr 1.5fr;
+  grid-template-rows: 5% 90% 5%;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
     "header header header"
     "leftside main rightside"
@@ -406,6 +406,26 @@ input {
 .rightside {
   grid-area: rightside;
   /*background-color: cornflowerblue;*/
+}
+
+table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-style: hidden;
+
+}
+table td {
+  border: 2px solid antiquewhite;
+  background-color: #80b1c2;
+  padding: 0 10px;
+}
+tr:first-child {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+tr:last-child {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .footer {
