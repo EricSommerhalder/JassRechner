@@ -23,16 +23,17 @@
 <body>
 <div class="wrapper">
   <div class="header">
-   
+
   </div>
   <div class="leftside">
     <input class="eingabe" #box (keyup) = "scoreEnter(box.value)" placeholder="Pünggt">
-    <div (click) = "editButtonClicked()">
-      <p *ngIf = "game.correction_mode === false">
-      Löschen</p>
-      <p *ngIf = "game.correction_mode"> Neuen Wert eingeben</p>
+    <div class="eingabe" (click) = "editButtonClicked()">
+      <div *ngIf = "game.correction_mode === false">
+        Korrektur</div>
+      <div *ngIf = "game.correction_mode"> Neuen Wert eingeben</div>
     </div>
-    <p>{{game.edit_mode}}</p>
+    <div>{{game.edit_mode}}</div>
+    <div class="eingabe">Neus Spiil</div>
   </div>
   <div class="main">
     <div class="item1"></div>
@@ -90,7 +91,7 @@
     <div id="m3" *ngIf = "summe[1]>summe[0]">{{summe[1]-summe[0]}}</div>
   </div>
   <div class="rightside">
-    <div> Ausgeben darf: {{game.playernames[game.ausgeber]}}</div>
+    <div class="eingabe"> Ausgeben darf:<br>{{game.playernames[game.ausgeber]}}</div>
     <table>
       <thead>
       <tr>
