@@ -88,7 +88,8 @@ export class TafelComponent implements OnInit {
     if (!this.game.correction_mode) {
       this.game.edit_mode = !this.game.edit_mode;
     }
-    this.storeGame();
+    console.log(this.game.edit_mode);
+    // this.storeGame();
   }
   checkDone(){
     let i = 0;
