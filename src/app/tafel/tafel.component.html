@@ -17,7 +17,7 @@
 
   <div class="leftside">
     <input class="button" #box (keyup) = "scoreEnter(box.value)" placeholder="Pünggt">
-    <div [ngClass]="game.edit_mode ? 'pressed_button' : 'button'" (click) = "editButtonClicked()">
+    <div [ngClass]="game.edit_mode || game.correction_mode ? 'pressed_button' : 'button'" (click) = "editButtonClicked()">
       <div *ngIf = "game.correction_mode === false">
         Korrektur</div>
       <div *ngIf = "game.correction_mode"> Neuen Wert eingeben</div>
