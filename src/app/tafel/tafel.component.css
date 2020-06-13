@@ -179,7 +179,6 @@ input {
 .itemm {
   grid-column: 1 / 4;
   grid-row: 13 / 14;
-  /*border-bottom: 2px solid antiquewhite;*/
 }
 
 #a2 {
