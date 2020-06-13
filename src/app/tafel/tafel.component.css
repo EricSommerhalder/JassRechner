@@ -58,6 +58,14 @@ input {
   border: 0;
 }
 
+.pressed_button {
+  background-color: #c28090;
+  width: 300px;
+  margin: 0 auto;
+  padding: 10px 0;
+  border-radius: 20px;
+}
+
 .main {
   font-family: 'Patrick Hand SC', cursive;
   font-size: 40px;
