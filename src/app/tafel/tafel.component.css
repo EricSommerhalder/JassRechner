@@ -72,7 +72,6 @@ input {
   color: antiquewhite;
   text-align: center;
   grid-area: main;
-  background-color: darkseagreen;
   background-image: url(../../assets/images/mainBg.jpg);
   border: 4px solid antiquewhite;
   border-radius: 20px;
@@ -84,6 +83,13 @@ input {
 .main p {
   margin-bottom: 0;
   align-self: center;
+}
+
+.green_cell {
+  background-color: rgba(128,194,178,0.5);
+}
+.red_cell {
+  background-color: rgba(194,128,144,0.5);
 }
 
 .item1 {
