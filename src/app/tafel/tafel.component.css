@@ -408,25 +408,33 @@ input {
   /*background-color: cornflowerblue;*/
 }
 
-table {
+.resultate {
   margin: 0 auto;
+  background-color: #80b1c2;
+  display: table;
+  border-radius: 20px;
+  font-size: 32px;
+}
+
+table {
   border-collapse: collapse;
   border-style: hidden;
 
 }
 table td {
   border: 2px solid antiquewhite;
-  background-color: #80b1c2;
   padding: 0 10px;
+
 }
-tr:first-child {
+ /*thead {
+  background-color: red;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-tr:last-child {
+ table tr:last-child td:last-child {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-}
+}*/
 
 .footer {
   grid-area: footer;
