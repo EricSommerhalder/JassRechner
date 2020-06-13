@@ -11,7 +11,7 @@ body {
 
 .wrapper {
   display: grid;
-  grid-template-rows: 5% 90% 5%;
+  grid-template-rows: 8% 90% 2%;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
     "header header header"
@@ -83,6 +83,7 @@ input {
 .main p {
   margin-bottom: 0;
   align-self: center;
+  overflow: hidden;
 }
 
 .green_cell {
@@ -451,5 +452,4 @@ table td {
 
 .footer {
   grid-area: footer;
-  background-color: aquamarine;
 }

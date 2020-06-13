@@ -22,6 +22,10 @@ export class TafelComponent implements OnInit {
     this.match_this_game = [0, 0];
   }
   scoreEnter(value:string){
+    if (value.length === 0){
+      this.punktzahl = -1;
+      return;
+    }
     const neu = Number(value);
     if (Number.isNaN(neu)){
       this.punktzahl = -1;

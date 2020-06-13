@@ -14,7 +14,7 @@ export class Game {
     this.gamestate = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
     this.edit_mode = false;
     this.correction_mode = false;
-    this.teamnames = ['Männer', 'Frauen'];
+    this.teamnames = ['Männer', 'Fraue'];
     this.playernames = ['Heinz', 'Eric', 'Bob Dylan', 'Claudia', 'Anja', 'Tina Turner'];
     this.ausgeber = Math.floor(Math.random() * 6);
     this.team_done = [false, false];
