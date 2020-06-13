@@ -24,6 +24,7 @@ export class TafelComponent implements OnInit {
   scoreEnter(value:string){
     const neu = Number(value);
     if (Number.isNaN(neu)){
+      this.punktzahl = -1;
       return;
     }
     this.punktzahl = neu;
