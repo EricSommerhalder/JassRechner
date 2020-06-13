@@ -18,14 +18,14 @@
 
   </div>
   <div class="leftside">
-    <input class="eingabe" #box (keyup) = "scoreEnter(box.value)" placeholder="Pünggt">
-    <div [ngClass]="game.edit_mode ? 'pressed_button' : 'eingabe'" (click) = "editButtonClicked()">
+    <input class="button" #box (keyup) = "scoreEnter(box.value)" placeholder="Pünggt">
+    <div [ngClass]="game.edit_mode ? 'pressed_button' : 'button'" (click) = "editButtonClicked()">
       <div *ngIf = "game.correction_mode === false">
         Korrektur</div>
       <div *ngIf = "game.correction_mode"> Neuen Wert eingeben</div>
     </div>
 
-    <div class="eingabe">Neus Spiil</div>
+    <div class="button">Neus Spiil</div>
     <div class="button">Abbrechen</div>
   </div>
   <div class="main">
@@ -84,7 +84,7 @@
     <div id="m3" *ngIf = "summe[1]>summe[0]">{{summe[1]-summe[0]}}</div>
   </div>
   <div class="rightside">
-    <div class="eingabe"> Ausgeben darf:<br>{{game.playernames[game.ausgeber]}}</div>
+    <div class="button"> Ausgeben darf:<br>{{game.playernames[game.ausgeber]}}</div>
     <div class="resultate">
     <table>
       <thead>
