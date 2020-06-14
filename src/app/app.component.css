@@ -5,11 +5,11 @@
 }
 
 .mat-toolbar {
-  background-color: indianred;
-  border-bottom-color: grey;
+  background-color: #c2b280;
+  border-bottom-color: antiquewhite;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  height: 65px;
+  height: 8%;
 }
 
 footer {
