@@ -12,6 +12,7 @@ export class UsersiteComponent implements OnInit {
   constructor(public router: Router, public authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.checkLoggedIn();
   }
 
 }

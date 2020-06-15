@@ -5,6 +5,8 @@ import * as firebase from "firebase";
 import {Game} from "../game.model";
 import {DataService} from "../data.service";
 import {AuthService} from '../auth.service';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-tafel',
@@ -16,8 +18,14 @@ export class TafelComponent implements OnInit {
   summe: number[];
   match_this_game: number[];
   game: Game;
-  constructor(public router: Router, public dataService: DataService, public authService: AuthService) {
+  gameList: any;
+  constructor(public router: Router, public dataService: DataService, public authService: AuthService, private firestore: AngularFirestore) {
     this.game = new Game();
+    firebase.auth().onAuthStateChanged(user => {
+     if (user){
+       this.game.user = user.email;
+     }
+   });
     this.punktzahl = -1;
     this.summe = [0, 0];
     this.match_this_game = [0, 0];
@@ -157,19 +165,31 @@ export class TafelComponent implements OnInit {
     }
   }
   storeGame(){
+    while (this.game.user === ''){
+      console.log('User has not been read, waiting for 2 seconds');
+      this.delay(2000);
+    }
     this.dataService.createGame(this.game);
   }
   finishGame(){
     // TODO add finish Game dialog
   }
-  ngOnInit(): void {
+  delay(ms: number){
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+  async initializeItems(): Promise<any>{
+    const gameList = await this.firestore.collection('games')
+      .snapshotChanges().pipe(first()).toPromise();
+    return gameList;
+  }
+  async ngOnInit(){
     this.authService.checkLoggedIn();
-    this.game.user = this.authService.getUser().email;
     let allGames: any = null;
-    this.dataService.getGames().subscribe(res => allGames = res);
-    for (const game of allGames){
+    allGames = await this.initializeItems();
+    console.log(allGames);
+    /*for (const game of allGames){
       if (this.dataService.getPropertyOfObservable(game, 'user') === this.game.user && this.dataService.getPropertyOfObservable(game, 'active') ){
       }
-    }
+    }*/
   }
 }

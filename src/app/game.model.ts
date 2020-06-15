@@ -2,7 +2,6 @@ export class Game {
   playernames: string[];
   teamnames: string[];
   gamestate: number[];
-  matchpoints: number[];
   totalpoints: number[];
   edit_mode: boolean;
   ausgeber: number;
@@ -18,8 +17,8 @@ export class Game {
     this.playernames = ['Heinz', 'Eric', 'Bob Dylan', 'Claudia', 'Anja', 'Tina Turner'];
     this.ausgeber = Math.floor(Math.random() * 6);
     this.team_done = [false, false];
-    this.matchpoints = [0, 0];
     this.totalpoints = [0, 0];
     this.active = true;
+    this.user = '';
   }
 }

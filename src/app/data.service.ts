@@ -12,8 +12,12 @@ export class DataService {
   getGames(){
     return this.firestore.collection('games').snapshotChanges();
   }
-  createGame(data){
-    return new Promise<any>((resolve, reject) =>{
+  createGame(game: Game){
+    let data = {};
+    for (const [key, value] of Object.entries(game)){
+      data[key] = value;
+    }
+    return new Promise<any>((resolve, reject) => {
       this.firestore
         .collection('games')
         .add(data)

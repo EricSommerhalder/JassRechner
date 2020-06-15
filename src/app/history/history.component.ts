@@ -12,14 +12,11 @@ import {AuthService} from '../auth.service';
 })
 export class HistoryComponent implements OnInit {
   games: any[];
-  gameToAdd = { playernames: ['Heinz', 'Eric'], teamnames: ['Männer, Frauen'], gamestate: [-1, -1],
-    matchpoints: [0, 0], totalpoints: [0, 0], edit_mode: false, ausgeber: 3, team_done:[false, false], correction_mode: false, user: 'schach94@gmx.ch', active: true};
+  gameToAdd = new Game();
   constructor(public dataService: DataService, public router: Router, public authService: AuthService) {}
 
   ngOnInit() {
-    if (!firebase.auth().currentUser){
-      this.router.navigateByUrl('/login');
-    }
+    this.authService.checkLoggedIn();
     this.getGames();
   }
   getGames(){
@@ -28,6 +25,7 @@ export class HistoryComponent implements OnInit {
 
 create(game: Game){
     this.dataService.createGame(game);
+    console.log(this.games);
 }
 
 update(game: Game){

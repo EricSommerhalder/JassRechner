@@ -10,7 +10,6 @@ import {PopupdialogComponent} from './popupdialog/popupdialog.component';
   providedIn: 'root'
 })
 export class AuthService {
-
   constructor(public afAuth: AngularFireAuth, public router: Router, public dialog: MatDialog) {
   }
 
@@ -90,7 +89,6 @@ export class AuthService {
 
   }
   checkLoggedIn(){
-    console.log('calling method');
     firebase.auth().onAuthStateChanged(user => {
       if (!user) {
         this.router.navigateByUrl('/login');
