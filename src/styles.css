@@ -2,3 +2,12 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-toolbar {
+  justify-content: flex-end;
+  padding: 0 16px;
+  grid-area: header;
+  background-color: #c2b280;
+  border-bottom-color: antiquewhite;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
