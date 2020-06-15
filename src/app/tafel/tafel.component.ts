@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import * as firebase from "firebase";
 import {Game} from "../game.model";
 import {DataService} from "../data.service";
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-tafel',
@@ -15,7 +16,7 @@ export class TafelComponent implements OnInit {
   summe: number[];
   match_this_game: number[];
   game: Game;
-  constructor(public router: Router, public dataService: DataService) {
+  constructor(public router: Router, public dataService: DataService, public authService: AuthService) {
     this.game = new Game();
     this.punktzahl = -1;
     this.summe = [0, 0];
@@ -36,6 +37,22 @@ export class TafelComponent implements OnInit {
   disciplineEnter(diszi:number){
     if (this.game.edit_mode){
       if (this.game.gamestate[diszi] !== -1) {
+        if (this.game.gamestate[diszi] % 257 === 0 && this.game.gamestate[diszi] !== 0){
+          if (diszi < 9){
+            this.game.totalpoints[0] = this.game.totalpoints[0] - 0.5;
+          }
+          else {
+           this.game.totalpoints[1] = this.game.totalpoints[1] - 0.5;
+          }
+        }
+        if (this.game.gamestate[diszi] === 0){
+          if (diszi < 9){
+            this.game.totalpoints[1]--;
+          }
+          else {
+            this.game.totalpoints[0]--;
+          }
+        }
         this.game.gamestate[diszi] = -1;
         this.game.edit_mode = false;
         this.game.correction_mode = true;
@@ -47,9 +64,21 @@ export class TafelComponent implements OnInit {
       }
       if (diszi > 9) {
         this.game.gamestate[diszi] = this.punktzahl * (diszi - 9);
+        if (this.punktzahl === 257){
+          this.game.totalpoints[1] = this.game.totalpoints[1] + 0.5;
+        }
+        if (this.punktzahl === 0){
+          this.game.totalpoints[0]++;
+        }
       }
       else {
         this.game.gamestate[diszi] = this.punktzahl * (diszi + 1);
+        if (this.punktzahl === 257){
+          this.game.totalpoints[0] = this.game.totalpoints[0] + 0.5;
+        }
+        if (this.punktzahl === 0){
+          this.game.totalpoints[1]++;
+        }
       }
       this.checkDone();
       if (this.game.correction_mode){
@@ -57,6 +86,9 @@ export class TafelComponent implements OnInit {
       }
       else {
         this.getNewAusgeber();
+      }
+      if (this.game.team_done[0] && this.game.team_done[1]){
+        this.finishGame();
       }
     }
     this.summe = [0, 0];
@@ -74,7 +106,7 @@ export class TafelComponent implements OnInit {
       }
       i++;
     }
-    while(i<20){
+    while (i < 20){
       if (this.game.gamestate[i] === 0){
         this.match_this_game[0]++;
       }
@@ -93,8 +125,7 @@ export class TafelComponent implements OnInit {
     if (!this.game.correction_mode) {
       this.game.edit_mode = !this.game.edit_mode;
     }
-    console.log(this.game.edit_mode);
-    // this.storeGame();
+    this.storeGame();
   }
   checkDone(){
     let i = 0;
@@ -128,18 +159,16 @@ export class TafelComponent implements OnInit {
   storeGame(){
     this.dataService.createGame(this.game);
   }
+  finishGame(){
+    // TODO add finish Game dialog
+  }
   ngOnInit(): void {
-    const user = firebase.auth().currentUser;
-    if (!user){
-      this.router.navigateByUrl('/login');
-    }
-    this.game.user = user.email;
+    this.authService.checkLoggedIn();
+    this.game.user = this.authService.getUser().email;
     let allGames: any = null;
     this.dataService.getGames().subscribe(res => allGames = res);
-    console.log(allGames);
     for (const game of allGames){
       if (this.dataService.getPropertyOfObservable(game, 'user') === this.game.user && this.dataService.getPropertyOfObservable(game, 'active') ){
-        console.log('Found game');
       }
     }
   }

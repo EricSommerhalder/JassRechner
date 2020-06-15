@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {TafelComponent} from '../tafel/tafel.component';
-import {CockpitComponent} from '../cockpit/cockpit.component';
-import {HomeComponent} from '../home/home.component';
+import {HistoryComponent} from '../history/history.component';
 import {LoginComponent} from '../login/login.component';
 import {RegisterComponent} from '../register/register.component';
+import {SettingsComponent} from '../settings/settings.component';
+import {UsersiteComponent} from '../usersite/usersite.component';
 
 const routes: Routes = [
   {
@@ -12,16 +13,19 @@ const routes: Routes = [
     component: TafelComponent
   },
   {
-    path: 'cockpit',
-    component: CockpitComponent
+    path: 'history',
+    component: HistoryComponent
   },
   {
-    path: 'home',
-    component: HomeComponent
+    path: 'settings',
+    component: SettingsComponent
+  },
+  {
+    path: 'usersite',
+    component: UsersiteComponent
   },
   {path: 'login', component : LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: '**', component: LoginComponent}
+  {path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({

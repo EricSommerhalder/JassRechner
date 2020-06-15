@@ -33,25 +33,30 @@ export class LoginComponent implements OnInit{
   tryFacebookLogin(){
     this.authService.doFacebookLogin()
       .then(res => {
-        this.router.navigate(['/cockpit']);
+        this.router.navigate(['/settings']);
       });
   }
   tryGoogleLogin(){
     this.authService.doGoogleLogin()
       .then(res => {
-        this.router.navigate(['/cockpit']);
+        this.router.navigate(['/settings']);
       });
   }
 
   tryLogin(value){
     this.authService.doLogin(value)
       .then(res => {
-        this.router.navigate(['/cockpit']);
+        this.router.navigate(['/settings']);
       }, err => {
         console.log(err);
         this.errorMessage = err.message;
       });
   }
   ngOnInit(): void {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.router.navigateByUrl('/settings');
+      }
+    });
   }
 }

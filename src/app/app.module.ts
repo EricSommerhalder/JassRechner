@@ -4,9 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { TafelComponent } from './tafel/tafel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CockpitComponent } from './cockpit/cockpit.component';
+import { HistoryComponent } from './history/history.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { HomeComponent } from './home/home.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -24,17 +23,22 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import * as firebase from 'firebase';
 import { PopupdialogComponent } from './popupdialog/popupdialog.component';
+import { SettingsComponent } from './settings/settings.component';
+import { UsersiteComponent } from './usersite/usersite.component';
+import { HomeComponent } from './home/home.component';
 
 firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [
     AppComponent,
     TafelComponent,
-    CockpitComponent,
-    HomeComponent,
+    HistoryComponent,
     LoginComponent,
     RegisterComponent,
-    PopupdialogComponent
+    PopupdialogComponent,
+    SettingsComponent,
+    UsersiteComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

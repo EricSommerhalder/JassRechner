@@ -19,18 +19,6 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(){
   }
-
-  account(): void {
-    this.user = this.getUser();
-    if (this.user) {
-        this.openDialog();
-      } else {
-        this.router.navigateByUrl('/login');
-      }
-  }
-  getUser(){
-    return firebase.auth().currentUser;
-  }
   openDialog() {
 
     const dialogConfig = new MatDialogConfig();

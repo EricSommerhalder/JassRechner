@@ -3,17 +3,18 @@ import {DataService} from '../data.service';
 import {Game} from '../game.model';
 import * as firebase from "firebase";
 import {Router} from "@angular/router";
+import {AuthService} from '../auth.service';
 
 @Component({
-  selector: 'app-cockpit',
-  templateUrl: './cockpit.component.html',
-  styleUrls: ['./cockpit.component.css']
+  selector: 'app-history',
+  templateUrl: './history.component.html',
+  styleUrls: ['./history.component.css']
 })
-export class CockpitComponent implements OnInit {
+export class HistoryComponent implements OnInit {
   games: any[];
   gameToAdd = { playernames: ['Heinz', 'Eric'], teamnames: ['Männer, Frauen'], gamestate: [-1, -1],
     matchpoints: [0, 0], totalpoints: [0, 0], edit_mode: false, ausgeber: 3, team_done:[false, false], correction_mode: false, user: 'schach94@gmx.ch', active: true};
-  constructor(public dataService: DataService, public router: Router) {}
+  constructor(public dataService: DataService, public router: Router, public authService: AuthService) {}
 
   ngOnInit() {
     if (!firebase.auth().currentUser){

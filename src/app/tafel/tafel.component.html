@@ -11,7 +11,16 @@
 -->
 
 
+<mat-toolbar>
 
+  <a mat-button *ngIf="authService.getUser()" (click) = "authService.openLogOutDialog()">Abmelden</a>
+  <span class="fill-remaining-space"></span>
+  <a mat-button *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/tafel')">Tafel</a>
+  <a mat-button *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/history')">Verlauf</a>
+  <a *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/settings')">Einstellungen</a>
+  <button mat-icon-button matTooltip="Benutzer" (click) = "router.navigateByUrl('/usersite')"><mat-icon >account_box</mat-icon></button>
+
+</mat-toolbar>
 <body>
 <div class="wrapper">
 
@@ -95,21 +104,27 @@
       </tr>
       <tr>
         <td>Turnier</td>
-        <td>{{game.totalpoints[0]}}</td>
-        <td>{{game.totalpoints[1]}}</td>
+        <td *ngIf ="game.totalpoints[0]!== 0">{{game.totalpoints[0]}}</td>
+        <td *ngIf ="game.totalpoints[0]=== 0"></td>
+        <td *ngIf ="game.totalpoints[1]!== 0">{{game.totalpoints[1]}}</td>
+        <td *ngIf ="game.totalpoints[1]=== 0"></td>
       </tr>
       <tr>
         <td colspan="3">Spiel</td>
       </tr>
       <tr>
         <td>Matchpunkte</td>
-        <td>{{match_this_game[0]}}</td>
-        <td>{{match_this_game[1]}}</td>
+        <td *ngIf ="match_this_game[0]!== 0">{{match_this_game[0]}}</td>
+        <td *ngIf ="match_this_game[0]=== 0"></td>
+        <td *ngIf ="match_this_game[1]!== 0">{{match_this_game[1]}}</td>
+        <td *ngIf ="match_this_game[1]=== 0"></td>
       </tr>
       <tr>
         <td>Sieg</td>
-        <td>{{match_this_game[0]+game.totalpoints[0]}}</td>
-        <td >{{match_this_game[1]+game.totalpoints[1]}}</td>
+        <td *ngIf = "game.team_done[0] && game.team_done[1] && summe[0]>summe[1]">1</td>
+        <td *ngIf = "!game.team_done[0] || !game.team_done[1] || summe[1]>= summe[0]"></td>
+        <td *ngIf = "game.team_done[0] && game.team_done[1] && summe[1]>summe[0]">1</td>
+        <td *ngIf = "!game.team_done[0] || !game.team_done[1] || summe[0]>= summe[1]"></td>
       </tr>
     </table>
     </div>

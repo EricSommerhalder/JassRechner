@@ -5,7 +5,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close()">Abbrechen</button>
-  <button class="mat-raised-button mat-primary"(click)="logout()">Ja, habe genug gejasst</button>
+  <button class="mat-raised-button"(click)="close()">{{leftMessage}}</button>
+  <button class="mat-raised-button mat-primary"(click)="getMethod()">{{rightMessage}}</button>
 </mat-dialog-actions>
 

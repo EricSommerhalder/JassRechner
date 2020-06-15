@@ -1,17 +1,3 @@
-
-
-<mat-toolbar>
-
-  <p *ngIf="getUser()" >{{getUser().email}}</p>
-  <span class="fill-remaining-space"></span>
-  <a mat-button routerLink="tafel" *ngIf="getUser()">Tafel</a>
-  <a mat-button routerLink="cockpit" *ngIf="getUser()">Cockpit</a>
-  <button mat-icon-button matTooltip="Benutzer an- und abmelden" (click)="account()"><mat-icon >account_box</mat-icon></button>
-  <button mat-icon-button matTooltip="Zurück zum Startbildschirm" routerLink="home"><mat-icon>home</mat-icon></button>
-
-
-</mat-toolbar>
-
 <router-outlet>
 
 </router-outlet>

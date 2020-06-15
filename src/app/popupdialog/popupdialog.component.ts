@@ -9,13 +9,20 @@ import {AuthService} from "../auth.service";
 })
 export class PopupdialogComponent implements OnInit {
   title: string;
-  constructor(public authService: AuthService, private dialogRef: MatDialogRef<PopupdialogComponent>, @Inject(MAT_DIALOG_DATA) data) {this.title = data.title; }
+  leftMessage: string;
+  rightMessage: string;
+  constructor(public authService: AuthService, private dialogRef: MatDialogRef<PopupdialogComponent>, @Inject(MAT_DIALOG_DATA) data) {this.title = data.title; this.leftMessage = data.leftMessage; this.rightMessage = data.rightMessage;}
 
   ngOnInit(): void {
   }
   logout() {
     this.authService.doLogout();
     this.dialogRef.close();
+  }
+  getMethod(){
+    if (this.title === 'Log Out'){
+      this.logout();
+    }
   }
 
   close() {

@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import {Router} from '@angular/router';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {PopupdialogComponent} from './popupdialog/popupdialog.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public afAuth: AngularFireAuth, public router: Router) { }
+  constructor(public afAuth: AngularFireAuth, public router: Router, public dialog: MatDialog) {
+  }
 
-  doFacebookLogin(){
+  doFacebookLogin() {
     return new Promise<any>((resolve, reject) => {
       let provider = new firebase.auth.FacebookAuthProvider();
       this.afAuth
@@ -24,7 +27,8 @@ export class AuthService {
         });
     });
   }
-  doGoogleLogin(){
+
+  doGoogleLogin() {
     return new Promise<any>((resolve, reject) => {
       let provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope('profile');
@@ -36,7 +40,8 @@ export class AuthService {
         });
     });
   }
-  doRegister(value){
+
+  doRegister(value) {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
         .then(res => {
@@ -44,7 +49,8 @@ export class AuthService {
         }, err => reject(err));
     });
   }
-  doLogin(value){
+
+  doLogin(value) {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
         .then(res => {
@@ -52,17 +58,42 @@ export class AuthService {
         }, err => reject(err));
     });
   }
-  doLogout(){
+
+  doLogout() {
     return new Promise((resolve, reject) => {
-      if(firebase.auth().currentUser){
+      if (firebase.auth().currentUser) {
         this.afAuth.signOut();
         resolve();
         this.router.navigateByUrl('/login');
-      }
-      else{
+      } else {
         reject();
       }
     });
   }
 
+  getUser() {
+    return firebase.auth().currentUser;
+  }
+
+  openLogOutDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title: 'Log Out',
+      leftMessage: 'Abbrechen',
+      rightMessage: 'Ja, habe genug gejasst'
+    };
+    this.dialog.open(PopupdialogComponent, dialogConfig);
+
+  }
+  checkLoggedIn(){
+    console.log('calling method');
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        this.router.navigateByUrl('/login');
+      }});
+  }
 }
