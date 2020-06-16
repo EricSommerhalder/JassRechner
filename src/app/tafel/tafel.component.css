@@ -43,6 +43,7 @@ body {
   padding: 10px 0;
   border-radius: 20px;
   cursor: pointer;
+  transition: background-color 0.6s;
 }
 input {
   background-color: inherit;
@@ -60,6 +61,7 @@ input {
   margin: 0 auto;
   padding: 10px 0;
   border-radius: 20px;
+  transition: background-color 0.6s;
 }
 
 .main {
@@ -84,9 +86,11 @@ input {
 
 .green_cell {
   background-color: rgba(128,194,178,0.5);
+  transition: background-color 0.6s;
 }
 .red_cell {
   background-color: rgba(194,128,144,0.5);
+  transition: background-color 0.6s;
 }
 
 .item1 {
