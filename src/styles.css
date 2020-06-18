@@ -1,11 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&family=Roboto:wght@300&display=swap');
+
 html, body {
   height: 100%;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #c2b280;
 }
 .mat-toolbar {
   justify-content: flex-end;
@@ -13,6 +16,7 @@ body {
   padding: 0 16px;
   grid-area: header;
   background-color: #c2b280;
+  margin-bottom: 10px;
   border-bottom-color: antiquewhite;
   border-bottom-width: 1px;
   border-bottom-style: solid;

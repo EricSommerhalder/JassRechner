@@ -8,4 +8,29 @@
   <button mat-icon-button matTooltip="Benutzer" (click) = "router.navigateByUrl('/usersite')"><mat-icon >account_box</mat-icon></button>
 
 </mat-toolbar>
-<p>settings works!</p>
+
+<section>
+  <h2>Teamnamen:</h2>
+  <input placeholder="Team A">
+  <p></p>
+  <input placeholder="Team B">
+</section>
+
+<section>
+  <h2>Sitzordnung:</h2>
+  <div class="seatorder">
+    <input class="player_a1" placeholder="Spieler A1">
+    <input class="player_a2" placeholder="Spieler A2">
+    <input class="player_a3" placeholder="Spieler A3">
+    <input class="player_b1" placeholder="Spieler B1">
+    <input class="player_b2" placeholder="Spieler B2">
+    <input class="player_b3" placeholder="Spieler B3">
+  </div>
+</section>
+<section>
+  <h2>Punkteverteilung:</h2>
+  <p>Punkte für einen Match: <input [defaultValue]="0.5"></p>
+  <p>Punkte für einen Kontermatch: <input [defaultValue]="1"></p>
+  <p>Punkte für ein gewonnenes Spiel: <input [defaultValue]="1"></p>
+  <p>Turnier gewonnen bei: <input [defaultValue]="21">Punkten</p>
+</section>
