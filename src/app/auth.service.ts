@@ -73,6 +73,18 @@ export class AuthService {
   getUser() {
     return firebase.auth().currentUser;
   }
+  getUserAsync(){
+    return new Promise((resolve, reject) => {
+      try {
+        firebase.auth()
+          .onAuthStateChanged(user => {
+            resolve(user);
+          });
+      } catch {
+        reject('api failed');
+      }
+    });
+  }
 
   openLogOutDialog() {
 

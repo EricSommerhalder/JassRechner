@@ -18,15 +18,8 @@ export class TafelComponent implements OnInit {
   summe: number[];
   match_this_game: number[];
   game: Game;
-  gameList: any;
-  gameId: string = '';
   constructor(public router: Router, public dataService: DataService, public authService: AuthService, private firestore: AngularFirestore) {
     this.game = new Game();
-    firebase.auth().onAuthStateChanged(user => {
-     if (user){
-       this.game.user = user.email;
-     }
-   });
     this.punktzahl = -1;
     this.summe = [0, 0];
     this.match_this_game = [0, 0];
@@ -100,33 +93,7 @@ export class TafelComponent implements OnInit {
         this.finishGame();
       }
     }
-    this.summe = [0, 0];
-    this.match_this_game = [0, 0];
-    let i = 0;
-    while (i < 10){
-      if (this.game.gamestate[i] === 0){
-        this.match_this_game[1] ++;
-      }
-      if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
-        this.match_this_game[0] += 0.5;
-      }
-      if (this.game.gamestate[i] !== -1) {
-        this.summe[0] += this.game.gamestate[i];
-      }
-      i++;
-    }
-    while (i < 20){
-      if (this.game.gamestate[i] === 0){
-        this.match_this_game[0]++;
-      }
-      if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
-        this.match_this_game[1] += 0.5;
-      }
-      if (this.game.gamestate[i] !== -1) {
-        this.summe[1] += this.game.gamestate[i];
-      }
-      i++;
-    }
+    this.updateFields();
     this.punktzahl = -1;
     this.storeGame();
   }
@@ -166,8 +133,8 @@ export class TafelComponent implements OnInit {
     }
   }
   storeGame(){
-    if (this.gameId.length > 0){
-      this.dataService.updateGame(this.gameId, this.game);
+    if (this.dataService.gameId.length > 0){
+      this.dataService.updateGame(this.dataService.gameId, this.game);
     }
     else{
       this.dataService.createGame(this.game);
@@ -176,58 +143,45 @@ export class TafelComponent implements OnInit {
   finishGame(){
     // TODO add finish Game dialog
   }
-  async loadGame(){
-    let allGames = null;
-    let gameFromData = null;
-    allGames = await this.initializeItems();
-    if (allGames){
-      for (const game of allGames){
-        if (this.gameId === game.payload.doc.id){
-          gameFromData = game;
-          break;
-        }
+  updateFields(){
+    this.summe = [0, 0];
+    this.match_this_game = [0, 0];
+    let i = 0;
+    while (i < 10){
+      if (this.game.gamestate[i] === 0){
+        this.match_this_game[1] ++;
       }
+      if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
+        this.match_this_game[0] += 0.5;
+      }
+      if (this.game.gamestate[i] !== -1) {
+        this.summe[0] += this.game.gamestate[i];
+      }
+      i++;
     }
-    if (gameFromData){
-      this.game.gamestate = this.dataService.getPropertyOfObservable(gameFromData, 'gamestate');
-      this.game.edit_mode = this.dataService.getPropertyOfObservable(gameFromData, 'edit_mode');
-      this.game.correction_mode = this.dataService.getPropertyOfObservable(gameFromData, 'correction_mode');
-      this.game.teamnames = this.dataService.getPropertyOfObservable(gameFromData, 'teamnames');
-      this.game.playernames = this.dataService.getPropertyOfObservable(gameFromData, 'playernames');
-      this.game.ausgeber = this.dataService.getPropertyOfObservable(gameFromData, 'ausgeber');
-      this.game.team_done = this.dataService.getPropertyOfObservable(gameFromData, 'team_done');
-      this.game.totalpoints = this.dataService.getPropertyOfObservable(gameFromData, 'totalpoints');
-      this.game.active = this.dataService.getPropertyOfObservable(gameFromData, 'active');
-      this.game.user = this.dataService.getPropertyOfObservable(gameFromData, 'user');
+    while (i < 20){
+      if (this.game.gamestate[i] === 0){
+        this.match_this_game[0]++;
+      }
+      if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
+        this.match_this_game[1] += 0.5;
+      }
+      if (this.game.gamestate[i] !== -1) {
+        this.summe[1] += this.game.gamestate[i];
+      }
+      i++;
     }
-  }
-  delay(ms: number){
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
-  async initializeItems(): Promise<any>{
-    const gameList = await this.firestore.collection('games')
-      .snapshotChanges().pipe(first()).toPromise();
-    return gameList;
   }
   async ngOnInit(){
+    const user = await this.authService.getUserAsync();
+    this.game.user = user.email;
     this.authService.checkLoggedIn();
-    let allGames: any = null;
-    allGames = await this.initializeItems();
-    if (allGames.length > 0 && this.gameId.length === 0) {
-      for (const game of allGames) {
-        if (this.dataService.getPropertyOfObservable(game, 'user') === this.game.user && this.dataService.getPropertyOfObservable(game,'active')){
-          this.gameId = game.payload.doc.id;
-          break;
-        }
-        console.log(this.dataService.getPropertyOfObservable(game, 'user'));
-        console.log(this.gameId);
-      }
+    if (this.dataService.gameId.length === 0){
+      await this.dataService.getGameId(this.game.user);
     }
-    if (this.gameId.length > 0){
-      await this.loadGame();
-    }
-    else{
-      console.log('Games not found yet, please refresh');
+    if (this.dataService.gameId.length > 0){
+      this.game = await this.dataService.loadGame();
+      this.updateFields();
     }
   }
 }

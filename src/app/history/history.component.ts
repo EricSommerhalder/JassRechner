@@ -28,9 +28,7 @@ create(game: Game){
     console.log(this.games);
 }
 
-update(game: Game){
-    this.dataService.updateGame(game);
-}
+
 delete(id: string){
     this.dataService.deleteGame(id);
 }

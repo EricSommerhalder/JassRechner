@@ -11,20 +11,20 @@
 
 <section>
   <h2>Teamnamen:</h2>
-  <input placeholder="Team A">
+  <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [defaultValue]="game.teamnames[0]">
   <p></p>
-  <input placeholder="Team B">
+  <input #teamNameB (keyup)="game.teamnames[1] = teamNameB.value; storeGame()" [defaultValue]="game.teamnames[1]" >
 </section>
 
 <section>
   <h2>Sitzordnung:</h2>
   <div class="seatorder">
-    <input class="player_a1" placeholder="Spieler A1">
-    <input class="player_a2" placeholder="Spieler A2">
-    <input class="player_a3" placeholder="Spieler A3">
-    <input class="player_b1" placeholder="Spieler B1">
-    <input class="player_b2" placeholder="Spieler B2">
-    <input class="player_b3" placeholder="Spieler B3">
+    <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [defaultValue]="game.playernames[0]">
+    <input #playerNameA2 class="player_a2" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [defaultValue]="game.playernames[1]">
+    <input #playerNameA3 class="player_a3" (keyup)="game.playernames[2] = playerNameA3.value; storeGame()" [defaultValue]="game.playernames[2]">
+    <input #playerNameB1 class="player_b1" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [defaultValue]="game.playernames[3]">
+    <input #playerNameB2 class="player_b2" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [defaultValue]="game.playernames[4]">
+    <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [defaultValue]="game.playernames[5]">
   </div>
 </section>
 <section>
@@ -32,5 +32,5 @@
   <p>Punkte für einen Match: <input [defaultValue]="0.5"></p>
   <p>Punkte für einen Kontermatch: <input [defaultValue]="1"></p>
   <p>Punkte für ein gewonnenes Spiel: <input [defaultValue]="1"></p>
-  <p>Turnier gewonnen bei: <input [defaultValue]="21">Punkten</p>
+  <p>Turnier gewonnen bei: <input [defaultValue]="21"> Punkten</p>
 </section>
