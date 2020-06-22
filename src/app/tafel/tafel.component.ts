@@ -19,6 +19,7 @@ export class TafelComponent implements OnInit {
   match_this_game: number[];
   game: Game;
   gameList: any;
+  gameId: string = '';
   constructor(public router: Router, public dataService: DataService, public authService: AuthService, private firestore: AngularFirestore) {
     this.game = new Game();
     firebase.auth().onAuthStateChanged(user => {
@@ -165,14 +166,40 @@ export class TafelComponent implements OnInit {
     }
   }
   storeGame(){
-    while (this.game.user === ''){
-      console.log('User has not been read, waiting for 2 seconds');
-      this.delay(2000);
+    if (this.gameId.length > 0){
+      this.dataService.updateGame(this.gameId, this.game);
     }
-    this.dataService.createGame(this.game);
+    else{
+      this.dataService.createGame(this.game);
+    }
   }
   finishGame(){
     // TODO add finish Game dialog
+  }
+  async loadGame(){
+    let allGames = null;
+    let gameFromData = null;
+    allGames = await this.initializeItems();
+    if (allGames){
+      for (const game of allGames){
+        if (this.gameId === game.payload.doc.id){
+          gameFromData = game;
+          break;
+        }
+      }
+    }
+    if (gameFromData){
+      this.game.gamestate = this.dataService.getPropertyOfObservable(gameFromData, 'gamestate');
+      this.game.edit_mode = this.dataService.getPropertyOfObservable(gameFromData, 'edit_mode');
+      this.game.correction_mode = this.dataService.getPropertyOfObservable(gameFromData, 'correction_mode');
+      this.game.teamnames = this.dataService.getPropertyOfObservable(gameFromData, 'teamnames');
+      this.game.playernames = this.dataService.getPropertyOfObservable(gameFromData, 'playernames');
+      this.game.ausgeber = this.dataService.getPropertyOfObservable(gameFromData, 'ausgeber');
+      this.game.team_done = this.dataService.getPropertyOfObservable(gameFromData, 'team_done');
+      this.game.totalpoints = this.dataService.getPropertyOfObservable(gameFromData, 'totalpoints');
+      this.game.active = this.dataService.getPropertyOfObservable(gameFromData, 'active');
+      this.game.user = this.dataService.getPropertyOfObservable(gameFromData, 'user');
+    }
   }
   delay(ms: number){
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -186,10 +213,21 @@ export class TafelComponent implements OnInit {
     this.authService.checkLoggedIn();
     let allGames: any = null;
     allGames = await this.initializeItems();
-    console.log(allGames);
-    /*for (const game of allGames){
-      if (this.dataService.getPropertyOfObservable(game, 'user') === this.game.user && this.dataService.getPropertyOfObservable(game, 'active') ){
+    if (allGames.length > 0 && this.gameId.length === 0) {
+      for (const game of allGames) {
+        if (this.dataService.getPropertyOfObservable(game, 'user') === this.game.user && this.dataService.getPropertyOfObservable(game,'active')){
+          this.gameId = game.payload.doc.id;
+          break;
+        }
+        console.log(this.dataService.getPropertyOfObservable(game, 'user'));
+        console.log(this.gameId);
       }
-    }*/
+    }
+    if (this.gameId.length > 0){
+      await this.loadGame();
+    }
+    else{
+      console.log('Games not found yet, please refresh');
+    }
   }
 }

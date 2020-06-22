@@ -24,11 +24,15 @@ export class DataService {
         .then(res => {}, err => reject(err));
     });
   }
-  updateGame(data){
-    this.firestore.collection('games').doc(data.payload.doc.id).set({ completed: true }, { merge: true });
+  updateGame(id: string, game: Game){
+    let data = {};
+    for (const [key, value] of Object.entries(game)){
+      data[key] = value;
+    }
+    this.firestore.collection('games').doc(id).update(data);
   }
-  deleteGame(data){
-    this.firestore.collection('games').doc(data.payload.doc.id).delete();
+  deleteGame(id: string){
+    this.firestore.collection('games').doc(id).delete();
   }
   getPropertyOfObservable(observable: any, property: string){
     try {
