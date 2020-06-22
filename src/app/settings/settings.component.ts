@@ -21,6 +21,32 @@ export class SettingsComponent implements OnInit {
       this.dataService.createGame(this.game);
     }
   }
+  updateNumberProperty(identifier: number, value: string){
+    if (value.length === 0){
+      return;
+    }
+    const val = Number(value);
+    if (Number.isNaN(val)){
+      return;
+    }
+    switch (identifier){
+      case 1:
+        this.game.pointsPerMatch = val;
+        break;
+      case 2:
+        this.game.pointsPerCounterMatch = val;
+        break;
+      case 3:
+        this.game.pointsPerGame = val;
+        break;
+      case 4:
+        this.game.tournamentWonWith = val;
+        break;
+      default:
+        break;
+    }
+    this.storeGame();
+  }
   async ngOnInit(): void {
     this.authService.checkLoggedIn();
     const user = await this.authService.getUserAsync();

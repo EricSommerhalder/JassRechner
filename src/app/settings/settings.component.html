@@ -29,8 +29,8 @@
 </section>
 <section>
   <h2>Punkteverteilung:</h2>
-  <p>Punkte für einen Match: <input [defaultValue]="0.5"></p>
-  <p>Punkte für einen Kontermatch: <input [defaultValue]="1"></p>
-  <p>Punkte für ein gewonnenes Spiel: <input [defaultValue]="1"></p>
-  <p>Turnier gewonnen bei: <input [defaultValue]="21"> Punkten</p>
+  <p>Punkte für einen Match: <input #match (keyup) = "updateNumberProperty(1, match.value)" [defaultValue]="game.pointsPerMatch"></p>
+  <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [defaultValue]="game.pointsPerCounterMatch"></p>
+  <p>Punkte für ein gewonnenes Spiel: <input #perGame (keyup) = "updateNumberProperty(3, perGame.value)" [defaultValue]="game.pointsPerGame"></p>
+  <p>Turnier gewonnen bei: <input #wonWith (keyup) = "updateNumberProperty(4, wonWith.value)" [defaultValue]="game.tournamentWonWith"> Punkten</p>
 </section>

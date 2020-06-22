@@ -82,7 +82,12 @@ export class DataService{
         team_done : this.getPropertyOfObservable(gameFromData, 'team_done'),
         totalpoints : this.getPropertyOfObservable(gameFromData, 'totalpoints'),
         active : this.getPropertyOfObservable(gameFromData, 'active'),
-        user : this.getPropertyOfObservable(gameFromData, 'user')
+        user : this.getPropertyOfObservable(gameFromData, 'user'),
+        pointsPerGame : this.getPropertyOfObservable(gameFromData, 'pointsPerGame'),
+        pointsPerMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerMatch'),
+        pointsPerCounterMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerCounterMatch'),
+        tournamentWonWith: this.getPropertyOfObservable(gameFromData, 'tournamentWonWith'),
+        pastGames : this.getPropertyOfObservable(gameFromData, 'pastGames')
       });
     }
     return null;
