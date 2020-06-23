@@ -5,6 +5,7 @@ import 'firebase/auth';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from './popupdialog/popupdialog.component';
+import {User} from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,7 @@ export class AuthService {
   getUser() {
     return firebase.auth().currentUser;
   }
-  getUserAsync(){
+  getUserAsync(): Promise<any>{
     return new Promise((resolve, reject) => {
       try {
         firebase.auth()

@@ -6,7 +6,7 @@ import {Game} from "../game.model";
 import {DataService} from "../data.service";
 import {AuthService} from '../auth.service';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {first} from 'rxjs/operators';
+import {User} from 'firebase';
 
 @Component({
   selector: 'app-tafel',
@@ -41,18 +41,18 @@ export class TafelComponent implements OnInit {
       if (this.game.gamestate[diszi] !== -1) {
         if (this.game.gamestate[diszi] % 257 === 0 && this.game.gamestate[diszi] !== 0){
           if (diszi < 9){
-            this.game.totalpoints[0] = this.game.totalpoints[0] - 0.5;
+            this.game.totalpoints[0] = this.game.totalpoints[0] - this.game.pointsPerMatch;
           }
           else {
-           this.game.totalpoints[1] = this.game.totalpoints[1] - 0.5;
+           this.game.totalpoints[1] = this.game.totalpoints[1] - this.game.pointsPerMatch;
           }
         }
         if (this.game.gamestate[diszi] === 0){
           if (diszi < 9){
-            this.game.totalpoints[1]--;
+            this.game.totalpoints[1] -= this.game.pointsPerCounterMatch;
           }
           else {
-            this.game.totalpoints[0]--;
+            this.game.totalpoints[0] -= this.game.pointsPerCounterMatch;
           }
         }
         this.game.gamestate[diszi] = -1;
@@ -67,19 +67,19 @@ export class TafelComponent implements OnInit {
       if (diszi > 9) {
         this.game.gamestate[diszi] = this.punktzahl * (diszi - 9);
         if (this.punktzahl === 257){
-          this.game.totalpoints[1] = this.game.totalpoints[1] + 0.5;
+          this.game.totalpoints[1] = this.game.totalpoints[1] + this.game.pointsPerMatch;
         }
         if (this.punktzahl === 0){
-          this.game.totalpoints[0]++;
+          this.game.totalpoints[0]  += this.game.pointsPerCounterMatch;
         }
       }
       else {
         this.game.gamestate[diszi] = this.punktzahl * (diszi + 1);
         if (this.punktzahl === 257){
-          this.game.totalpoints[0] = this.game.totalpoints[0] + 0.5;
+          this.game.totalpoints[0] = this.game.totalpoints[0] + this.game.pointsPerMatch;
         }
         if (this.punktzahl === 0){
-          this.game.totalpoints[1]++;
+          this.game.totalpoints[1] += this.game.pointsPerCounterMatch;
         }
       }
       this.checkDone();
@@ -149,10 +149,10 @@ export class TafelComponent implements OnInit {
     let i = 0;
     while (i < 10){
       if (this.game.gamestate[i] === 0){
-        this.match_this_game[1] ++;
+        this.match_this_game[1] += this.game.pointsPerCounterMatch;
       }
       if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
-        this.match_this_game[0] += 0.5;
+        this.match_this_game[0] += this.game.pointsPerMatch;
       }
       if (this.game.gamestate[i] !== -1) {
         this.summe[0] += this.game.gamestate[i];
@@ -161,10 +161,10 @@ export class TafelComponent implements OnInit {
     }
     while (i < 20){
       if (this.game.gamestate[i] === 0){
-        this.match_this_game[0]++;
+        this.match_this_game[0] += this.game.pointsPerCounterMatch;
       }
       if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
-        this.match_this_game[1] += 0.5;
+        this.match_this_game[1] += this.game.pointsPerMatch;
       }
       if (this.game.gamestate[i] !== -1) {
         this.summe[1] += this.game.gamestate[i];
@@ -173,7 +173,7 @@ export class TafelComponent implements OnInit {
     }
   }
   async ngOnInit(){
-    const user = await this.authService.getUserAsync();
+    const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
     this.authService.checkLoggedIn();
     if (this.dataService.gameId.length === 0){
