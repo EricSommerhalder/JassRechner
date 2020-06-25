@@ -7,6 +7,10 @@ input {
   border-radius: 20px;
 }
 
+input::placeholder {
+  opacity: 1;
+}
+
 .seatorder {
   position: relative;
   width: 600px;
