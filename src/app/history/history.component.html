@@ -8,32 +8,7 @@
   <button mat-icon-button matTooltip="Benutzer" (click) = "router.navigateByUrl('/usersite')"><mat-icon >account_box</mat-icon></button>
 
 </mat-toolbar>
-<table>
-  <thead>
-  <th>ID</th>
-  <th>Player Names</th>
-  <th>Team Names</th>
-  <th>Game State</th>
-  <th>Match Points</th>
-  <th> Total Points </th>
-  </thead>
-  <tbody>
-  <tr *ngFor="let game of games">
-    <td>{{game.payload.doc.id}}</td>
-    <td>{{dataService.getPropertyOfObservable(game,'playernames')}}</td>
-    <td>{{dataService.getPropertyOfObservable(game,'teamnames')}}</td>
-    <td>{{dataService.getPropertyOfObservable(game,'gamestate')}}</td>
-    <td>{{dataService.getPropertyOfObservable(game,'matchpoints')}}</td>
-    <td>{{dataService.getPropertyOfObservable(game,'totalpoints')}}</td>
-    <td>
-      <button (click)="delete(game)">Delete</button>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<td>
-  <button (click)="create(gameToAdd)">Create</button>
-</td>
+
 
 
 

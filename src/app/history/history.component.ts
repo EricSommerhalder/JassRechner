@@ -4,6 +4,7 @@ import {Game} from '../game.model';
 import * as firebase from "firebase";
 import {Router} from "@angular/router";
 import {AuthService} from '../auth.service';
+import {User} from "firebase";
 
 @Component({
   selector: 'app-history',
@@ -12,25 +13,27 @@ import {AuthService} from '../auth.service';
 })
 export class HistoryComponent implements OnInit {
   games: any[];
-  gameToAdd = new Game();
   constructor(public dataService: DataService, public router: Router, public authService: AuthService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.authService.checkLoggedIn();
-    this.getGames();
+    await this.getTable();
   }
-  getGames(){
-    this.dataService.getGames().subscribe(res => this.games = res);
+  async getTable(){
+    const table = [];
+    let allGames = null;
+    const user: User = await this.authService.getUserAsync() as User;
+    const user_email = user.email;
+    allGames = await this.dataService.getGames();
+    if (allGames) {
+      for (const game of allGames) {
+        if (user_email === game.user){
+          table.push(game);
+        }
+      }
+    }
+    console.log(table);
   }
 
-create(game: Game){
-    this.dataService.createGame(game);
-    console.log(this.games);
-}
-
-
-delete(id: string){
-    this.dataService.deleteGame(id);
-}
 
 }
