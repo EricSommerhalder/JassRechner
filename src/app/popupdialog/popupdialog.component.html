@@ -1,11 +1,11 @@
 <h2 mat-dialog-title>{{title}}</h2>
 
 <mat-dialog-content >
-<p>Willst du wirklich schon aufhören zu jassen?</p>
+<p></p>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close()">{{leftMessage}}</button>
-  <button class="mat-raised-button mat-primary"(click)="getMethod()">{{rightMessage}}</button>
+  <button class="mat-raised-button"(click)="close('no')">{{leftMessage}}</button>
+  <button class="mat-raised-button mat-primary" (click)="close('yes')">{{rightMessage}}</button>
 </mat-dialog-actions>
 

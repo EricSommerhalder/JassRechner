@@ -6,12 +6,13 @@ import {Router} from '@angular/router';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from './popupdialog/popupdialog.component';
 import {User} from 'firebase';
+import {DataService} from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(public afAuth: AngularFireAuth, public router: Router, public dialog: MatDialog) {
+  constructor(public afAuth: AngularFireAuth, public router: Router, public dialog: MatDialog, public dataService: DataService) {
   }
 
   doFacebookLogin() {
@@ -64,6 +65,7 @@ export class AuthService {
       if (firebase.auth().currentUser) {
         this.afAuth.signOut();
         resolve();
+        this.dataService.gameId = '';
         this.router.navigateByUrl('/login');
       } else {
         reject();
@@ -94,11 +96,16 @@ export class AuthService {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-      title: 'Log Out',
+      title: 'Abmelden?',
       leftMessage: 'Abbrechen',
       rightMessage: 'Ja, habe genug gejasst'
     };
-    this.dialog.open(PopupdialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'yes'){
+        this.doLogout();
+      }
+    });
 
   }
   checkLoggedIn(){
