@@ -1,13 +1,14 @@
-<mat-toolbar>
-
-  <a mat-button *ngIf="authService.getUser()" (click) = "authService.openLogOutDialog()">Abmelden</a>
-  <span class="fill-remaining-space"></span>
-  <a mat-button *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/tafel')">Tafel</a>
-  <a mat-button *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/history')">Verlauf</a>
-  <a mat-button *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/settings')">Einstellungen</a>
-  <button mat-icon-button matTooltip="Benutzer" (click) = "router.navigateByUrl('/usersite')"><mat-icon >account_box</mat-icon></button>
-
-</mat-toolbar>
+<nav>
+  <ul>
+    <li><a *ngIf="authService.getUser()" (click) = "authService.openLogOutDialog()">Abmelden</a></li>
+    <li class="pipe">|</li>
+    <li><a *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/tafel')">Tafel</a></li>
+    <li class="pipe">|</li>
+    <li><a *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/history')">Verlauf</a></li>
+    <li class="pipe">|</li>
+    <li class="aktiv"><a *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/settings')">Einstellungen</a></li>
+  </ul>
+</nav>
 
 <section>
   <h2>Teamnamen:</h2>

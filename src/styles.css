@@ -21,3 +21,51 @@ body {
   border-bottom-width: 1px;
   border-bottom-style: solid;
 }
+
+nav {
+  grid-area: header;
+  width: 100%;
+  max-height: 90%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #a5a39d;
+  margin-bottom: 10px;
+  border-bottom-color: antiquewhite;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+nav ul {
+  font-size: 20px;
+  margin: 0 20px 0 0
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+  color: antiquewhite;
+  text-decoration: none;
+}
+
+nav ul li a {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+nav ul li:hover {
+  background-color: rgba(47, 53, 59, 0.2);
+  border-radius: 5px;
+  transition: background-color 0.6s;
+}
+
+.pipe:hover {
+  color: antiquewhite;
+  padding: 0;
+}
+
+.aktiv {
+  color: #2f353b;
+}
