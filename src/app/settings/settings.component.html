@@ -11,20 +11,20 @@
 
 <section>
   <h2>Teamnamen:</h2>
-  <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [defaultValue]="game.teamnames[0]">
+  <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [placeholder]="game.teamnames[0]">
   <p></p>
-  <input #teamNameB (keyup)="game.teamnames[1] = teamNameB.value; storeGame()" [defaultValue]="game.teamnames[1]" >
+  <input #teamNameB (keyup)="game.teamnames[1] = teamNameB.value; storeGame()" [placeholder]="game.teamnames[1]" >
 </section>
 
 <section>
   <h2>Sitzordnung:</h2>
   <div class="seatorder">
-    <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [defaultValue]="game.playernames[0]">
-    <input #playerNameA2 class="player_a2" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [defaultValue]="game.playernames[1]">
-    <input #playerNameA3 class="player_a3" (keyup)="game.playernames[2] = playerNameA3.value; storeGame()" [defaultValue]="game.playernames[2]">
-    <input #playerNameB1 class="player_b1" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [defaultValue]="game.playernames[3]">
-    <input #playerNameB2 class="player_b2" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [defaultValue]="game.playernames[4]">
-    <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [defaultValue]="game.playernames[5]">
+    <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0]">
+    <input #playerNameA2 class="player_a2" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1]">
+    <input #playerNameA3 class="player_a3" (keyup)="game.playernames[2] = playerNameA3.value; storeGame()" [placeholder]="game.playernames[2]">
+    <input #playerNameB1 class="player_b1" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3]">
+    <input #playerNameB2 class="player_b2" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [placeholder]="game.playernames[4]">
+    <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [placeholder]="game.playernames[5]">
   </div>
 </section>
 <section>
