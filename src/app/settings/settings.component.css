@@ -22,6 +22,7 @@ input {
   padding: 10px 0;
   border-style: hidden;
   border-radius: 20px;
+  color: antiquewhite;
 }
 
 input::-webkit-input-placeholder {
