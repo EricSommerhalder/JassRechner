@@ -1,2 +1,17 @@
-
+.wrapper {
+  display: grid;
+  grid-template-rows: 8% 90% 2%;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  height: 100vh;
+  max-height: 100%;
+  line-height: 1.5;
+  font-family: 'Patrick Hand SC', cursive;
+  font-size: 26px;
+  color: antiquewhite;
+  text-align: center;
+}
 

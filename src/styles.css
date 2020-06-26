@@ -7,10 +7,11 @@ html, body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Patrick Hand SC', cursive;
   background-color: #c2b280;
 }
-.mat-toolbar {
+
+/*.mat-toolbar {
   justify-content: flex-end;
   max-height: 90%;
   padding: 0 16px;
@@ -20,7 +21,7 @@ body {
   border-bottom-color: antiquewhite;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-}
+}*/
 
 nav {
   grid-area: header;

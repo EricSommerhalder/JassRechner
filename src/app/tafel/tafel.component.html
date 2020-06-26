@@ -85,23 +85,23 @@
     <div class="button"> Ausgeben darf:<br>{{game.playernames[game.ausgeber]}}</div>
     <div class="resultate">
     <table>
-            <tr>
-        <td colspan="3">Zwischenstand</td>
+      <tr>
+        <td colspan="3">Zwischenstand Turnier</td>
       </tr>
       <tr>
-        <td> </td>
+        <td></td>
         <td>{{game.teamnames[0]}}</td>
         <td>{{game.teamnames[1]}}</td>
       </tr>
       <tr>
-        <td>Turnier</td>
+        <td>Punkte</td>
         <td *ngIf ="game.totalpoints[0]!== 0">{{game.totalpoints[0]}}</td>
         <td *ngIf ="game.totalpoints[0]=== 0"></td>
         <td *ngIf ="game.totalpoints[1]!== 0">{{game.totalpoints[1]}}</td>
         <td *ngIf ="game.totalpoints[1]=== 0"></td>
       </tr>
       <tr>
-        <td colspan="3">Spiel</td>
+        <td colspan="3">Zwischenstand Spiel</td>
       </tr>
       <tr>
         <td>Matchpunkte</td>

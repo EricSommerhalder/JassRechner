@@ -1,4 +1,5 @@
-<nav>
+<div class="wrapper">
+  <nav>
   <ul>
     <li><a *ngIf="authService.getUser()" (click) = "authService.openLogOutDialog()">Abmelden</a></li>
     <li class="pipe">|</li>
@@ -9,29 +10,37 @@
     <li class="aktiv"><a *ngIf="authService.getUser()" (click) = "router.navigateByUrl('/settings')">Einstellungen</a></li>
   </ul>
 </nav>
+  <div class="leftside">
+    <section class="teamname">
+    <h2>Teamnamen:</h2>
+    <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [placeholder]="game.teamnames[0]">
+    <input #teamNameB (keyup)="game.teamnames[1] = teamNameB.value; storeGame()" [placeholder]="game.teamnames[1]" >
+    </section>
 
-<section>
-  <h2>Teamnamen:</h2>
-  <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [placeholder]="game.teamnames[0]">
-  <p></p>
-  <input #teamNameB (keyup)="game.teamnames[1] = teamNameB.value; storeGame()" [placeholder]="game.teamnames[1]" >
-</section>
+    <section>
+    <h2>Sitzordnung:</h2>
+    <div class="seatorder">
+      <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0]">
+      <input #playerNameA2 class="player_a2" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1]">
+      <input #playerNameA3 class="player_a3" (keyup)="game.playernames[2] = playerNameA3.value; storeGame()" [placeholder]="game.playernames[2]">
+      <input #playerNameB1 class="player_b1" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3]">
+      <input #playerNameB2 class="player_b2" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [placeholder]="game.playernames[4]">
+      <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [placeholder]="game.playernames[5]">
+    </div>
+  </section>
 
-<section>
-  <h2>Sitzordnung:</h2>
-  <div class="seatorder">
-    <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0]">
-    <input #playerNameA2 class="player_a2" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1]">
-    <input #playerNameA3 class="player_a3" (keyup)="game.playernames[2] = playerNameA3.value; storeGame()" [placeholder]="game.playernames[2]">
-    <input #playerNameB1 class="player_b1" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3]">
-    <input #playerNameB2 class="player_b2" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [placeholder]="game.playernames[4]">
-    <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [placeholder]="game.playernames[5]">
+    <section class="point-setting">
+    <h2>Punkteverteilung:</h2>
+    <p>Punkte für einen Match: <input #match (keyup) = "updateNumberProperty(1, match.value)" [placeholder]="game.pointsPerMatch"></p>
+    <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [placeholder]="game.pointsPerCounterMatch"></p>
+    <p>Punkte für ein gewonnenes Spiel: <input #perGame (keyup) = "updateNumberProperty(3, perGame.value)" [placeholder]="game.pointsPerGame"></p>
+    <p>Punkte für den Turniersieg: <input #wonWith (keyup) = "updateNumberProperty(4, wonWith.value)" [placeholder]="game.tournamentWonWith"></p>
+  </section>
   </div>
-</section>
-<section>
-  <h2>Punkteverteilung:</h2>
-  <p>Punkte für einen Match: <input #match (keyup) = "updateNumberProperty(1, match.value)" [placeholder]="game.pointsPerMatch"></p>
-  <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [placeholder]="game.pointsPerCounterMatch"></p>
-  <p>Punkte für ein gewonnenes Spiel: <input #perGame (keyup) = "updateNumberProperty(3, perGame.value)" [placeholder]="game.pointsPerGame"></p>
-  <p>Turnier gewonnen bei: <input #wonWith (keyup) = "updateNumberProperty(4, wonWith.value)" [placeholder]="game.tournamentWonWith"> Punkten</p>
-</section>
+
+  <div class="rightside">
+    <h2>Benutzerzeugs</h2>
+  </div>
+
+  <footer></footer>
+</div>
