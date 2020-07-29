@@ -13,7 +13,7 @@ interface constructorHelper{
   pointsPerCounterMatch: number;
   pointsPerGame: number;
   tournamentWonWith: number;
-  pastGames: {game: number[], date: string}[];
+  paidOn: string;
 }
 
 export class Game {
@@ -31,7 +31,7 @@ export class Game {
   pointsPerCounterMatch: number;
   pointsPerGame: number;
   tournamentWonWith: number;
-  pastGames: {game: number[], date: string}[];
+  paidOn: string;
   constructor(helper?: constructorHelper) {
     this.gamestate = helper && helper.gamestate || [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
     this.edit_mode = helper && helper.edit_mode || false;
@@ -47,6 +47,6 @@ export class Game {
     this.pointsPerCounterMatch = helper && helper.pointsPerCounterMatch || 1;
     this.pointsPerGame = helper && helper.pointsPerGame || 1;
     this.tournamentWonWith = helper && helper.tournamentWonWith || 21;
-    this.pastGames = helper && helper.pastGames || [];
+    this.paidOn = helper && helper.paidOn || '';
   }
 }

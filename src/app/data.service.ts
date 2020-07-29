@@ -17,11 +17,12 @@ export class DataService{
     for (const [key, value] of Object.entries(game)){
       data[key] = value;
     }
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<any>(async (resolve, reject) => {
       this.firestore
         .collection('games')
         .add(data)
         .then(res => {}, err => reject(err));
+      await this.getGameId(game.user);
     });
   }
   updateGame(id: string, game: Game){
@@ -87,7 +88,7 @@ export class DataService{
         pointsPerMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerMatch'),
         pointsPerCounterMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerCounterMatch'),
         tournamentWonWith: this.getPropertyOfObservable(gameFromData, 'tournamentWonWith'),
-        pastGames : this.getPropertyOfObservable(gameFromData, 'pastGames')
+        paidOn : this.getPropertyOfObservable(gameFromData, 'paidOn')
       });
     }
     return null;

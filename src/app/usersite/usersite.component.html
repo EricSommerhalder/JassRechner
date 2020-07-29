@@ -8,4 +8,5 @@
   <button mat-icon-button matTooltip="Benutzer" (click) = "router.navigateByUrl('/usersite')"><mat-icon >account_box</mat-icon></button>
 
 </mat-toolbar>
-<p>usersite works!</p>
+<input #newPass placeholder="Change Password">
+<a mat-button (click) = "changePassword(newPass.value)">Passwort ändern</a>

@@ -42,7 +42,7 @@ export class TafelComponent implements OnInit {
     if (this.game.edit_mode){
       if (this.game.gamestate[diszi] !== -1) {
         if (this.game.gamestate[diszi] % 257 === 0 && this.game.gamestate[diszi] !== 0){
-          if (diszi < 9){
+          if (diszi <= 9){
             this.game.totalpoints[0] = this.game.totalpoints[0] - this.game.pointsPerMatch;
           }
           else {
@@ -50,7 +50,7 @@ export class TafelComponent implements OnInit {
           }
         }
         if (this.game.gamestate[diszi] === 0){
-          if (diszi < 9){
+          if (diszi <= 9){
             this.game.totalpoints[1] -= this.game.pointsPerCounterMatch;
           }
           else {
@@ -67,7 +67,7 @@ export class TafelComponent implements OnInit {
          return; // TODO: Add dialog that entry was impossible, as the value was impossible or the discipline was already full
       }
       if (diszi > 9) {
-        this.game.gamestate[diszi] = this.punktzahl * (diszi - 9);
+        this.game.gamestate[diszi] = this.punktzahl * (diszi - 10);
         if (this.punktzahl === 257){
           this.game.totalpoints[1] = this.game.totalpoints[1] + this.game.pointsPerMatch;
         }
@@ -161,9 +161,8 @@ export class TafelComponent implements OnInit {
   }
   async finishGame(){
     console.log('All done!');
-    const date = new Date();
-    const strDate = date.getDate().toString().padStart(2, '0') + '.' + (date.getMonth() + 1).toString().padStart(2, '0') + '.' + date.getFullYear();
-    this.game.pastGames.push({game: this.game.gamestate, date: strDate});
+    //const date = new Date();
+    //const strDate = date.getDate().toString().padStart(2, '0') + '.' + (date.getMonth() + 1).toString().padStart(2, '0') + '.' + date.getFullYear();
     if (this.summe[0] > this.summe[1]){
       this.game.totalpoints[0] += this.game.pointsPerGame;
     }
@@ -246,6 +245,43 @@ export class TafelComponent implements OnInit {
     }
     this.updateFields();
     this.storeGame();
+  }
+  abortGame(){
+    for (let i = 0; i < 10; i++){
+      if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
+        this.game.totalpoints[0] -= this.game.pointsPerMatch;
+      }
+      if (this.game.gamestate[i] === 0){
+        this.game.totalpoints[1] -= this.game.pointsPerCounterMatch;
+      }
+      if (this.game.gamestate[i + 10] % 257 === 0 && this.game.gamestate[i + 10] !== 0){
+        this.game.totalpoints[1] -= this.game.pointsPerMatch;
+      }
+      if (this.game.gamestate[i + 10] === 0){
+        this.game.totalpoints[0] -= this.game.pointsPerCounterMatch;
+      }
+      this.game.gamestate[i] = -1;
+      this.game.gamestate[i + 10] = -1;
+    }
+    this.storeGame();
+    this.updateFields();
+  }
+  async openAbortGameDialog(){
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title: 'Spiel abbrechen?',
+      leftMessage: 'Nein',
+      rightMessage: 'Ja'
+    };
+    const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe( async result => {
+      if (result === 'yes'){
+        this.abortGame();
+      }
+    });
   }
   async ngOnInit(){
     const user: User = await this.authService.getUserAsync() as User;
