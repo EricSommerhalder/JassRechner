@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {DataService} from '../data.service';
 import {Game} from '../game.model';
 import {User} from 'firebase';
+import {stringify} from 'querystring';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -58,9 +59,14 @@ export class SettingsComponent implements OnInit {
     this.storeGame();
   }
   emptyPlayerFields() {
-    for (const player in this.game.playernames){
-      
+    for (let i = 1; i < 4; i++) {
+      this.game.playernames[i - 1] = 'Spieler A' + i.toString();
     }
+    for (let i = 4; i < 7; i++) {
+      this.game.playernames[i - 1] = 'Spieler B' + (i - 3).toString();
+    }
+    this.storeGame();
+    window.location.reload();
   }
   async ngOnInit() {
     this.authService.checkLoggedIn();
