@@ -1,0 +1,30 @@
+::ng-deep .mat-dialog-container {
+  background: #a5a39d;
+  color: #2f353b;
+  border-radius: 20px;
+}
+.mat-dialog-title {
+  font-family: 'Patrick Hand SC', cursive;
+  color: antiquewhite;
+  font-size: 40px;
+}
+::ng-deep .mat-dialog-actions {
+  justify-content: space-between;
+}
+::ng-deep .mat-raised-button {
+  font-family: 'Patrick Hand SC', cursive;
+  font-size: 30px;
+  background: #c28090;
+  color: antiquewhite;
+}
+::ng-deep .mat-raised-button:not {
+  box-shadow: none;
+}
+::ng-deep .mat-dialog-content {
+  display: none;
+}
+::ng-deep .mat-raised-button.mat-primary {
+  background: #80c2b2;
+  color: antiquewhite;
+}
+
