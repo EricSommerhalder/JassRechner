@@ -26,20 +26,20 @@ input {
 }
 
 input::-webkit-input-placeholder {
-  opacity: 1;
+  opacity: 0.6;
   color: antiquewhite;
 }
 input::-moz-placeholder {
-  opacity: 1;
+  opacity: 0.6;
   color: antiquewhite;
 }
 input:-ms-input-placeholder {
-  opacity: 1;
+  opacity: 0.6;
   color: antiquewhite;
 }
 
 input::placeholder {
-  opacity: 1;
+  opacity: 0.6;
   color: antiquewhite;
 }
 
