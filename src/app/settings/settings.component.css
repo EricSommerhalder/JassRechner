@@ -87,6 +87,12 @@ input::placeholder {
   top: 10px;
   left: 20px;
 }
+.player_leeren {
+  top: calc(50% - 20px);
+  left: calc(50% - 70px);
+  padding: 0 !important;
+  background: #c28090 !important;
+}
 
 .point-setting input {
   width: 50px;
