@@ -57,6 +57,11 @@ export class SettingsComponent implements OnInit {
     }
     this.storeGame();
   }
+  emptyPlayerFields() {
+    for (const player in this.game.playernames){
+      
+    }
+  }
   async ngOnInit() {
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;

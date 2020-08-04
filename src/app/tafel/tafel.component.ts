@@ -63,8 +63,27 @@ export class TafelComponent implements OnInit {
       }
     }
     else {
-      if (this.game.gamestate[diszi] !== -1 || this.punktzahl < 0){
-         return; // TODO: Add dialog that entry was impossible, as the value was impossible or the discipline was already full
+      if (this.game.gamestate[diszi] !== -1){
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+          title: 'Diese Disziplin hat bereits einen Wert',
+          leftMessage: 'Alles klar!',
+          rightMessage: ''
+        };
+        this.dialog.open(PopupdialogComponent, dialogConfig);
+        this.punktzahl = -1;
+        return;
+      }
+      if (this.punktzahl < 0 || this.punktzahl > 257 || (this.punktzahl > 156 && this.punktzahl < 257)){
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+          title: 'Wert muss zwischen 0 und 156 oder 257 sein',
+          leftMessage: 'Alles klar!',
+          rightMessage: ''
+        };
+        this.dialog.open(PopupdialogComponent, dialogConfig);
+        this.punktzahl = -1;
+        return;
       }
       if (diszi > 9) {
         this.game.gamestate[diszi] = this.punktzahl * (diszi - 10);

@@ -5,7 +5,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close('no')">{{leftMessage}}</button>
-  <button class="mat-raised-button mat-primary" (click)="close('yes')">{{rightMessage}}</button>
+  <button *ngIf ="leftMessage !== ''" class="mat-raised-button"(click)="close('no')">{{leftMessage}}</button>
+  <button *ngIf = "rightMessage !== ''" class="mat-raised-button mat-primary" (click)="close('yes')">{{rightMessage}}</button>
 </mat-dialog-actions>
 
