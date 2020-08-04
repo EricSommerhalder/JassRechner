@@ -32,6 +32,9 @@ export class DataService{
     }
     this.firestore.collection('games').doc(id).update(data);
   }
+  updateGameWithDict(id: string, data: any){
+    this.firestore.collection('games').doc(id).update(data);
+  }
   deleteGame(id: string){
     this.firestore.collection('games').doc(id).delete();
   }
@@ -59,6 +62,19 @@ export class DataService{
         }
       }
     }
+  }
+  async getAllGamesOfUser(user: string){
+    const toReturn = [];
+    let allGames: any = null;
+    allGames = await this.getAllGames();
+    if (allGames.length > 0) {
+      for (const game of allGames) {
+        if (this.getPropertyOfObservable(game, 'user') === user){
+          toReturn.push(game);
+        }
+      }
+    }
+    return toReturn;
   }
   async loadGame(){
     let allGames = null;
@@ -88,7 +104,9 @@ export class DataService{
         pointsPerMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerMatch'),
         pointsPerCounterMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerCounterMatch'),
         tournamentWonWith: this.getPropertyOfObservable(gameFromData, 'tournamentWonWith'),
-        paidOn : this.getPropertyOfObservable(gameFromData, 'paidOn')
+        paidOn : this.getPropertyOfObservable(gameFromData, 'paidOn'),
+        startDate: this.getPropertyOfObservable(gameFromData, 'startDate'),
+        endDate: this.getPropertyOfObservable(gameFromData, 'endDate')
       });
     }
     return null;

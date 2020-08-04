@@ -21,10 +21,8 @@
     <div [ngClass]="game.edit_mode || game.correction_mode ? 'pressed_button' : 'button'" (click) = "editButtonClicked()">
         Korrektur
     </div>
-
-    <div class="button">Neus Spiil</div>
     <div class="button" (click)="openAbortGameDialog()">Abbrechen</div>
-    <div class="button" (click)="fill()">Fill for test</div>
+    <div class="button" *ngIf="game.team_done[0] && game.team_done[1]" (click) ="openFinishGameDialog()">Neus Spiil</div>
   </div>
   <div class="main">
     <div class="item1"></div>
