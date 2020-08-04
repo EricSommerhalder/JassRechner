@@ -14,6 +14,8 @@ interface constructorHelper{
   pointsPerGame: number;
   tournamentWonWith: number;
   paidOn: string;
+  startDate: string;
+  endDate: string;
 }
 
 export class Game {
@@ -32,6 +34,8 @@ export class Game {
   pointsPerGame: number;
   tournamentWonWith: number;
   paidOn: string;
+  startDate: string;
+  endDate: string;
   constructor(helper?: constructorHelper) {
     this.gamestate = helper && helper.gamestate || [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
     this.edit_mode = helper && helper.edit_mode || false;
@@ -48,5 +52,11 @@ export class Game {
     this.pointsPerGame = helper && helper.pointsPerGame || 1;
     this.tournamentWonWith = helper && helper.tournamentWonWith || 21;
     this.paidOn = helper && helper.paidOn || '';
+    this.startDate = helper && helper.startDate || this.getToday();
+    this.endDate = helper && helper.endDate || '';
+  }
+  getToday(){
+    const date = new Date();
+    return date.getDate().toString().padStart(2, '0') + '.' + (date.getMonth() + 1).toString().padStart(2, '0') + '.' + date.getFullYear();
   }
 }

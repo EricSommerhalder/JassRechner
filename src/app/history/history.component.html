@@ -11,7 +11,32 @@
     </ul>
   </nav>
   <main>
-    <h2>@Bueb: Hier kommt der Code rein!</h2>
+    <table>
+      <tr>
+        <td></td>
+        <td>Team 1</td>
+        <td>Punkte Team 1</td>
+        <td>Team 2</td>
+        <td>Punkte Team 2</td>
+        <td>Angefangen am</td>
+        <td>Beendet am</td>
+        <td>Eingelöst am</td>
+      </tr>
+      <tr *ngFor="let game of games; let i = index">
+        <td>Turnier {{i + 1}}</td>
+        <td>{{game.teamNameA}}</td>
+        <td>{{game.pointsTeamA}}</td>
+        <td>{{game.teamNameB}}</td>
+        <td>{{game.pointsTeamB}}</td>
+        <td>{{game.startedOn}}</td>
+        <td>{{game.endedOn}}</td>
+        <td>
+          <mat-form-field>
+            <textarea #paidOnInput matInput [value]="game.paidOn" (keyup)="updatePaidOn(game.gameId, paidOnInput.value)"></textarea>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
   </main>
   <footer></footer>
 </div>

@@ -41,6 +41,14 @@ export class TafelComponent implements OnInit {
   async disciplineEnter(diszi:number){
     if (this.game.edit_mode){
       if (this.game.gamestate[diszi] !== -1) {
+        if (this.game.team_done[0] && this.game.team_done[1]){
+          if (this.summe[0] > this.summe[1]){
+            this.game.totalpoints[0] -= this.game.pointsPerGame;
+          }
+          if (this.summe[1] > this.summe[0]){
+            this.game.totalpoints[1] -= this.game.pointsPerGame;
+          }
+        }
         if (this.game.gamestate[diszi] % 257 === 0 && this.game.gamestate[diszi] !== 0){
           if (diszi <= 9){
             this.game.totalpoints[0] = this.game.totalpoints[0] - this.game.pointsPerMatch;
@@ -86,7 +94,7 @@ export class TafelComponent implements OnInit {
         return;
       }
       if (diszi > 9) {
-        this.game.gamestate[diszi] = this.punktzahl * (diszi - 10);
+        this.game.gamestate[diszi] = this.punktzahl * (diszi - 9);
         if (this.punktzahl === 257){
           this.game.totalpoints[1] = this.game.totalpoints[1] + this.game.pointsPerMatch;
         }
@@ -104,14 +112,22 @@ export class TafelComponent implements OnInit {
         }
       }
       this.checkDone();
+      if (this.game.team_done[0] && this.game.team_done[1]) {
+        if (this.summe[0] > this.summe[1]){
+          this.game.totalpoints[0] += this.game.pointsPerGame;
+        }
+        if (this.summe[1] > this.summe[0]){
+          this.game.totalpoints[1] += this.game.pointsPerGame;
+        }
+      }
+      if (this.game.totalpoints[0] >= this.game.tournamentWonWith || this.game.totalpoints[1] >= this.game.tournamentWonWith){
+        await this.finishMatch();
+      }
       if (this.game.correction_mode){
         this.game.correction_mode = false;
       }
       else {
         this.getNewAusgeber();
-      }
-      if (this.game.team_done[0] && this.game.team_done[1]){
-        await this.openFinishGameDialog();
       }
     }
     this.updateFields();
@@ -180,14 +196,6 @@ export class TafelComponent implements OnInit {
   }
   async finishGame(){
     console.log('All done!');
-    //const date = new Date();
-    //const strDate = date.getDate().toString().padStart(2, '0') + '.' + (date.getMonth() + 1).toString().padStart(2, '0') + '.' + date.getFullYear();
-    if (this.summe[0] > this.summe[1]){
-      this.game.totalpoints[0] += this.game.pointsPerGame;
-    }
-    if (this.summe[1] > this.summe[0]){
-      this.game.totalpoints[1] += this.game.pointsPerGame;
-    }
     this.game.gamestate = Array(20).fill(-1);
     this.game.team_done = [false, false];
     this.storeGame();
@@ -198,34 +206,34 @@ export class TafelComponent implements OnInit {
 
   }
   async finishMatch(){
-    const temp = {playernames: this.game.playernames, teamnames: this.game.teamnames, pointsPerMatch: this.game.pointsPerMatch, pointsPerCounterMatch: this.game.pointsPerCounterMatch, pointsPerGame: this.game.pointsPerGame, tournamentWonWith: this.game.tournamentWonWith, user: this.game.user};
-    console.log(temp);
-    this.game.active = false;
-    this.storeGame();
-    this.dataService.gameId = '';
-    this.game = new Game();
-    this.game.playernames = temp.playernames;
-    this.game.teamnames = temp.teamnames;
-    this.game.pointsPerMatch = temp.pointsPerMatch;
-    this.game.pointsPerCounterMatch = temp.pointsPerCounterMatch;
-    this.game.pointsPerGame = temp.pointsPerGame;
-    this.game.user = temp.user;
-    this.game.tournamentWonWith = temp.tournamentWonWith;
-    this.storeGame();
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       title: 'Das Turnier ist beendet!',
-      leftMessage: 'Zum Verlauf',
+      leftMessage: 'Noch korrigieren',
       rightMessage: 'Nächstes Spiel'
     };
-    await this.dataService.getGameId(this.game.user);
     const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe( result => {
-      if (result === 'no'){
-        this.router.navigateByUrl('/history');
+    await dialogRef.afterClosed().subscribe( async result => {
+      if (result === 'yes') {
+        const temp = {playernames: this.game.playernames, teamnames: this.game.teamnames, pointsPerMatch: this.game.pointsPerMatch, pointsPerCounterMatch: this.game.pointsPerCounterMatch, pointsPerGame: this.game.pointsPerGame, tournamentWonWith: this.game.tournamentWonWith, user: this.game.user};
+        console.log(temp);
+        this.game.active = false;
+        this.game.endDate = this.game.getToday();
+        this.storeGame();
+        this.dataService.gameId = '';
+        this.game = new Game();
+        this.game.playernames = temp.playernames;
+        this.game.teamnames = temp.teamnames;
+        this.game.pointsPerMatch = temp.pointsPerMatch;
+        this.game.pointsPerCounterMatch = temp.pointsPerCounterMatch;
+        this.game.pointsPerGame = temp.pointsPerGame;
+        this.game.user = temp.user;
+        this.game.tournamentWonWith = temp.tournamentWonWith;
+        this.storeGame();
+        await this.dataService.getGameId(this.game.user);
       }
     });
   }
@@ -258,14 +266,15 @@ export class TafelComponent implements OnInit {
       i++;
     }
   }
-  fill(){
-    for (let i = 0; i < 20; i++){
-      this.game.gamestate[i] = 10;
-    }
-    this.updateFields();
-    this.storeGame();
-  }
   abortGame(){
+    if (this.game.team_done[0] && this.game.team_done[1]) {
+      if (this.summe[0] > this.summe[1]){
+        this.game.totalpoints[0] -= this.game.pointsPerGame;
+      }
+      if (this.summe[1] > this.summe[0]){
+        this.game.totalpoints[1] -= this.game.pointsPerGame;
+      }
+    }
     for (let i = 0; i < 10; i++){
       if (this.game.gamestate[i] % 257 === 0 && this.game.gamestate[i] !== 0){
         this.game.totalpoints[0] -= this.game.pointsPerMatch;
@@ -282,6 +291,8 @@ export class TafelComponent implements OnInit {
       this.game.gamestate[i] = -1;
       this.game.gamestate[i + 10] = -1;
     }
+    this.game.team_done[0] = false;
+    this.game.team_done[1] = false;
     this.storeGame();
     this.updateFields();
   }
