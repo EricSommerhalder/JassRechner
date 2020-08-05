@@ -27,7 +27,7 @@
       <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [placeholder]="game.playernames[5] === 'Spieler B3' ? game.teamnames[1] + ' 3' : game.playernames[5]">
       <input type="button"class="player_leeren" (click)="emptyPlayerFields()"value="refresh">
     </div>
-  </section>
+    </section>
 
     <section class="point-setting">
     <h2>Punkteverteilung:</h2>
@@ -35,7 +35,7 @@
     <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [placeholder]="game.pointsPerCounterMatch"></p>
     <p>Punkte für ein gewonnenes Spiel: <input #perGame (keyup) = "updateNumberProperty(3, perGame.value)" [placeholder]="game.pointsPerGame"></p>
     <p>Punkte für den Turniersieg: <input #wonWith (keyup) = "updateNumberProperty(4, wonWith.value)" [placeholder]="game.tournamentWonWith"></p>
-  </section>
+    </section>
   </div>
 
   <div class="rightside">

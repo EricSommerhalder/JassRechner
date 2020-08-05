@@ -14,4 +14,23 @@
   color: antiquewhite;
   text-align: center;
 }
+table {
+  border-collapse: collapse;
+  border-style: hidden;
+  background-color: #80b1c2;
+  margin: 0 auto;
+
+}
+table td {
+  border: 2px solid antiquewhite;
+  padding: 0 10px;
+
+}
+
+input {
+  background-color: #80b1c2;
+  color: antiquewhite;
+  height: 30px;
+  border: 0;
+}
 
