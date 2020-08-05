@@ -5,6 +5,7 @@ import {DataService} from '../data.service';
 import {Game} from '../game.model';
 import {User} from 'firebase';
 import {stringify} from 'querystring';
+import * as firebase from 'firebase';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -67,6 +68,14 @@ export class SettingsComponent implements OnInit {
     }
     this.storeGame();
     window.location.reload();
+  }
+  async fireChangePassword(oldPassword, newPassword, confirmNewPassword){
+    if (newPassword !== confirmNewPassword){
+      console.log('Nid zweimol s gliiche passwort');
+    }
+    const user = await this.authService.getUserAsync() as User;
+    const cred = firebase.auth.EmailAuthProvider.credential(user.email, oldPassword);
+    user.reauthenticateWithCredential(cred).then(success => )
   }
   async ngOnInit() {
     this.authService.checkLoggedIn();

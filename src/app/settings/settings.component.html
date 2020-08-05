@@ -40,6 +40,17 @@
 
   <div class="rightside">
     <h2>Benutzerzeugs</h2>
+    <h3>Passwort ändern</h3>
+    <mat-form-field>
+      <input type="password" #oldPassword matInput placeholder="Altes Passwort"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" #newPassword matInput placeholder="Neues Passwort"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" #confirmPassword matInput placeholder="Neues Passwort bestätigen"/>
+    </mat-form-field>
+    <div class="button" (click)="fireChangePassword(oldPassword.value, newPassword.value, confirmPassword.value)">Passwort ändern</div>
   </div>
 
   <footer></footer>
