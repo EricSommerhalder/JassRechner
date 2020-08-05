@@ -11,20 +11,20 @@
 ::ng-deep .mat-dialog-actions {
   justify-content: space-between;
 }
-::ng-deep .mat-raised-button {
+::ng-deep .mat-button {
   font-family: 'Patrick Hand SC', cursive;
   font-size: 30px;
   background: #c28090;
   color: antiquewhite;
-}
-::ng-deep .mat-raised-button:not {
-  box-shadow: none;
+  border: 2px solid #a5a39d;
+  border-radius: 10px;
 }
 ::ng-deep .mat-dialog-content {
   display: none;
 }
-::ng-deep .mat-raised-button.mat-primary {
+::ng-deep .mat-button.mat-primary {
   background: #80c2b2;
   color: antiquewhite;
+  margin-left: 20px;
 }
 
