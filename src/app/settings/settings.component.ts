@@ -75,7 +75,7 @@ export class SettingsComponent implements OnInit {
     }
     const user = await this.authService.getUserAsync() as User;
     const cred = firebase.auth.EmailAuthProvider.credential(user.email, oldPassword);
-    user.reauthenticateWithCredential(cred).then(success => )
+    // user.reauthenticateWithCredential(cred).then(success => )
   }
   async ngOnInit() {
     this.authService.checkLoggedIn();

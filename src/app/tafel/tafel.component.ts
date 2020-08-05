@@ -111,18 +111,6 @@ export class TafelComponent implements OnInit {
           this.game.totalpoints[1] += this.game.pointsPerCounterMatch;
         }
       }
-      this.checkDone();
-      if (this.game.team_done[0] && this.game.team_done[1]) {
-        if (this.summe[0] > this.summe[1]){
-          this.game.totalpoints[0] += this.game.pointsPerGame;
-        }
-        if (this.summe[1] > this.summe[0]){
-          this.game.totalpoints[1] += this.game.pointsPerGame;
-        }
-      }
-      if (this.game.totalpoints[0] >= this.game.tournamentWonWith || this.game.totalpoints[1] >= this.game.tournamentWonWith){
-        await this.finishMatch();
-      }
       if (this.game.correction_mode){
         this.game.correction_mode = false;
       }
@@ -130,7 +118,20 @@ export class TafelComponent implements OnInit {
         this.getNewAusgeber();
       }
     }
+    this.checkDone();
     this.updateFields();
+    if (this.game.team_done[0] && this.game.team_done[1]) {
+      console.log('Recognized both teams done');
+      if (this.summe[0] > this.summe[1]){
+        this.game.totalpoints[0] += this.game.pointsPerGame;
+      }
+      if (this.summe[1] > this.summe[0]){
+        this.game.totalpoints[1] += this.game.pointsPerGame;
+      }
+    }
+    if (this.game.totalpoints[0] >= this.game.tournamentWonWith || this.game.totalpoints[1] >= this.game.tournamentWonWith){
+      await this.finishMatch();
+    }
     this.punktzahl = -1;
     this.storeGame();
   }
