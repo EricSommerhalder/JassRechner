@@ -11,6 +11,7 @@
     </ul>
   </nav>
   <main>
+    <div class="verlauf">
     <table>
       <tr>
         <td></td>
@@ -18,7 +19,7 @@
         <td>Punkte</td>
         <td>Name</td>
         <td>Punkte</td>
-        <td>Angefangen am</td>
+        <td>Begonnen am</td>
         <td>Beendet am</td>
         <td>Eingelöst am</td>
       </tr>
@@ -32,12 +33,13 @@
         <td>{{game.endedOn}}</td>
         <td>
 
-            <input #paidOnInput matInput [value]="game.paidOn" (keyup)="updatePaidOn(game.gameId, paidOnInput.value)">
+            <input placeholder="Datum" #paidOnInput matInput [value]="game.paidOn" (keyup)="updatePaidOn(game.gameId, paidOnInput.value)">
 
 
         </td>
       </tr>
     </table>
+    </div>
   </main>
   <footer></footer>
 </div>

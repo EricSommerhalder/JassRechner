@@ -14,11 +14,17 @@
   color: antiquewhite;
   text-align: center;
 }
+
+.verlauf {
+  margin: 10px auto;
+  background-color: #80b1c2;
+  display: table;
+  border-radius: 20px;
+}
 table {
   border-collapse: collapse;
   border-style: hidden;
-  background-color: #80b1c2;
-  margin: 0 auto;
+  table-layout: fixed;
 
 }
 table td {
@@ -30,7 +36,12 @@ table td {
 input {
   background-color: #80b1c2;
   color: antiquewhite;
-  height: 30px;
+  width: 110px;
+  height: 26px;
   border: 0;
+}
+
+input::placeholder {
+  color: rgba(250, 235, 215, 0.7);
 }
 
