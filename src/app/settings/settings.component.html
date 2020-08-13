@@ -25,7 +25,7 @@
       <input #playerNameB1 class="player_b1" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3] === 'Spieler B1' ? game.teamnames[1] + ' 1' : game.playernames[3]">
       <input #playerNameB2 class="player_b2" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [placeholder]="game.playernames[4] === 'Spieler B2' ? game.teamnames[1] + ' 2' : game.playernames[4]">
       <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [placeholder]="game.playernames[5] === 'Spieler B3' ? game.teamnames[1] + ' 3' : game.playernames[5]">
-      <input type="button"class="player_leeren" (click)="emptyPlayerFields()"value="refresh">
+      <input type="button"class="player_leeren" (click)="emptyPlayerFields()" value="refresh">
     </div>
     </section>
 

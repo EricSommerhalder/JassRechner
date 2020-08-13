@@ -77,6 +77,7 @@ export class DataService{
     return toReturn;
   }
   async loadGame(){
+    this.firestore.collection('games').doc(this.gameId).snapshotChanges().subscribe( a => { console.log(a.payload.data()); });
     let allGames = null;
     let gameFromData = null;
     allGames = await this.getAllGames();
@@ -110,6 +111,9 @@ export class DataService{
       });
     }
     return null;
+  }
+  getGameObservable(){
+    return this.firestore.collection('games').doc(this.gameId).snapshotChanges();
   }
 }
 

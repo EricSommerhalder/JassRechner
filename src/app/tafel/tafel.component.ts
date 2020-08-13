@@ -9,6 +9,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from 'firebase';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-tafel',
@@ -20,6 +21,7 @@ export class TafelComponent implements OnInit {
   summe: number[];
   match_this_game: number[];
   game: Game;
+  gameObservable: Observable<any>;
   constructor(public router: Router, public dataService: DataService, public authService: AuthService, private firestore: AngularFirestore, private dialog: MatDialog) {
     this.game = new Game();
     this.punktzahl = -1;
@@ -326,5 +328,7 @@ export class TafelComponent implements OnInit {
       this.game = await this.dataService.loadGame();
       this.updateFields();
     }
+    this.gameObservable = this.dataService.getGameObservable();
+    this.gameObservable.subscribe(a => {this. game = a.payload.data(); console.log('updated from Observable') ; });
   }
 }
