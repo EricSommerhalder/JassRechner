@@ -235,6 +235,7 @@ export class TafelComponent implements OnInit {
         this.game.tournamentWonWith = temp.tournamentWonWith;
         this.storeGame();
         await this.dataService.getGameId(this.game.user);
+        this.updateFields();
       }
     });
   }
@@ -315,9 +316,9 @@ export class TafelComponent implements OnInit {
     });
   }
   async ngOnInit(){
+    this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
-    this.authService.checkLoggedIn();
     if (this.dataService.gameId.length === 0){
       await this.dataService.getGameId(this.game.user);
     }

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from "firebase";
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
 
 
 @Component({
@@ -18,7 +20,9 @@ export class LoginComponent implements OnInit{
   constructor(
     public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialog: MatDialog,
+    public ngZone: NgZone
   ) {
     this.createForm();
   }
@@ -52,11 +56,25 @@ export class LoginComponent implements OnInit{
         this.errorMessage = err.message;
       });
   }
+  forgotPassword(email: string){
+    const auth = firebase.auth();
+    auth.sendPasswordResetEmail(email).then(a => this.createDialog('E-mail zum Passwort ändern wurde gesendet')).catch(error => this.createDialog('Da ist etwas schiefgegangen. Bitte nochmals versuchen'));
+  }
+  createDialog(message: string){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: message,
+      leftMessage: 'Alles klar!',
+      rightMessage: ''
+    };
+    this.dialog.open(PopupdialogComponent, dialogConfig);
+  }
   ngOnInit(): void {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => this.ngZone.run(() => {
       if (user) {
-        this.router.navigateByUrl('/settings');
+        console.log('Redirecting to settings');
+        this.router.navigate(['/settings']);
       }
-    });
+    }));
   }
 }

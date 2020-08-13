@@ -22,4 +22,10 @@
       <p>Noch kein Benutzer? <a href="/register">Erstelle einen Benutzer</a></p>
     </div>
   </div>
+  <div class="row">
+    <mat-form-field>
+      <input #emailField matInput placeholder="Email"/>
+    </mat-form-field>
+    <div class = "button" (click) = "forgotPassword(emailField.value)">Passwort vergessen</div>
+  </div>
 </div>

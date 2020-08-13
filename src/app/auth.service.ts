@@ -111,6 +111,7 @@ export class AuthService {
   checkLoggedIn(){
     firebase.auth().onAuthStateChanged(user => {
       if (!user) {
+        console.log('Not logged in, redirecting');
         this.router.navigateByUrl('/login');
       }});
   }

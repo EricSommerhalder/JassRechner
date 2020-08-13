@@ -6,6 +6,8 @@ import {Game} from '../game.model';
 import {User} from 'firebase';
 import {stringify} from 'querystring';
 import * as firebase from 'firebase';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -13,7 +15,7 @@ import * as firebase from 'firebase';
 })
 export class SettingsComponent implements OnInit {
   game: Game = new Game();
-  constructor(public authService: AuthService, public router: Router, public dataService: DataService) { }
+  constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
   storeGame(){
     if (this.dataService.gameId.length > 0){
@@ -71,13 +73,39 @@ export class SettingsComponent implements OnInit {
   }
   async fireChangePassword(oldPassword, newPassword, confirmNewPassword){
     if (newPassword !== confirmNewPassword){
-      console.log('Nid zweimol s gliiche passwort');
+      this.createDialog('Neues Passwort wurde nicht zweimal gleichangegeben');
+      return;
+    }
+    if (oldPassword.length < 6){
+      this.createDialog('Passwort muss mindestens 6 Stellen haben');
+      return;
     }
     const user = await this.authService.getUserAsync() as User;
     const cred = firebase.auth.EmailAuthProvider.credential(user.email, oldPassword);
-    // user.reauthenticateWithCredential(cred).then(success => )
+    user.reauthenticateWithCredential(cred).then(success => user.updatePassword(newPassword)).then( a => {
+      this.createDialog('Passwort wurde geändert'); }).catch(error => {
+        this.createDialog('Da ist etwas schiefgegangen. Nochmals probieren bitte');
+      });
+  }
+  async fireDeleteUser(password) {
+    const user = await this.authService.getUserAsync() as User;
+    const cred = firebase.auth.EmailAuthProvider.credential(user.email, password);
+    user.reauthenticateWithCredential(cred).then(success => user.delete().then(a => {
+      this.createDialog('User gelöscht. Danke fürs Jassen!');
+      this.authService.doLogout();
+    }).catch(error => this.createDialog('Da ist etwas schiefgegangen. Nochmals probieren bitte')));
+  }
+  createDialog(message: string){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: message,
+      leftMessage: 'Alles klar!',
+      rightMessage: ''
+    };
+    this.dialog.open(PopupdialogComponent, dialogConfig);
   }
   async ngOnInit() {
+    console.log('Reached Settings');
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
