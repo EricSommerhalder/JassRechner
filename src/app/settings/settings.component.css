@@ -99,3 +99,19 @@ input::placeholder {
   padding: 0;
   border-radius: 10px;
 }
+
+.password {
+  width: 300px;
+  background-color: #c2b280;
+  border-bottom: 1px solid antiquewhite;
+  border-radius: 0;
+}
+
+button {
+  background: #80c2b2;
+  border-radius: 20px;
+  color: antiquewhite;
+  margin: 20px 0;
+
+  border: 0;
+}
