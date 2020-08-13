@@ -11,13 +11,14 @@
   </ul>
 </nav>
   <div class="leftside">
+    <h2>Einstellungen</h2>
     <section class="teamname">
-    <h2>Teamnamen:</h2>
+    <h3>Teamnamen:</h3>
     <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [placeholder]="game.teamnames[0]">
     <input #teamNameB (keyup)="game.teamnames[1] = teamNameB.value; storeGame()" [placeholder]="game.teamnames[1]" >
     </section>
     <section>
-    <h2>Sitzordnung:</h2>
+    <h3>Sitzordnung:</h3>
     <div class="seatorder">
       <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0] === 'Spieler A1' ? game.teamnames[0] + ' 1' : game.playernames[0]">
       <input #playerNameA2 class="player_a2" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1] === 'Spieler A2' ? game.teamnames[0] + ' 2' : game.playernames[1]">
@@ -30,7 +31,7 @@
     </section>
 
     <section class="point-setting">
-    <h2>Punkteverteilung:</h2>
+    <h3>Punkteverteilung:</h3>
     <p>Punkte für einen Match: <input #match (keyup) = "updateNumberProperty(1, match.value)" [placeholder]="game.pointsPerMatch"></p>
     <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [placeholder]="game.pointsPerCounterMatch"></p>
     <p>Punkte für ein gewonnenes Spiel: <input #perGame (keyup) = "updateNumberProperty(3, perGame.value)" [placeholder]="game.pointsPerGame"></p>
@@ -40,22 +41,19 @@
 
   <div class="rightside">
     <h2>Benutzerzeugs</h2>
-    <h3>Passwort ändern</h3>
-    <mat-form-field>
-      <input type="password" #oldPassword matInput placeholder="Altes Passwort"/>
-    </mat-form-field>
-    <mat-form-field>
-      <input type="password" #newPassword matInput placeholder="Neues Passwort"/>
-    </mat-form-field>
-    <mat-form-field>
-      <input type="password" #confirmPassword matInput placeholder="Neues Passwort bestätigen"/>
-    </mat-form-field>
-    <div class="button" (click)="fireChangePassword(oldPassword.value, newPassword.value, confirmPassword.value); oldPassword.value = ''; newPassword.value = ''; confirmPassword.value = '';">Passwort ändern</div>
-    <h3>Benutzer löschen</h3>
-    <mat-form-field>
-      <input type="password" #password matInput placeholder="Passwort"/>
-    </mat-form-field>
-    <div class="button" (click)="fireDeleteUser(password.value)">Benutzer löschen</div>
+    <h3>Passwort ändern:</h3>
+
+      <input class="password" type="password" #oldPassword placeholder="Altes Passwort"/>
+    <br>
+      <input class="password" type="password" #newPassword placeholder="Neues Passwort"/>
+    <br>
+      <input class="password" type="password" #confirmPassword placeholder="Neues Passwort bestätigen"/>
+      <br>
+    <button (click)="fireChangePassword(oldPassword.value, newPassword.value, confirmPassword.value); oldPassword.value = ''; newPassword.value = ''; confirmPassword.value = '';">Passwort ändern</button>
+    <h3>Benutzer löschen:</h3>
+      <input  class="password" type="password" #password placeholder="Passwort"/>
+    <br>
+  <button (click)="fireDeleteUser(password.value)">Benutzer löschen</button>
   </div>
 
   <footer></footer>
