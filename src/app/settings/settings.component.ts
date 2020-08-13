@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {DataService} from '../data.service';
@@ -8,12 +8,20 @@ import {stringify} from 'querystring';
 import * as firebase from 'firebase';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
+import {ElementRef} from '@angular/core';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  @ViewChild('playerNameA1') playerNameA1: ElementRef;
+  @ViewChild('playerNameA2') playerNameA2: ElementRef;
+  @ViewChild('playerNameA3') playerNameA3: ElementRef;
+  @ViewChild('playerNameB1') playerNameB1: ElementRef;
+  @ViewChild('playerNameB2') playerNameB2: ElementRef;
+  @ViewChild('playerNameB3') playerNameB3: ElementRef;
   game: Game = new Game();
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
@@ -69,7 +77,12 @@ export class SettingsComponent implements OnInit {
       this.game.playernames[i - 1] = 'Spieler B' + (i - 3).toString();
     }
     this.storeGame();
-    window.location.reload();
+    this.playerNameA1.nativeElement.value = '';
+    this.playerNameA2.nativeElement.value = '';
+    this.playerNameA3.nativeElement.value = '';
+    this.playerNameB1.nativeElement.value = '';
+    this.playerNameB2.nativeElement.value = '';
+    this.playerNameB3.nativeElement.value = '';
   }
   async fireChangePassword(oldPassword, newPassword, confirmNewPassword){
     if (newPassword !== confirmNewPassword){
