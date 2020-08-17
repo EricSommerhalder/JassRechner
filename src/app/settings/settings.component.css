@@ -96,6 +96,7 @@ input::placeholder {
 .player_leeren {
   top: calc(50% - 20px);
   left: calc(50% - 70px);
+  cursor: pointer;
   padding: 0 !important;
   background: #c28090 !important;
 }
@@ -119,4 +120,5 @@ button {
   color: antiquewhite;
   margin: 20px 0;
   border: 0;
+  cursor: pointer;
 }

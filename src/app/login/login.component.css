@@ -56,8 +56,12 @@ input:focus {
   box-shadow: none;
 }
 
+.form-control {
+  color: antiquewhite;
+}
+
 a {
-  color: #80c2b2;
+  color: #2f353b;
 }
 
 .hinweis {
@@ -74,6 +78,7 @@ button {
   margin: 20px 0;
   padding: 0 10px;
   border: 0;
+  cursor: pointer;
 }
 
 button:focus {
