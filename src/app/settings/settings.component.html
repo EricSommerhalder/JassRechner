@@ -41,6 +41,7 @@
 
   <div class="rightside">
     <h2>Benutzerzeugs</h2>
+    <section>
     <h3>Passwort ändern:</h3>
 
       <input class="password" type="password" #oldPassword placeholder="Altes Passwort"/>
@@ -50,10 +51,13 @@
       <input class="password" type="password" #confirmPassword placeholder="Neues Passwort bestätigen"/>
       <br>
     <button (click)="fireChangePassword(oldPassword.value, newPassword.value, confirmPassword.value); oldPassword.value = ''; newPassword.value = ''; confirmPassword.value = '';">Passwort ändern</button>
-    <h3>Benutzer löschen:</h3>
+    </section>
+    <section>
+      <h3>Konto löschen:</h3>
       <input  class="password" type="password" #password placeholder="Passwort"/>
     <br>
-  <button (click)="fireDeleteUser(password.value)">Benutzer löschen</button>
+  <button (click)="fireDeleteUser(password.value)">Konto löschen</button>
+    </section>
   </div>
 
   <footer></footer>

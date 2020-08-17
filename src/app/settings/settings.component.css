@@ -15,6 +15,12 @@
   text-align: center;
 }
 
+.rightside, .leftside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 input {
   background: #80c2b2;
   text-align: center;
@@ -112,6 +118,5 @@ button {
   border-radius: 20px;
   color: antiquewhite;
   margin: 20px 0;
-
   border: 0;
 }
