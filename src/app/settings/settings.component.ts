@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
 import {ElementRef} from '@angular/core';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -23,6 +24,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('playerNameB2') playerNameB2: ElementRef;
   @ViewChild('playerNameB3') playerNameB3: ElementRef;
   game: Game = new Game();
+  gameObservable: Observable<any>;
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
   storeGame(){
@@ -128,6 +130,8 @@ export class SettingsComponent implements OnInit {
     if (this.dataService.gameId.length > 0) {
       this.game = await this.dataService.loadGame();
     }
+    this.gameObservable = this.dataService.getGameObservable();
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable')});
   }
 
 }

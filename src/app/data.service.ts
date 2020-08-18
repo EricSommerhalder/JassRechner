@@ -55,9 +55,8 @@ export class DataService{
     allGames = await this.getAllGames();
     if (allGames.length > 0 && this.gameId.length === 0) {
       for (const game of allGames) {
-        if (this.getPropertyOfObservable(game, 'user') === user && this.getPropertyOfObservable(game, 'active')){
+        if (this.getPropertyOfObservable(game, 'user') === user && this.getPropertyOfObservable(game, 'active') === true){
           this.gameId = game.payload.doc.id;
-          console.log('Updated gameID to ', this.gameId);
           break;
         }
       }
@@ -67,6 +66,7 @@ export class DataService{
     const toReturn = [];
     let allGames: any = null;
     allGames = await this.getAllGames();
+    console.log(allGames);
     if (allGames.length > 0) {
       for (const game of allGames) {
         if (this.getPropertyOfObservable(game, 'user') === user){
@@ -77,8 +77,10 @@ export class DataService{
     return toReturn;
   }
   async loadGame(){
-    this.firestore.collection('games').doc(this.gameId).snapshotChanges().subscribe( a => { console.log(a.payload.data()); });
-    let allGames = null;
+    let toReturn = new Game();
+    await this.firestore.collection('games').doc(this.gameId).snapshotChanges().subscribe(a => { toReturn = a.payload.data() as Game; });
+    return toReturn;
+    /*let allGames = null;
     let gameFromData = null;
     allGames = await this.getAllGames();
     if (allGames){
@@ -110,7 +112,7 @@ export class DataService{
         endDate: this.getPropertyOfObservable(gameFromData, 'endDate')
       });
     }
-    return null;
+    return null;*/
   }
   getGameObservable(){
     return this.firestore.collection('games').doc(this.gameId).snapshotChanges();

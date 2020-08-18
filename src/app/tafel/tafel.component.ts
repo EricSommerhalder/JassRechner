@@ -9,7 +9,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from 'firebase';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-tafel',
@@ -21,7 +21,7 @@ export class TafelComponent implements OnInit {
   summe: number[];
   match_this_game: number[];
   game: Game;
-  gameObservable: Observable<any>;
+  gameObservable: Subscription;
   constructor(public router: Router, public dataService: DataService, public authService: AuthService, private firestore: AngularFirestore, private dialog: MatDialog) {
     this.game = new Game();
     this.punktzahl = -1;
@@ -224,7 +224,7 @@ export class TafelComponent implements OnInit {
         const temp = {playernames: this.game.playernames, teamnames: this.game.teamnames, pointsPerMatch: this.game.pointsPerMatch, pointsPerCounterMatch: this.game.pointsPerCounterMatch, pointsPerGame: this.game.pointsPerGame, tournamentWonWith: this.game.tournamentWonWith, user: this.game.user};
         console.log(temp);
         this.game.active = false;
-        this.game.endDate = this.game.getToday();
+        this.game.endDate = this.getToday();
         this.storeGame();
         this.dataService.gameId = '';
         this.game = new Game();
@@ -236,7 +236,9 @@ export class TafelComponent implements OnInit {
         this.game.user = temp.user;
         this.game.tournamentWonWith = temp.tournamentWonWith;
         this.storeGame();
+        this.gameObservable.unsubscribe();
         await this.dataService.getGameId(this.game.user);
+        this.gameObservable = this.getSubscription();
         this.updateFields();
       }
     });
@@ -317,6 +319,32 @@ export class TafelComponent implements OnInit {
       }
     });
   }
+  getToday(){
+    const date = new Date();
+    return date.getDate().toString().padStart(2, '0') + '.' + (date.getMonth() + 1).toString().padStart(2, '0') + '.' + date.getFullYear();
+  }
+  async updateSub() {
+    this.gameObservable.unsubscribe();
+    await this.dataService.getGameId(this.game.user);
+    this.gameObservable = await this.getSubscription();
+  }
+  getSubscription(){
+    return this.dataService.getGameObservable().subscribe(async a => {
+      console.log('Changed to subscription with ID:', a.payload.id);
+      this.game = a.payload.data() as Game;
+      this.updateFields();
+      if (!this.game.active) {
+        // this.gameObservable.unsubscribe();
+        console.log('Caught inactive');
+        /*await this.dataService.getGameId(this.game.user);
+        console.log('Changed Game ID to', this.dataService.gameId);
+        this.gameObservable = await this.getSubscription();
+         */
+        window.location.reload();
+        // await this.updateSub();
+      }
+      });
+  }
   async ngOnInit(){
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
@@ -328,7 +356,6 @@ export class TafelComponent implements OnInit {
       this.game = await this.dataService.loadGame();
       this.updateFields();
     }
-    this.gameObservable = this.dataService.getGameObservable();
-    this.gameObservable.subscribe(a => {this. game = a.payload.data(); console.log('updated from Observable') ; });
+    this.gameObservable = await this.getSubscription();
   }
 }

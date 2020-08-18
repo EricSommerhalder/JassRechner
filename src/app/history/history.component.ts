@@ -43,6 +43,7 @@ export class HistoryComponent implements OnInit {
     const user: User = await this.authService.getUserAsync() as User;
     const userEmail = user.email;
     const rawData = await this.dataService.getAllGamesOfUser(userEmail);
+    console.log(rawData);
     for (const game of  rawData){
       const toPush = new DisplayGame();
       toPush.gameId = game.payload.doc.id;
@@ -57,7 +58,6 @@ export class HistoryComponent implements OnInit {
       toPush.paidOn = await this.dataService.getPropertyOfObservable(game, 'paidOn');
       this.games.push(toPush);
     }
-    console.log(this.games);
   }
   updatePaidOn(id: string, value: string){
     this.dataService.updateGameWithDict(id, {paidOn : value});
