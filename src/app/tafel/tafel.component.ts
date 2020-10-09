@@ -117,10 +117,10 @@ export class TafelComponent implements OnInit {
         this.game.correction_mode = false;
       }
       else {
+        this.checkDone();
         this.getNewAusgeber();
       }
     }
-    this.checkDone();
     this.updateFields();
     if (this.game.team_done[0] && this.game.team_done[1]) {
       console.log('Recognized both teams done');
@@ -160,16 +160,24 @@ export class TafelComponent implements OnInit {
       return;
     }
     if (this.game.ausgeber < 3){
-      this.game.ausgeber += 3;
+      if (this.game.team_done[0]) {
+        this.game.ausgeber = (this.game.ausgeber + 1) % 3;
+      }
+      else {
+        this.game.ausgeber += 3;
+      }
     }
-    else if (this.game.ausgeber < 5){
-      this.game.ausgeber -= 2;
-      return;
-    }
-    else {this.game.ausgeber = 0; }
-    if ((this.game.ausgeber < 3 && this.game.team_done[1]) || (this.game.ausgeber > 2 && this.game.team_done[0])){ //team schon fertig
-      console.log('Unerlaubter Ausgeber', this.game.playernames[this.game.ausgeber]);
-      this.getNewAusgeber();
+    else {
+      if (this.game.team_done[1]) {
+        this.game.ausgeber++;
+        if (this.game.ausgeber > 5) {
+          this.game.ausgeber = 3;
+        }
+      }
+      else {
+        this.game.ausgeber = (this.game.ausgeber - 2) % 3;
+        return;
+      }
     }
   }
   storeGame(){
@@ -299,6 +307,7 @@ export class TafelComponent implements OnInit {
     }
     this.game.team_done[0] = false;
     this.game.team_done[1] = false;
+    this.game.ausgeber = Math.floor(Math.random() * 6);
     this.storeGame();
     this.updateFields();
   }
