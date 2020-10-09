@@ -38,6 +38,17 @@ export class HistoryComponent implements OnInit {
   async ngOnInit() {
     this.authService.checkLoggedIn();
     await this.getTable();
+    this.games.sort( (a, b) => {
+      const aString = a.startedOn.substr(6) + a.startedOn.substr(3, 2) + a.startedOn.substr(0, 2);
+      const bString = b.startedOn.substr(6) + b.startedOn.substr(3, 2) + b.startedOn.substr(0, 2);
+      if (aString > bString) {
+        return -1;
+      }
+      if (aString < bString) {
+        return 1;
+      }
+      return 0;
+    });
   }
   async getTable(){
     const user: User = await this.authService.getUserAsync() as User;

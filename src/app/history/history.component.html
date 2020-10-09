@@ -24,7 +24,7 @@
         <td>Eingelöst am</td>
       </tr>
       <tr *ngFor="let game of games; let i = index">
-        <td>Turnier {{i + 1}}</td>
+        <td>Turnier {{games.length - i}}</td>
         <td>{{game.teamNameA}}</td>
         <td>{{game.pointsTeamA}}</td>
         <td>{{game.teamNameB}}</td>
