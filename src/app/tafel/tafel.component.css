@@ -13,6 +13,10 @@
   line-height: 1.5;
 }
 
+.mobile {
+  display: none;
+}
+
 .leftside {
   grid-area: leftside;
 }
@@ -438,4 +442,24 @@ td:nth-child(2), td:nth-child(3) {
 
 .footer {
   grid-area: footer;
+}
+
+/*RESPONSIVE STUFF*/
+
+@media screen and (max-width: 750px) {
+
+  .wrapper, .mobile {
+    display: block;
+  }
+
+  .main {
+    margin: 0 10px;
+  }
+
+  nav, .leftside, .rightside, .footer {
+    display: none;
+  }
+  nav ul {
+    text-align: right;
+  }
 }

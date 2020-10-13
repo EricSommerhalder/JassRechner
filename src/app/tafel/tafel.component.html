@@ -3,7 +3,7 @@
 <div class="wrapper">
 
 
-    <nav>
+  <nav>
       <ul>
         <li><a *ngIf="authService.getUser()" (click) = "authService.openLogOutDialog()">Abmelden</a></li>
         <li class="pipe">|</li>
@@ -15,6 +15,11 @@
       </ul>
     </nav>
 
+  <nav class="mobile">
+    <ul>
+      <li><a *ngIf="authService.getUser()" (click) = "authService.openLogOutDialog()">Abmelden</a></li>
+    </ul>
+  </nav>
 
   <div class="leftside">
     <input class="button" #box (keyup) = "scoreEnter(box.value)" [placeholder]="game.correction_mode ? 'Neue Wärt igäh bitte': 'Pünggt'">
