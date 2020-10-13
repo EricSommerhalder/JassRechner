@@ -57,16 +57,16 @@
     <div id="f1">Misere</div>
     <div id="f2" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[4]!== -1)||(game.correction_mode && game.gamestate[4]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[4]===-1 } " (click) = "disciplineEnter(4);box.value = ''" ><p *ngIf = "game.gamestate[4]!== -1">{{game.gamestate[4]}}</p></div>
     <div id="f3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[14]!== -1)||(game.correction_mode && game.gamestate[14]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[14]===-1 } " (click) = "disciplineEnter(14);box.value = ''" ><p *ngIf = "game.gamestate[14]!== -1">{{game.gamestate[14]}}</p></div>
-    <div id="g1">Obe</div>
+    <div id="g1">Unde</div>
     <div id="g2" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[5]!== -1)||(game.correction_mode && game.gamestate[5]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[5]===-1 } " (click) = "disciplineEnter(5);box.value = ''" ><p *ngIf = "game.gamestate[5]!== -1">{{game.gamestate[5]}}</p></div>
     <div id="g3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[15]!== -1)||(game.correction_mode && game.gamestate[15]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[15]===-1 } " (click) = "disciplineEnter(15);box.value = ''" ><p *ngIf = "game.gamestate[15]!== -1">{{game.gamestate[15]}}</p></div>
-    <div id="h1">Unde</div>
+    <div id="h1">Obe</div>
     <div id="h2" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[6]!== -1)||(game.correction_mode && game.gamestate[6]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[6]===-1 } " (click) = "disciplineEnter(6);box.value = ''" ><p *ngIf = "game.gamestate[6]!== -1">{{game.gamestate[6]}}</p></div>
     <div id="h3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[16]!== -1)||(game.correction_mode && game.gamestate[16]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[16]===-1 } " (click) = "disciplineEnter(16);box.value = ''" ><p *ngIf = "game.gamestate[16]!== -1">{{game.gamestate[16]}}</p></div>
-    <div id="i1">2-2-2</div>
+    <div id="i1">Slalom</div>
     <div id="i2" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[7]!== -1)||(game.correction_mode && game.gamestate[7]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[7]===-1 } " (click) = "disciplineEnter(7);box.value = ''" ><p *ngIf = "game.gamestate[7]!== -1">{{game.gamestate[7]}}</p></div>
     <div id="i3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[17]!== -1)||(game.correction_mode && game.gamestate[17]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[17]===-1 } " (click) = "disciplineEnter(17);box.value = ''" ><p *ngIf = "game.gamestate[17]!== -1">{{game.gamestate[17]}}</p></div>
-    <div id="j1">Slalom</div>
+    <div id="j1">2-2-2</div>
     <div id="j2" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[8]!== -1)||(game.correction_mode && game.gamestate[8]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[8]===-1 } " (click) = "disciplineEnter(8);box.value = ''" ><p *ngIf = "game.gamestate[8]!== -1">{{game.gamestate[8]}}</p></div>
     <div id="j3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[18]!== -1)||(game.correction_mode && game.gamestate[18]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[18]===-1 } " (click) = "disciplineEnter(18);box.value = ''" ><p *ngIf = "game.gamestate[18]!== -1">{{game.gamestate[18]}}</p></div>
     <div id="k1">Frei</div>
