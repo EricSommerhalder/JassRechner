@@ -11,6 +11,10 @@
   height: 100vh;
   max-height: 100%;
   line-height: 1.5;
+  font-family: 'Patrick Hand SC', cursive;
+  font-size: 40px;
+  color: antiquewhite;
+  text-align: center;
 }
 
 .mobile {
@@ -21,11 +25,6 @@
   grid-area: leftside;
 }
 .leftside, .rightside {
-  font-family: 'Patrick Hand SC', cursive;
-  font-size: 40px;
-  color: antiquewhite;
-  text-align: center;
-  /*background-color: darksalmon;*/
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -60,10 +59,6 @@ input {
 }
 
 .main {
-  font-family: 'Patrick Hand SC', cursive;
-  font-size: 40px;
-  color: antiquewhite;
-  text-align: center;
   grid-area: main;
   background-image: url(../../assets/images/mainBg.jpg);
   border: 4px solid antiquewhite;
@@ -443,8 +438,25 @@ td:nth-child(2), td:nth-child(3) {
 .footer {
   grid-area: footer;
 }
+/*.counted_points {
+  font-size: 14px;
+}*/
 
 /*RESPONSIVE STUFF*/
+@media screen and (max-width: 1320px) {
+
+  .wrapper {
+    font-size: 32px;
+  }
+
+  .counted_points {
+    font-size: 14px;
+  }
+
+  .resultate {
+    font-size: 26px;
+  }
+}
 
 @media screen and (max-width: 750px) {
 
@@ -454,6 +466,10 @@ td:nth-child(2), td:nth-child(3) {
 
   .main {
     margin: 0 10px;
+  }
+
+  .counted_points {
+    display: none;
   }
 
   nav, .leftside, .rightside, .footer {
