@@ -2,15 +2,34 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Game} from './game.model';
 import {first} from 'rxjs/operators';
+import {User} from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService{
   public gameId = '';
+  public chosenGroup = '';
+  public userStorage = '';
   constructor(private firestore: AngularFirestore) { }
   getGames(){
     return this.firestore.collection('games').snapshotChanges();
+  }
+  async getAllUsers(): Promise<any>{
+    return await this.firestore.collection('users')
+      .snapshotChanges().pipe(first()).toPromise();
+  }
+  async getUserStorage(email: string){
+    if (this.userStorage !== '') {
+      return;
+    }
+    const users = await this.getAllUsers();
+    for (const user of users) {
+      if (this.getPropertyOfObservable(user, 'email') === email) {
+        this.userStorage = user.payload.doc.id;
+        return;
+      }
+    }
   }
   createGame(game: Game){
     let data = {};
@@ -116,6 +135,24 @@ export class DataService{
   }
   getGameObservable(){
     return this.firestore.collection('games').doc(this.gameId).snapshotChanges();
+  }
+  createUser(email: string){
+    let data = {"email" : email, groups: []};
+    return new Promise<any>(async (resolve, reject) => {
+      this.firestore
+        .collection('users')
+        .add(data)
+        .then(res => {}, err => reject(err));
+    });
+  }
+  createGroup(n: string, four: boolean) {
+    const data = {name: n, fourPlayers: four, tournaments: [] };
+    return new Promise<any>(async (resolve, reject) => {
+      this.firestore
+        .collection('groups')
+        .add(data)
+        .then(res => {}, err => reject(err));
+    });
   }
 }
 

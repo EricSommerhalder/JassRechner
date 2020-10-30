@@ -58,6 +58,15 @@
     <br>
   <button (click)="fireDeleteUser(password.value)">Konto löschen</button>
     </section>
+    <h2>Gruppen verwalten:</h2>
+    <section>
+      <h3>Gruppe erstellen:</h3>
+      <input #groupName placeholder="Name"/>
+      <br>
+      <mat-checkbox #fourPlayers>4 Spieler?</mat-checkbox>
+      <br>
+      <button (click) = "dataService.createGroup(groupName.value, fourPlayers.checked)">Gruppe erstellen</button>
+    </section>
   </div>
 
   <footer></footer>
