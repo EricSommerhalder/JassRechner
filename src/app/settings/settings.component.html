@@ -68,6 +68,22 @@
         <mat-radio-button value="6"> 6 Spieler</mat-radio-button>
       </mat-radio-group>
       <br>
+      <label class="radio">
+  <span class="radio__input">
+    <input type="radio" name="radio">
+    <span class="radio__control"></span>
+  </span>
+        <span class="radio__label">Radio 1</span>
+      </label>
+
+      <label class="radio">
+  <span class="radio__input">
+    <input type="radio" name="radio">
+    <span class="radio__control"></span>
+  </span>
+        <span class="radio__label">Radio 2</span>
+      </label>
+      <br>
       <button (click) = "dataService.createGroup(groupName.value, fourPlayers.value)">Gruppe erstellen</button>
     </section>
   </div>

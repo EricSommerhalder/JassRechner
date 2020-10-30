@@ -123,3 +123,33 @@ button {
   border: 0;
   cursor: pointer;
 }
+
+.radio {
+  font-size: 2.25rem;
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-gap: 0.5em;
+}
+
+.radio__input input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+.radio__control {
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 0.1em solid currentColor;
+}
+
+.radio__input {
+  display: flex;
+}
+
+.radio__label {
+  line-height: 1;
+  text-align: left;
+}
