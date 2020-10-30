@@ -12,6 +12,10 @@
 </nav>
   <div class="leftside">
     <h2>Einstellungen</h2>
+    <p>Hallo, lieber Benutzer. Schön bist du hier. Deine Gruppen sind dann übrigens die folgenden, wenn du das mal anschauen möchstest.</p>
+    <div *ngFor="let group of groups">
+      <p>{{group}}</p>
+    </div>
     <section class="teamname">
     <h3>Teamnamen:</h3>
     <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [placeholder]="game.teamnames[0]">
@@ -63,28 +67,17 @@
       <h3>Gruppe erstellen:</h3>
       <input #groupName placeholder="Name"/>
       <br>
-      <mat-radio-group #fourPlayers label="4 oder 6 Spieler" >
+      <mat-radio-group label="4 oder 6 Spieler" (change)="fourPlayers = $event.value;">
         <mat-radio-button value="4">4 Spieler</mat-radio-button>
         <mat-radio-button value="6"> 6 Spieler</mat-radio-button>
       </mat-radio-group>
       <br>
-      <label class="radio">
-  <span class="radio__input">
-    <input type="radio" name="radio">
-    <span class="radio__control"></span>
-  </span>
-        <span class="radio__label">Radio 1</span>
-      </label>
-
-      <label class="radio">
-  <span class="radio__input">
-    <input type="radio" name="radio">
-    <span class="radio__control"></span>
-  </span>
-        <span class="radio__label">Radio 2</span>
-      </label>
-      <br>
+<<<<<<< HEAD
+    
       <button (click) = "dataService.createGroup(groupName.value, fourPlayers.value)">Gruppe erstellen</button>
+=======
+      <button (click) = "dataService.createGroup(groupName.value, fourPlayers === '4'); groups.push(groupName.value); ">Gruppe erstellen</button>
+>>>>>>> ce34df75f8ce3907aede70f59792629b0189da76
     </section>
   </div>
 
