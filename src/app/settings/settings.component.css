@@ -108,6 +108,7 @@ input::placeholder {
 }
 
 .password {
+  font-family: "Patrick Hand";
   width: 300px;
   background-color: #c2b280;
   border-bottom: 1px solid antiquewhite;
