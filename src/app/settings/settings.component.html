@@ -58,6 +58,18 @@
     <br>
   <button (click)="fireDeleteUser(password.value)">Konto löschen</button>
     </section>
+    <h2>Gruppen verwalten:</h2>
+    <section>
+      <h3>Gruppe erstellen:</h3>
+      <input #groupName placeholder="Name"/>
+      <br>
+      <mat-radio-group #fourPlayers label="4 oder 6 Spieler" >
+        <mat-radio-button value="4">4 Spieler</mat-radio-button>
+        <mat-radio-button value="6"> 6 Spieler</mat-radio-button>
+      </mat-radio-group>
+      <br>
+      <button (click) = "dataService.createGroup(groupName.value, fourPlayers.value)">Gruppe erstellen</button>
+    </section>
   </div>
 
   <footer></footer>

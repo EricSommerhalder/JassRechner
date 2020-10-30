@@ -37,20 +37,20 @@ export class LoginComponent implements OnInit{
   tryFacebookLogin(){
     this.authService.doFacebookLogin()
       .then(res => {
-        this.router.navigate(['/settings']);
+        this.router.navigate(['/tafel']);
       });
   }
   tryGoogleLogin(){
     this.authService.doGoogleLogin()
       .then(res => {
-        this.router.navigate(['/settings']);
+        this.router.navigate(['/tafel']);
       });
   }
 
   tryLogin(value){
     this.authService.doLogin(value)
       .then(res => {
-        this.router.navigate(['/settings']);
+        this.router.navigate(['/tafel']);
       }, err => {
         console.log(err);
         this.errorMessage = err.message;
@@ -72,8 +72,7 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
     firebase.auth().onAuthStateChanged(user => this.ngZone.run(() => {
       if (user) {
-        console.log('Redirecting to settings');
-        this.router.navigate(['/settings']);
+        this.router.navigate(['/tafel']);
       }
     }));
   }

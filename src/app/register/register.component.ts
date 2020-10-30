@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {DataService} from '../data.service';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,7 @@ export class RegisterComponent {
 
   constructor(
     public authService: AuthService,
+    public dataService: DataService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -53,6 +55,7 @@ export class RegisterComponent {
         console.log(res);
         this.errorMessage = "";
         this.successMessage = "Your account has been created";
+        this.dataService.createUser(value.email);
         this.router.navigate(['/settings']);
       }, err => {
         console.log(err);
