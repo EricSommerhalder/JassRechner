@@ -24,6 +24,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('playerNameB2') playerNameB2: ElementRef;
   @ViewChild('playerNameB3') playerNameB3: ElementRef;
   game: Game = new Game();
+  public fourPlayers = '';
   gameObservable: Observable<any>;
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
@@ -132,6 +133,9 @@ export class SettingsComponent implements OnInit {
     }
     this.gameObservable = this.dataService.getGameObservable();
     this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable')});
+  }
+  fourPlayersChange(event: any) {
+    console.log(event.value);
   }
 
 }
