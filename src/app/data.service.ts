@@ -11,7 +11,7 @@ export class DataService{
   public gameId = '';
   public chosenGroup = '';
   public userStorage = '';
-  constructor(private firestore: AngularFirestore) { }
+  constructor(public firestore: AngularFirestore) { }
   getGames(){
     return this.firestore.collection('games').snapshotChanges();
   }
@@ -145,13 +145,47 @@ export class DataService{
         .then(res => {}, err => reject(err));
     });
   }
+  async addGroupToUser(id: string) {
+    let g = await this.readGroups();
+    /*let g = [];
+    await this.firestore.collection('users').doc(this.userStorage).ref.get().then((u) => {
+      if ('groups' in u.data()) {
+        g = u.data()['groups'];
+        }
+        else {console.log('No groups yet'); }
+    });*/
+    g.push(id);
+    await this.firestore.collection('users').doc(this.userStorage).update({groups: g});
+  }
+  async readGroups() {
+    let g = [];
+    await this.firestore.collection('users').doc(this.userStorage).ref.get().then((u) => {
+      if ('groups' in u.data()) {
+        g = u.data()['groups'];
+      }
+      else {console.log('No groups yet'); }
+    });
+    return g;
+  }
+  async getGroupNames() {
+    const output = [];
+    const groups = await this.readGroups();
+    for (const group of groups) {
+      await this.firestore.collection('groups').doc(group).ref.get().then((u) => {
+        if ('name' in u.data()) {
+          output.push(u.data()['name']);
+        }
+    });
+  }
+    return output;
+    }
   createGroup(n: string, four: boolean) {
     const data = {name: n, fourPlayers: four, tournaments: [] };
     return new Promise<any>(async (resolve, reject) => {
       this.firestore
         .collection('groups')
         .add(data)
-        .then(res => {}, err => reject(err));
+        .then(async res => {await this.addGroupToUser(res.id); }, err => reject(err));
     });
   }
 }

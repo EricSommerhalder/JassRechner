@@ -12,6 +12,10 @@
 </nav>
   <div class="leftside">
     <h2>Einstellungen</h2>
+    <p>Hallo, lieber Benutzer. Schön bist du hier. Deine Gruppen sind dann übrigens die folgenden, wenn du das mal anschauen möchstest.</p>
+    <div *ngFor="let group of groups">
+      <p>{{group}}</p>
+    </div>
     <section class="teamname">
     <h3>Teamnamen:</h3>
     <input #teamNameA (keyup)="game.teamnames[0] = teamNameA.value; storeGame()" [placeholder]="game.teamnames[0]">
@@ -68,7 +72,7 @@
         <mat-radio-button value="6"> 6 Spieler</mat-radio-button>
       </mat-radio-group>
       <br>
-      <button (click) = "dataService.createGroup(groupName.value, fourPlayers === '4')">Gruppe erstellen</button>
+      <button (click) = "dataService.createGroup(groupName.value, fourPlayers === '4'); groups.push(groupName.value); ">Gruppe erstellen</button>
     </section>
   </div>
 

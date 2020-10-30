@@ -24,6 +24,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('playerNameB2') playerNameB2: ElementRef;
   @ViewChild('playerNameB3') playerNameB3: ElementRef;
   game: Game = new Game();
+  groups = [];
   public fourPlayers = '';
   gameObservable: Observable<any>;
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
@@ -120,11 +121,16 @@ export class SettingsComponent implements OnInit {
     };
     this.dialog.open(PopupdialogComponent, dialogConfig);
   }
+  async getGroupNames(){
+    this.groups = await this.dataService.getGroupNames();
+  }
   async ngOnInit() {
     console.log('Reached Settings');
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
+    await this.dataService.getUserStorage(user.email);
+    this.getGroupNames();
     if (this.dataService.gameId.length === 0){
       await this.dataService.getGameId(this.game.user);
     }
@@ -133,9 +139,6 @@ export class SettingsComponent implements OnInit {
     }
     this.gameObservable = this.dataService.getGameObservable();
     this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable')});
-  }
-  fourPlayersChange(event: any) {
-    console.log(event.value);
   }
 
 }
