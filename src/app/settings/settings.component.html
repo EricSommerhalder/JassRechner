@@ -63,9 +63,12 @@
       <h3>Gruppe erstellen:</h3>
       <input #groupName placeholder="Name"/>
       <br>
-      <mat-checkbox #fourPlayers>4 Spieler?</mat-checkbox>
+      <mat-radio-group #fourPlayers label="4 oder 6 Spieler" >
+        <mat-radio-button value="4">4 Spieler</mat-radio-button>
+        <mat-radio-button value="6"> 6 Spieler</mat-radio-button>
+      </mat-radio-group>
       <br>
-      <button (click) = "dataService.createGroup(groupName.value, fourPlayers.checked)">Gruppe erstellen</button>
+      <button (click) = "dataService.createGroup(groupName.value, fourPlayers.value)">Gruppe erstellen</button>
     </section>
   </div>
 

@@ -27,6 +27,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { UsersiteComponent } from './usersite/usersite.component';
 import { HomeComponent } from './home/home.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
@@ -60,6 +61,7 @@ firebase.initializeApp(environment.firebaseConfig);
         AngularFirestoreModule,
         AngularFireAuthModule,
         MatCheckboxModule,
+        MatRadioModule,
     ],
   providers: [],
   bootstrap: [AppComponent],
