@@ -6,8 +6,6 @@
     "header header"
     "leftside rightside"
     "footer footer";
-  height: 100vh;
-  max-height: 100%;
   line-height: 1.5;
   font-family: 'Patrick Hand SC', cursive;
   font-size: 26px;
@@ -18,7 +16,19 @@
 .rightside, .leftside {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+}
+
+.leftside {
+  padding: 0 10px;
+  border-right: 2px dashed antiquewhite;
+}
+
+h2 {
+  color: #2f353b;
+}
+
+section {
+  border-bottom: 2px dashed antiquewhite;
 }
 
 input {
@@ -49,18 +59,31 @@ input::placeholder {
   color: antiquewhite;
 }
 
+.teamname {
+  border-bottom: none;
+}
+
 .teamname input {
   margin: 0 20px;
 }
-.seatorder {
+
+.seatorder_6 {
   position: relative;
   width: 80%;
   height: 200px;
-  margin: auto;
+  margin: 0 auto 20px;
   border-radius: 125px;
   background: #2f353b;
 }
-.seatorder input {
+.seatorder_4 {
+  position: relative;
+  width: 60%;
+  height: 200px;
+  margin: 0 auto 20px;
+  border-radius: 125px;
+  background: #2f353b;
+}
+.seatorder_6 input, .seatorder_4 input {
   background: #80c2b2;
   text-align: center;
   padding: 10px 0;
@@ -77,11 +100,11 @@ input::placeholder {
   left: calc(50% - 70px);
   margin-bottom: 0; /*Fixing Edge Bug*/
 }
-.player_a2 {
+.player_a2, .player_b1_4 {
   bottom: 10px;
   right: 20px;
 }
-.player_b2 {
+.player_b2, .player_a2_4 {
   top: 10px;
   right: 20px;
 }
@@ -89,7 +112,7 @@ input::placeholder {
   top: 10px;
   left: calc(50% - 70px);
 }
-.player_b3 {
+.player_b3, .player_b2_4 {
   top: 10px;
   left: 20px;
 }
@@ -124,32 +147,84 @@ button {
   cursor: pointer;
 }
 
-.radio {
-  font-size: 2.25rem;
-  display: grid;
-  grid-template-columns: min-content auto;
-  grid-gap: 0.5em;
-}
-
-.radio__input input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-.radio__control {
-  display: block;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  border: 0.1em solid currentColor;
-}
-
-.radio__input {
-  display: flex;
-}
-
-.radio__label {
-  line-height: 1;
+.groupsection {
   text-align: left;
+}
+
+.neueGruppe {
+  display: flex;
+  max-width: 300px;
+  margin: 0 auto;
+  flex-direction: row;
+  justify-content: space-around;
+}
+/* Customize the label (the container) */
+.spielerZahl, .selectGroup {
+  display: inline;
+  position: relative;
+  padding-left: 35px;
+  text-align: left;
+  align-items: center;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.spielerZahl input,
+.selectGroup input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: calc(50% - 10px);
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: antiquewhite;
+  border-radius: 25%;
+}
+
+/* On mouse-over, add a background color */
+.spielerZahl:hover input ~ .checkmark,
+.selectGroup:hover input ~ .checkmark {
+  background-color: #d8ece7;
+}
+
+/* When the radio button is checked, add a light-green background */
+.spielerZahl input:checked ~ .checkmark,
+.selectGroup input:checked ~ .checkmark {
+  background-color: #80c2b2;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.spielerZahl input:checked ~ .checkmark:after,
+.selectGroup input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.spielerZahl .checkmark:after,
+.selectGroup .checkmark:after {
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 25%;
+  background: antiquewhite;
 }
