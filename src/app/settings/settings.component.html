@@ -60,7 +60,9 @@
     </section>
 
     <section class="cash-setting">
-      
+      <h3>Gschiide Titel:</h3>
+      <p>Betrag / 1000 Punkte / Spieler: <input placeholder="100.-"></p>
+      <p>Minimumbetrag / Spiel / Spieler: <input placeholder="5.-"></p>
     </section>
   </div>
 
@@ -75,9 +77,18 @@
           <input type="radio" name="spielerzahl" (change)="fourPlayers = '4';">
           <span class="checkmark"></span>
         </label>
-
         <label class="spielerZahl">6 Spieler
           <input type="radio" name="spielerzahl" (change)="fourPlayers = '6';">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="neueGruppe">
+        <label class="spielerZahl">Punkte
+          <input type="radio" name="cashOrPoints">
+          <span class="checkmark"></span>
+        </label>
+        <label class="spielerZahl">Geld
+          <input type="radio" name="cashOrPoints">
           <span class="checkmark"></span>
         </label>
       </div>

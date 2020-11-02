@@ -19,8 +19,14 @@
 }
 
 .leftside {
-  padding: 0 10px;
+  margin-left: 10px;
+  padding-right: 5px;
   border-right: 1px solid #877c59;
+}
+
+.rightside {
+  margin-right: 10px;
+  padding-left: 5px;
 }
 
 h2 {
@@ -130,8 +136,14 @@ input::placeholder {
   border-radius: 10px;
 }
 
+.cash-setting input {
+  width: 70px;
+  padding: 0;
+  border-radius: 10px;
+}
+
 .password {
-  font-family: "Patrick Hand";
+  font-family: "Patrick Hand", cursive;
   width: 300px;
   background-color: #c2b280;
   border-bottom: 1px solid antiquewhite;
