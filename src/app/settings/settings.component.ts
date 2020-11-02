@@ -38,6 +38,7 @@ export class SettingsComponent implements OnInit {
   groups: Group[] = [];
   public fourPlayers = '';
   gameObservable: Observable<any>;
+  currentlyFour: boolean = false;
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
   storeGame(){
@@ -148,6 +149,11 @@ export class SettingsComponent implements OnInit {
   }
   groupChanged(id: string) {
     this.dataService.chosenGroup = id;
+    this.dataService.firestore.collection('groups').doc(this.dataService.chosenGroup).snapshotChanges().subscribe(
+      a => {
+        this.currentlyFour = a.payload.data()['fourPlayers'];
+      }
+    );
   }
   async ngOnInit() {
     console.log('Reached Settings');
