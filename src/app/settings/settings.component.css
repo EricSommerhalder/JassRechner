@@ -20,7 +20,7 @@
 
 .leftside {
   padding: 0 10px;
-  border-right: 2px dashed antiquewhite;
+  border-right: 1px solid #877c59;
 }
 
 h2 {
@@ -28,7 +28,7 @@ h2 {
 }
 
 section {
-  border-bottom: 2px dashed antiquewhite;
+  border-bottom: 1px solid #877c59;
 }
 
 input {
