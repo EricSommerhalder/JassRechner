@@ -14,16 +14,17 @@
     <section>
     <h2>Einstellungen</h2>
     <h3>Jassgruppe:</h3>
-    <p>Hallo, lieber Benutzer. Schön bist du hier. Deine Gruppen sind dann übrigens die folgenden, wenn du das mal anschauen möchstest. Du musst nicht, Du kannst aber. Wir fänden es besser wenn Du eine Gruppe anklickst!</p>
+    <p>Hallo, lieber Benutzer. Schön bist du hier. Deine Gruppen sind dann übrigens die folgenden, wenn du das mal anschauen möchstest. Du musst nicht, Du kannst aber. Wir fänden es besser wenn Du eine Gruppe anklickst! Aber nochmal: Wie du willst, gell. Ich bin ja schliesslich nur ein Rechner, ich weiss doch nicht.</p>
     <!--<div *ngFor="let group of groups">
       <p>{{group}}</p>
     </div>-->
     <div class="groupsection" *ngFor="let group of groups">
-      <label class="selectGroup">{{group}}
-        <input type="radio" name="spielerzahl">
+      <label class="selectGroup"> {{group.name}}
+        <input type="radio" name="spielerzahl" (change)="groupChanged(group.id);">
         <span class="checkmark"></span>
       </label>
     </div>
+      <p>Ausgesuchte Gruppe: {{dataService.chosenGroup}}</p>
     </section>
     <section class="teamname">
     <h3>Teamnamen:</h3>
@@ -32,7 +33,7 @@
     </section>
     <section>
     <h3>Sitzordnung:</h3>
-    <div class="seatorder_6">
+    <div *ngIf="!currentlyFour" class="seatorder_6">
       <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0] === 'Spieler A1' ? game.teamnames[0] + ' 1' : game.playernames[0]">
       <input #playerNameA2 class="player_a2" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1] === 'Spieler A2' ? game.teamnames[0] + ' 2' : game.playernames[1]">
       <input #playerNameA3 class="player_a3" (keyup)="game.playernames[2] = playerNameA3.value; storeGame()" [placeholder]="game.playernames[2] === 'Spieler A3' ? game.teamnames[0] + ' 3' : game.playernames[2]">
@@ -41,7 +42,7 @@
       <input #playerNameB3 class="player_b3" (keyup)="game.playernames[5] = playerNameB3.value; storeGame()" [placeholder]="game.playernames[5] === 'Spieler B3' ? game.teamnames[1] + ' 3' : game.playernames[5]">
       <input type="button"class="player_leeren" (click)="emptyPlayerFields()" value="refresh">
     </div>
-    <div class="seatorder_4">
+    <div *ngIf="currentlyFour" class="seatorder_4">
         <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0] === 'Spieler A1' ? game.teamnames[0] + ' 1' : game.playernames[0]">
         <input #playerNameA2 class="player_a2_4" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1] === 'Spieler A2' ? game.teamnames[0] + ' 2' : game.playernames[1]">
         <input #playerNameB1 class="player_b1_4" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3] === 'Spieler B1' ? game.teamnames[1] + ' 1' : game.playernames[3]">
@@ -69,23 +70,18 @@
       <h3>Neue Gruppe erstellen:</h3>
       <input class="password" #groupName placeholder="Name der neuen Gruppe"/>
       <br>
-      <!--<mat-radio-group label="4 oder 6 Spieler" (change)="fourPlayers = $event.value;">
-        <mat-radio-button value="4">4 Spieler</mat-radio-button>
-        <mat-radio-button value="6"> 6 Spieler</mat-radio-button>
-      </mat-radio-group>
-      <br>-->
       <div class="neueGruppe">
         <label class="spielerZahl">4 Spieler
-          <input type="radio" name="spielerzahl">
+          <input type="radio" name="spielerzahl" (change)="fourPlayers = '4';">
           <span class="checkmark"></span>
         </label>
 
         <label class="spielerZahl">6 Spieler
-          <input type="radio" name="spielerzahl">
+          <input type="radio" name="spielerzahl" (change)="fourPlayers = '6';">
           <span class="checkmark"></span>
         </label>
       </div>
-      <button (click) = "dataService.createGroup(groupName.value, fourPlayers === '4'); groups.push(groupName.value); ">Gruppe erstellen</button>
+      <button (click) = "dataService.createGroup(groupName.value, fourPlayers === '4');">Gruppe erstellen</button>
     </section>
     <section>
     <h3>Passwort ändern:</h3>

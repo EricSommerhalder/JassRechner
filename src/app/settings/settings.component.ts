@@ -9,13 +9,24 @@ import * as firebase from 'firebase';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
 import {ElementRef} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+
+class Group {
+  public name: string;
+  public id: string;
+  constructor(n: string, i: string) {
+    this.name = n;
+    this.id = i;
+  }
+}
+
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
+
 export class SettingsComponent implements OnInit {
   @ViewChild('playerNameA1') playerNameA1: ElementRef;
   @ViewChild('playerNameA2') playerNameA2: ElementRef;
@@ -24,9 +35,10 @@ export class SettingsComponent implements OnInit {
   @ViewChild('playerNameB2') playerNameB2: ElementRef;
   @ViewChild('playerNameB3') playerNameB3: ElementRef;
   game: Game = new Game();
-  groups = [];
+  groups: Group[] = [];
   public fourPlayers = '';
   gameObservable: Observable<any>;
+  currentlyFour: boolean = false;
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
   storeGame(){
@@ -121,8 +133,27 @@ export class SettingsComponent implements OnInit {
     };
     this.dialog.open(PopupdialogComponent, dialogConfig);
   }
-  async getGroupNames(){
-    this.groups = await this.dataService.getGroupNames();
+  getGroupNames(){
+    this.dataService.firestore.collection('users').doc(this.dataService.userStorage).snapshotChanges().subscribe(
+        (a) => {
+          this.groups = [];
+          const groups = a.payload.data()['groups'];
+          for (const group of groups) {
+              this.dataService.firestore.collection('groups').doc(group).snapshotChanges().subscribe(
+                (b) => {
+                  const g = new Group(b.payload.data()['name'], b.payload.id);
+                  this.groups.push(g);
+                });
+          }
+        });
+  }
+  groupChanged(id: string) {
+    this.dataService.chosenGroup = id;
+    this.dataService.firestore.collection('groups').doc(this.dataService.chosenGroup).snapshotChanges().subscribe(
+      a => {
+        this.currentlyFour = a.payload.data()['fourPlayers'];
+      }
+    );
   }
   async ngOnInit() {
     console.log('Reached Settings');
@@ -138,7 +169,7 @@ export class SettingsComponent implements OnInit {
       this.game = await this.dataService.loadGame();
     }
     this.gameObservable = this.dataService.getGameObservable();
-    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable')});
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable');});
   }
 
 }
