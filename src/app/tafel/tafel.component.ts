@@ -185,7 +185,7 @@ export class TafelComponent implements OnInit {
       this.dataService.updateGame(this.dataService.gameId, this.game);
     }
     else{
-      this.dataService.createGame(this.game);
+      this.dataService.createGame(this.game, this.dataService.chosenGroup);
     }
   }
   async openFinishGameDialog(){
@@ -353,6 +353,12 @@ export class TafelComponent implements OnInit {
         // await this.updateSub();
       }
       });
+  }
+  getCoiffeurString(): string {
+    if (this.dataService.currentlyFour) {
+      return '3-3-3';
+    }
+    return '2-2-2';
   }
   async ngOnInit(){
     this.authService.checkLoggedIn();

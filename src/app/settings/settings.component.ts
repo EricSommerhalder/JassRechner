@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
   groups: Group[] = [];
   public fourPlayers = '';
   gameObservable: Observable<any>;
-  currentlyFour: boolean = false;
+  currentlyFour: boolean;
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
   storeGame(){
@@ -46,7 +46,7 @@ export class SettingsComponent implements OnInit {
       this.dataService.updateGame(this.dataService.gameId, this.game);
     }
     else{
-      this.dataService.createGame(this.game);
+      this.dataService.createGame(this.game, this.dataService.chosenGroup);
     }
   }
   updateNumberProperty(identifier: number, value: string){
@@ -151,7 +151,7 @@ export class SettingsComponent implements OnInit {
     this.dataService.chosenGroup = id;
     this.dataService.firestore.collection('groups').doc(this.dataService.chosenGroup).snapshotChanges().subscribe(
       a => {
-        this.currentlyFour = a.payload.data()['fourPlayers'];
+        this.dataService.currentlyFour = a.payload.data()['fourPlayers'];
       }
     );
   }
