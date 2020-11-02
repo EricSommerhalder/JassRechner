@@ -167,6 +167,14 @@ export class DataService{
     });
     return g;
   }
+  async getGroupObservables() {
+    const output = [];
+    const groups = await this.readGroups();
+    for (const group of groups) {
+      output.push(this.firestore.collection('groups').doc(group).snapshotChanges());
+    }
+    return output;
+  }
   async getGroupNames() {
     const output = [];
     const groups = await this.readGroups();
