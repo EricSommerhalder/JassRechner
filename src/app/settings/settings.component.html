@@ -23,7 +23,9 @@
         <input type="radio" name="spielerzahl" (change)="groupChanged(group.id);" [checked] = "group.id === dataService.chosenGroup" >
         <span class="checkmark"></span>
       </label>
+
     </div>
+      <button class="eraseGroup">Markierte Gruppe löschen</button>
       <p>Ausgesuchte Gruppe: {{dataService.chosenGroup}}</p>
     </section>
     <section class="teamname">
@@ -43,25 +45,25 @@
       <input type="button"class="player_leeren" (click)="emptyPlayerFields()" value="refresh">
     </div>
     <div *ngIf="dataService.currentlyFour" class="seatorder_4">
-        <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0] === 'Spieler A1' ? game.teamnames[0] + ' 1' : game.playernames[0]">
-        <input #playerNameA2 class="player_a2_4" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1] === 'Spieler A2' ? game.teamnames[0] + ' 2' : game.playernames[1]">
-        <input #playerNameB1 class="player_b1_4" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3] === 'Spieler B1' ? game.teamnames[1] + ' 1' : game.playernames[3]">
-        <input #playerNameB2 class="player_b2_4" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [placeholder]="game.playernames[4] === 'Spieler B2' ? game.teamnames[1] + ' 2' : game.playernames[4]">
-        <input type="button"class="player_leeren" (click)="emptyPlayerFields()" value="refresh">
-      </div>
+      <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0] === 'Spieler A1' ? game.teamnames[0] + ' 1' : game.playernames[0]">
+      <input #playerNameA2 class="player_a2_4" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1] === 'Spieler A2' ? game.teamnames[0] + ' 2' : game.playernames[1]">
+      <input #playerNameB1 class="player_b1_4" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3] === 'Spieler B1' ? game.teamnames[1] + ' 1' : game.playernames[3]">
+      <input #playerNameB2 class="player_b2_4" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [placeholder]="game.playernames[4] === 'Spieler B2' ? game.teamnames[1] + ' 2' : game.playernames[4]">
+      <input type="button"class="player_leeren" (click)="emptyPlayerFields()" value="refresh">
+    </div>
     </section>
 
     <section class="point-setting" *ngIf="!dataService.currentlyCash">
-    <h3>Punkteverteilung:</h3>
-    <p>Punkte für einen Match: <input #match (keyup) = "updateNumberProperty(1, match.value)" [placeholder]="game.pointsPerMatch"></p>
-    <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [placeholder]="game.pointsPerCounterMatch"></p>
-    <p>Punkte für ein gewonnenes Spiel: <input #perGame (keyup) = "updateNumberProperty(3, perGame.value)" [placeholder]="game.pointsPerGame"></p>
-    <p>Benötigte Punkte für den Turniersieg: <input #wonWith (keyup) = "updateNumberProperty(4, wonWith.value)" [placeholder]="game.tournamentWonWith"></p>
+      <h3>Turnier-Eingaben:</h3>
+      <p>Punkte für einen Match: <input #match (keyup) = "updateNumberProperty(1, match.value)" [placeholder]="game.pointsPerMatch"></p>
+      <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [placeholder]="game.pointsPerCounterMatch"></p>
+      <p>Punkte für ein gewonnenes Spiel: <input #perGame (keyup) = "updateNumberProperty(3, perGame.value)" [placeholder]="game.pointsPerGame"></p>
+      <p>Benötigte Punkte für den Turniersieg: <input #wonWith (keyup) = "updateNumberProperty(4, wonWith.value)" [placeholder]="game.tournamentWonWith"></p>
     </section>
 
     <section class="cash-setting" *ngIf="dataService.currentlyCash">
-      <h3>Gschiide Titel:</h3>
-      <p>Betrag / 1000 Punkte / Spieler: <input placeholder="100.-"></p>
+      <h3>Cashgame-Eingaben:</h3>
+      <p>Betrag/100 Punkte Differenz/Spieler: <input placeholder="100.-"></p>
       <p>Minimumbetrag / Spiel / Spieler: <input placeholder="5.-"></p>
     </section>
   </div>
@@ -83,11 +85,11 @@
         </label>
       </div>
       <div class="neueGruppe">
-        <label class="spielerZahl">Punkte
+        <label class="spielerZahl">Turnier
           <input type="radio" name="cashOrPoints" (change)="cash = 'points';">
           <span class="checkmark"></span>
         </label>
-        <label class="spielerZahl">Geld
+        <label class="spielerZahl">Cashgame
           <input type="radio" name="cashOrPoints" (change)="cash= 'cash';">
           <span class="checkmark"></span>
         </label>
