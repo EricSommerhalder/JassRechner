@@ -11,6 +11,7 @@ export class DataService{
   public gameId = '';
   public chosenGroup = '';
   public currentlyFour: boolean;
+  public currentlyCash: boolean;
   public userStorage = '';
   constructor(public firestore: AngularFirestore) { }
   getGames(){
@@ -44,7 +45,7 @@ export class DataService{
         .then(async res => {
           await this.addGameToGroup(res.id, groupId);
         }, err => reject(err));
-      await this.getGameId(game.user);
+      await this.getGameId();
     });
   }
   async addGameToGroup(gameId: string, groupId: string) {
@@ -87,7 +88,7 @@ export class DataService{
     return await this.firestore.collection('games')
       .snapshotChanges().pipe(first()).toPromise();
   }
-  async getGameId(user: string){
+/*async getGameId(user: string){
     let allGames: any = null;
     allGames = await this.getAllGames();
     if (allGames.length > 0 && this.gameId.length === 0) {
@@ -98,6 +99,25 @@ export class DataService{
         }
       }
     }
+  }*/
+  async getGameId() {
+      let g = [];
+      await this.firestore.collection('groups').doc(this.chosenGroup).ref.get().then((u) => {
+        if ('games' in u.data()) {
+          g = u.data()['games'];
+        }
+        else {console.log('No games yet'); }
+      });
+      for (const game of g) {
+        let act = false;
+        await this.firestore.collection('games').doc(game).ref.get().then((u) => {
+            act = u.data()['active'];
+        });
+        if (act) {
+          this.gameId = game;
+          break;
+        }
+      }
   }
   async getAllGamesOfUser(user: string){
     const toReturn = [];
@@ -155,7 +175,7 @@ export class DataService{
     return this.firestore.collection('games').doc(this.gameId).snapshotChanges();
   }
   createUser(email: string){
-    let data = {"email" : email, groups: []};
+    let data = {"email" : email, groups: [], chosenGroup: ''};
     return new Promise<any>(async (resolve, reject) => {
       this.firestore
         .collection('users')
@@ -173,7 +193,16 @@ export class DataService{
         else {console.log('No groups yet'); }
     });*/
     g.push(id);
-    await this.firestore.collection('users').doc(this.userStorage).update({groups: g});
+    await this.firestore.collection('users').doc(this.userStorage).update({groups: g, chosenGroup: id});
+    this.chosenGroup = id;
+    this.firestore.collection('groups').doc(this.chosenGroup).snapshotChanges().subscribe(
+      a => {
+        console.log('setting to:', a.payload.data());
+        this.currentlyFour = a.payload.data()['fourPlayers'];
+        this.currentlyCash = a.payload.data()['cashGame']
+      }
+    );
+    await this.getGameId();
   }
   async readGroups() {
     let g = [];
@@ -185,8 +214,8 @@ export class DataService{
     });
     return g;
   }
-  createGroup(n: string, four: boolean) {
-    const data = {name: n, fourPlayers: four, games: [] };
+  createGroup(n: string, four: boolean, cash: boolean) {
+    const data = {name: n, fourPlayers: four, cashGame: cash, games: [] };
     return new Promise<any>(async (resolve, reject) => {
       this.firestore
         .collection('groups')
@@ -197,6 +226,28 @@ export class DataService{
           await this.createGame(game, res.id);
         }, err => reject(err));
     });
+  }
+  async changeGroup(id: string){
+    this.chosenGroup = id;
+    await this.firestore.collection('users').doc(this.userStorage).update({chosenGroup: id});
+    this.firestore.collection('groups').doc(this.chosenGroup).snapshotChanges().subscribe(
+      a => {
+        this.currentlyFour = a.payload.data()['fourPlayers'];
+        this.currentlyCash = a.payload.data()['cashGame'];
+      }
+    );
+    await this.getGameId();
+  }
+  async checkChosenGroup(){
+    await this.firestore.collection('users').doc(this.userStorage).ref.get().then((u) => {
+      this.chosenGroup = u.data()['chosenGroup'];
+    });
+    this.firestore.collection('groups').doc(this.chosenGroup).snapshotChanges().subscribe(
+      a => {
+        this.currentlyFour = a.payload.data()['fourPlayers'];
+        this.currentlyCash = a.payload.data()['cashGame'];
+      }
+    );
   }
 }
 

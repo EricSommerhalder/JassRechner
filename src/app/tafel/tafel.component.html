@@ -49,7 +49,7 @@
     <div id="a3">{{game.teamnames[1]}}</div>
     <div id="b1">Schuufle</div>
     <div id="b2" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[0]!== -1)||(game.correction_mode && game.gamestate[0]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[0]===-1 } " (click) = "disciplineEnter(0);box.value = '';" ><p *ngIf = "game.gamestate[0]!== -1">{{game.gamestate[0]/1}} | {{game.gamestate[0]}}</p></div>
-    <div id="b3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[10]!== -1)||(game.correction_mode && game.gamestate[10]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[10]===-1 } " (click) = "disciplineEnter(10);box.value = '';" ><p *ngIf = "game.gamestate[10]!== -1">{{game.gamestate[10]}}</p></div>
+    <div id="b3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[10]!== -1)||(game.correction_mode && game.gamestate[10]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[10]===-1 } " (click) = "disciplineEnter(10);box.value = '';" ><p *ngIf = "game.gamestate[10]!== -1">{{game.gamestate[10]/1}} | {{game.gamestate[10]}}</p></div>
     <div id="c1">Chrüüz</div>
     <div id="c2" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[1]!== -1)||(game.correction_mode && game.gamestate[1]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[1]===-1 } " (click) = "disciplineEnter(1);box.value = ''" ><p *ngIf = "game.gamestate[1]!== -1"><span class="counted_points">{{game.gamestate[1]/2}} | </span>{{game.gamestate[1]}}</p></div>
     <div id="c3" [ngClass]="{'red_cell': (game.edit_mode && game.gamestate[11]!== -1)||(game.correction_mode && game.gamestate[11]===-1), 'green_cell' : punktzahl>-1 && game.gamestate[11]===-1 } " (click) = "disciplineEnter(11);box.value = ''" ><p *ngIf = "game.gamestate[11]!== -1"><span class="counted_points">{{game.gamestate[11]/2}} | </span>{{game.gamestate[11]}}</p></div>
@@ -87,7 +87,7 @@
   <div class="rightside">
     <div class="button"> Ausgeben darf:<br>{{game.playernames[game.ausgeber]}}</div>
     <div class="resultate">
-    <table>
+    <table *ngIf="!dataService.currentlyCash">
       <tr>
         <td colspan="3">Zwischenstand Turnier</td>
       </tr>
@@ -122,7 +122,7 @@
       </tr>
     </table>
     </div>
-    <div class="resultate">
+    <div class="resultate" *ngIf="dataService.currentlyCash">
       <p>[Verlierer] müssen <span class="loserAmount">[XX.XX]</span> pro Spieler bezahlen</p>
     </div>
    </div>

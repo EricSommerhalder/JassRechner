@@ -159,24 +159,59 @@ export class TafelComponent implements OnInit {
     if (this.game.team_done[0] && this.game.team_done[1]){
       return;
     }
-    if (this.game.ausgeber < 3){
-      if (this.game.team_done[0]) {
-        this.game.ausgeber = (this.game.ausgeber + 1) % 3;
-      }
-      else {
-        this.game.ausgeber += 3;
-      }
-    }
-    else {
-      if (this.game.team_done[1]) {
-        this.game.ausgeber++;
-        if (this.game.ausgeber > 5) {
-          this.game.ausgeber = 3;
+    if (!this.dataService.currentlyFour) {
+      if (this.game.ausgeber < 3) {
+        if (this.game.team_done[0]) {
+          this.game.ausgeber = (this.game.ausgeber + 1) % 3;
+        } else {
+          this.game.ausgeber += 3;
+        }
+      } else {
+        if (this.game.team_done[1]) {
+          this.game.ausgeber++;
+          if (this.game.ausgeber > 5) {
+            this.game.ausgeber = 3;
+          }
+        } else {
+          this.game.ausgeber = (this.game.ausgeber - 2) % 3;
         }
       }
-      else {
-        this.game.ausgeber = (this.game.ausgeber - 2) % 3;
-        return;
+    } else {
+      switch (this.game.ausgeber) {
+        case 0:
+          if (this.game.team_done[0]) {
+            this.game.ausgeber = 1;
+          }
+          else {
+            this.game.ausgeber = 3;
+          }
+          break;
+        case 1:
+          if (this.game.team_done[0]) {
+            this.game.ausgeber = 0;
+          }
+          else {
+            this.game.ausgeber = 4;
+          }
+          break;
+        case 3:
+          if (this.game.team_done[1]) {
+            this.game.ausgeber = 4;
+          }
+          else {
+            this.game.ausgeber = 1;
+          }
+          break;
+        case 4:
+          if (this.game.team_done[1]) {
+            this.game.ausgeber = 3;
+          }
+          else {
+            this.game.ausgeber = 0;
+          }
+          break;
+        default:
+          break;
       }
     }
   }
@@ -245,7 +280,7 @@ export class TafelComponent implements OnInit {
         this.game.tournamentWonWith = temp.tournamentWonWith;
         this.storeGame();
         this.gameObservable.unsubscribe();
-        await this.dataService.getGameId(this.game.user);
+        await this.dataService.getGameId();
         this.gameObservable = this.getSubscription();
         this.updateFields();
       }
@@ -334,7 +369,7 @@ export class TafelComponent implements OnInit {
   }
   async updateSub() {
     this.gameObservable.unsubscribe();
-    await this.dataService.getGameId(this.game.user);
+    await this.dataService.getGameId();
     this.gameObservable = await this.getSubscription();
   }
   getSubscription(){
@@ -364,13 +399,17 @@ export class TafelComponent implements OnInit {
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
-    if (this.dataService.gameId.length === 0){
-      await this.dataService.getGameId(this.game.user);
-    }
     if (this.dataService.gameId.length > 0){
       this.game = await this.dataService.loadGame();
       this.updateFields();
     }
     this.gameObservable = await this.getSubscription();
+    await this.dataService.getUserStorage(user.email);
+    await this.dataService.checkChosenGroup();
+    await this.dataService.getGameId();
+    while (this.dataService.currentlyFour && (this.game.ausgeber === 2 || this.game.ausgeber === 5)){
+      this.game.ausgeber = Math.floor(Math.random() * 6);
+      await this.storeGame();
+    }
   }
 }

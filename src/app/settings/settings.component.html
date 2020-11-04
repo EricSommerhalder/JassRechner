@@ -20,7 +20,7 @@
     </div>-->
     <div class="groupsection" *ngFor="let group of groups">
       <label class="selectGroup"> {{group.name}}
-        <input type="radio" name="spielerzahl" (change)="groupChanged(group.id);">
+        <input type="radio" name="spielerzahl" (change)="groupChanged(group.id);" [checked] = "group.id === dataService.chosenGroup" >
         <span class="checkmark"></span>
       </label>
     </div>
@@ -51,7 +51,7 @@
       </div>
     </section>
 
-    <section class="point-setting">
+    <section class="point-setting" *ngIf="!dataService.currentlyCash">
     <h3>Punkteverteilung:</h3>
     <p>Punkte für einen Match: <input #match (keyup) = "updateNumberProperty(1, match.value)" [placeholder]="game.pointsPerMatch"></p>
     <p>Punkte für einen Kontermatch: <input #counterMatch (keyup) = "updateNumberProperty(2, counterMatch.value)" [placeholder]="game.pointsPerCounterMatch"></p>
@@ -59,7 +59,7 @@
     <p>Benötigte Punkte für den Turniersieg: <input #wonWith (keyup) = "updateNumberProperty(4, wonWith.value)" [placeholder]="game.tournamentWonWith"></p>
     </section>
 
-    <section class="cash-setting">
+    <section class="cash-setting" *ngIf="dataService.currentlyCash">
       <h3>Gschiide Titel:</h3>
       <p>Betrag / 1000 Punkte / Spieler: <input placeholder="100.-"></p>
       <p>Minimumbetrag / Spiel / Spieler: <input placeholder="5.-"></p>
@@ -84,15 +84,15 @@
       </div>
       <div class="neueGruppe">
         <label class="spielerZahl">Punkte
-          <input type="radio" name="cashOrPoints">
+          <input type="radio" name="cashOrPoints" (change)="cash = 'points';">
           <span class="checkmark"></span>
         </label>
         <label class="spielerZahl">Geld
-          <input type="radio" name="cashOrPoints">
+          <input type="radio" name="cashOrPoints" (change)="cash= 'cash';">
           <span class="checkmark"></span>
         </label>
       </div>
-      <button (click) = "dataService.createGroup(groupName.value, fourPlayers === '4');">Gruppe erstellen</button>
+      <button (click) = "createGroup(groupName.value);">Gruppe erstellen</button>
     </section>
     <section>
     <h3>Passwort ändern:</h3>

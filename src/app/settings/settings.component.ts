@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
   groups: Group[] = [];
   public fourPlayers = '';
   gameObservable: Observable<any>;
-  currentlyFour: boolean;
+  cash = '';
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
   storeGame(){
@@ -136,34 +136,54 @@ export class SettingsComponent implements OnInit {
   getGroupNames(){
     this.dataService.firestore.collection('users').doc(this.dataService.userStorage).snapshotChanges().subscribe(
         (a) => {
-          this.groups = [];
           const groups = a.payload.data()['groups'];
           for (const group of groups) {
               this.dataService.firestore.collection('groups').doc(group).snapshotChanges().subscribe(
                 (b) => {
+                  for (const gr of this.groups) {
+                    if (gr.id === b.payload.id) {
+                      return;
+                    }
+                  }
                   const g = new Group(b.payload.data()['name'], b.payload.id);
                   this.groups.push(g);
+                  console.log('Push by:', b.payload.id);
                 });
           }
         });
   }
-  groupChanged(id: string) {
-    this.dataService.chosenGroup = id;
-    this.dataService.firestore.collection('groups').doc(this.dataService.chosenGroup).snapshotChanges().subscribe(
-      a => {
-        this.dataService.currentlyFour = a.payload.data()['fourPlayers'];
-      }
-    );
+  createGroup(name: string) {
+    //TODO warnmäldige
+    if (name === '') {
+      return;
+    }
+    if (this.fourPlayers === '') {
+      return;
+    }
+    if (this.cash === '') {
+      return;
+    }
+    this.dataService.createGroup(name, this.fourPlayers === '4', this.cash === 'cash');
+    this.gameObservable = this.dataService.getGameObservable();
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable');});
   }
+  async groupChanged(id: string) {
+    await this.dataService.changeGroup(id);
+    this.gameObservable = this.dataService.getGameObservable();
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable');});
+
+  }
+
   async ngOnInit() {
     console.log('Reached Settings');
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
     await this.dataService.getUserStorage(user.email);
+    await this.dataService.checkChosenGroup();
     this.getGroupNames();
     if (this.dataService.gameId.length === 0){
-      await this.dataService.getGameId(this.game.user);
+      await this.dataService.getGameId();
     }
     if (this.dataService.gameId.length > 0) {
       this.game = await this.dataService.loadGame();

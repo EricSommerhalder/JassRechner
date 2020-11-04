@@ -37,6 +37,9 @@ export class HistoryComponent implements OnInit {
 
   async ngOnInit() {
     this.authService.checkLoggedIn();
+    const user: User = await this.authService.getUserAsync() as User;
+    await this.dataService.getUserStorage(user.email);
+    await this.dataService.checkChosenGroup();
     await this.getTable();
     this.games.sort( (a, b) => {
       const aString = a.startedOn.substr(6) + a.startedOn.substr(3, 2) + a.startedOn.substr(0, 2);
