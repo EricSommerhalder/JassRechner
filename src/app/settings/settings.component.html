@@ -19,11 +19,10 @@
       <p>{{group}}</p>
     </div>-->
     <div class="groupsection" *ngFor="let group of groups">
-      <label class="selectGroup"> {{group.name}}<br class="zeroHeight"><span class="deleteGroup1">Diese Gruppe löschen</span>
+      <label class="selectGroup"> {{group.name}}
         <input type="radio" name="gruppenwahl" (change)="groupChanged(group.id);" [checked] = "group.id === dataService.chosenGroup">
         <span class="checkmark"></span>
       </label>
-      <br class="zeroHeight">
       <a class="deleteGroup" href="">Diese Gruppe löschen</a>
     </div>
       <button class="deleteGroup">Markierte Gruppe löschen</button>

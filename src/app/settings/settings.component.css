@@ -250,25 +250,12 @@ button.deleteGroup{
 }
 
 a.deleteGroup {
-  padding-left: 35px;
-  font-size: 18px;
-  color: #c28090;
-  text-decoration: underline;
-  border: 1px solid #80b1c2;
-  display: table-cell;
-}
-span.deleteGroup1 {
-  padding-left: 35px;
-  font-size: 18px;
-  color: #c28090;
-  text-decoration: underline;
-  border: 1px solid #80b1c2;
-  display: table-cell;
-}
-.zeroHeight {
-  height: 0;
   display: block;
-}
-sup, sub {
   line-height: 0;
+  margin-bottom: 15px;
+  padding-left: 35px;
+  font-size: 18px;
+  color: #c28090;
+  text-decoration: underline;
 }
+
