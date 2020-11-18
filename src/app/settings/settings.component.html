@@ -57,7 +57,7 @@
 
     <section class="cash-setting" *ngIf="dataService.currentlyCash">
       <h3>Cashgame-Eingaben:</h3>
-      <p>Betrag/100 Punkte Differenz/Spieler (in CHF): <input #amountPer100 [placeholder]="game.amountPer100" (keyup)="updateNumberProperty(5, amountPer100.value)"></p>
+      <p>Betrag / 100 Punkte Differenz / Spieler (in CHF): <input #amountPer100 [placeholder]="game.amountPer100" (keyup)="updateNumberProperty(5, amountPer100.value)"></p>
       <p>Minimumbetrag / Spiel / Spieler (in CHF): <input #minimalAmount [placeholder]="game.minimalAmount" (keyup)="updateNumberProperty(6, minimalAmount.value)"></p>
     </section>
   </div>

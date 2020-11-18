@@ -257,5 +257,6 @@ a.deleteGroup {
   font-size: 18px;
   color: #c28090;
   text-decoration: underline;
+  cursor: pointer;
 }
 
