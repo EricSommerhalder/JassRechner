@@ -88,6 +88,7 @@ export class DataService{
       await this.firestore.collection('groups').doc(this.chosenGroup).ref.get().then((u) => {
         if ('games' in u.data()) {
           g = u.data()['games'];
+          console.log(g);
         }
         else {console.log('No games yet'); }
       });

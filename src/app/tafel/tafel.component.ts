@@ -271,7 +271,7 @@ export class TafelComponent implements OnInit {
   async finishMatch(){
         const temp = {playernames: this.game.playernames, teamnames: this.game.teamnames, pointsPerMatch: this.game.pointsPerMatch, pointsPerCounterMatch: this.game.pointsPerCounterMatch, pointsPerGame: this.game.pointsPerGame, tournamentWonWith: this.game.tournamentWonWith, user: this.game.user, amountPer100: this.game.amountPer100, minimalAmount: this.game.minimalAmount};
         this.game.active = false;
-        this.game.endDate = this.game.getToday();
+        this.game.endDate = this.getToday();
         this.storeGame();
         this.dataService.gameId = '';
         this.game = new Game();
@@ -287,6 +287,7 @@ export class TafelComponent implements OnInit {
         this.storeGame();
         this.gameObservable.unsubscribe();
         await this.dataService.getGameId();
+        console.log(this.dataService.gameId);
         this.gameObservable = this.getSubscription();
         this.updateFields();
   }
