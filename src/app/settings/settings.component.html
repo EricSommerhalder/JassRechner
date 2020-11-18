@@ -20,7 +20,7 @@
     </div>-->
     <div class="groupsection" *ngFor="let group of groups">
       <label class="selectGroup"> {{group.name}}
-        <input type="radio" name="spielerzahl" (change)="groupChanged(group.id);" [checked] = "group.id === dataService.chosenGroup" >
+        <input type="radio" name="spielerzahl" (change)="groupChanged(group.id);" [checked] = "group.id === dataService.chosenGroup">
         <span class="checkmark"></span>
       </label>
     </div>
