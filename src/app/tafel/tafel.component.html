@@ -123,9 +123,10 @@
     </table>
     </div>
     <div class="resultate" *ngIf="dataService.currentlyCash && summe[0] !== summe[1]">
-      <p *ngIf="summe[0] > summe[1]">{{game.teamnames[1]}}</p>
-      <p *ngIf="summe[1] > summe[0]">{{game.teamnames[0]}}</p>
-      <p>müssen<span class="loserAmount">{{getCashAmount()}}</span> pro Spieler bezahlen</p>
+      <p>
+        <span *ngIf="summe[0] > summe[1]">{{game.teamnames[1]}}</span>
+        <span *ngIf="summe[1] > summe[0]">{{game.teamnames[0]}}</span>
+        müssen<span class="loserAmount">{{getCashAmount()}} CHF</span> pro Spieler bezahlen</p>
     </div>
    </div>
   <div class="footer"></div>
