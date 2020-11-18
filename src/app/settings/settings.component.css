@@ -209,12 +209,15 @@ button {
 .spielerZahl:hover input ~ .checkmark,
 .selectGroup:hover input ~ .checkmark {
   background-color: #d8ece7;
+  border: 1px solid #80c2b2;
+  box-shadow: 0 0 10px #80c2b2;
 }
 
 /* When the radio button is checked, add a light-green background */
 .spielerZahl input:checked ~ .checkmark,
 .selectGroup input:checked ~ .checkmark {
   background-color: #80c2b2;
+  transition: 200ms;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -240,3 +243,19 @@ button {
   border-radius: 25%;
   background: antiquewhite;
 }
+
+button.deleteGroup{
+  margin: 0;
+  background-color: #c28090;
+}
+
+a.deleteGroup {
+  display: block;
+  line-height: 0;
+  margin-bottom: 15px;
+  padding-left: 35px;
+  font-size: 18px;
+  color: #c28090;
+  text-decoration: underline;
+}
+
