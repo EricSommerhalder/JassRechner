@@ -14,20 +14,13 @@
     <section>
     <h2>Einstellungen</h2>
     <h3>Jassgruppe:</h3>
-    <p>Hallo, lieber Benutzer. Schön bist du hier. Deine Gruppen sind dann übrigens die folgenden, wenn du das mal anschauen möchstest. Du musst nicht, Du kannst aber. Wir fänden es besser wenn Du eine Gruppe anklickst! Aber nochmal: Wie du willst, gell. Ich bin ja schliesslich nur ein Rechner, ich weiss doch nicht.</p>
-    <!--<div *ngFor="let group of groups">
-      <p>{{group}}</p>
-    </div>-->
     <div class="groupsection" *ngFor="let group of groups">
       <label class="selectGroup"> {{group.name}}
         <input type="radio" name="gruppenwahl" (change)="groupChanged(group.id);" [checked] = "group.id === dataService.chosenGroup">
->>>>>>> cd0d11eac403030eec123d94018a548753eb784a
         <span class="checkmark"></span>
       </label>
-      <a class="deleteGroup" href="">Diese Gruppe löschen</a>
+      <a class="deleteGroup" (click)="deleteGroup(group.id)">Diese Gruppe löschen</a>
     </div>
-      <button class="deleteGroup">Markierte Gruppe löschen</button>
-      <p>Ausgesuchte Gruppe: {{dataService.chosenGroup}}</p>
     </section>
     <section class="teamname">
     <h3>Teamnamen:</h3>
@@ -64,8 +57,8 @@
 
     <section class="cash-setting" *ngIf="dataService.currentlyCash">
       <h3>Cashgame-Eingaben:</h3>
-      <p>Betrag/100 Punkte Differenz/Spieler: <input placeholder="100.-"></p>
-      <p>Minimumbetrag / Spiel / Spieler: <input placeholder="5.-"></p>
+      <p>Betrag/100 Punkte Differenz/Spieler (in CHF): <input #amountPer100 [placeholder]="game.amountPer100" (keyup)="updateNumberProperty(5, amountPer100.value)"></p>
+      <p>Minimumbetrag / Spiel / Spieler (in CHF): <input #minimalAmount [placeholder]="game.minimalAmount" (keyup)="updateNumberProperty(6, minimalAmount.value)"></p>
     </section>
   </div>
 
@@ -77,25 +70,25 @@
       <br>
       <div class="neueGruppe">
         <label class="spielerZahl">4 Spieler
-          <input type="radio" name="spielerzahl" (change)="fourPlayers = '4';">
+          <input type="radio" name="spielerzahl" [checked] = "fourPlayers === '4'" (change)="fourPlayers = '4';">
           <span class="checkmark"></span>
         </label>
         <label class="spielerZahl">6 Spieler
-          <input type="radio" name="spielerzahl" (change)="fourPlayers = '6';">
+          <input type="radio" name="spielerzahl" [checked] = "fourPlayers === '6'" (change)="fourPlayers = '6';">
           <span class="checkmark"></span>
         </label>
       </div>
       <div class="neueGruppe">
         <label class="spielerZahl">Turnier
-          <input type="radio" name="cashOrPoints" (change)="cash = 'points';">
+          <input type="radio" name="cashOrPoints" [checked] = "cash === 'points'" (change)="cash = 'points';">
           <span class="checkmark"></span>
         </label>
         <label class="spielerZahl">Cashgame
-          <input type="radio" name="cashOrPoints" (change)="cash= 'cash';">
+          <input type="radio" name="cashOrPoints" [checked] = "cash === 'cash'" (change)="cash= 'cash';">
           <span class="checkmark"></span>
         </label>
       </div>
-      <button (click) = "createGroup(groupName.value);">Gruppe erstellen</button>
+      <button (click) = "createGroup(groupName.value); groupName.value = ''; fourPlayers = ''; cash= '';">Gruppe erstellen</button>
     </section>
     <section>
     <h3>Passwort ändern:</h3>

@@ -132,7 +132,7 @@ export class TafelComponent implements OnInit {
       }
     }
     if (this.game.totalpoints[0] >= this.game.tournamentWonWith || this.game.totalpoints[1] >= this.game.tournamentWonWith){
-      await this.finishMatch();
+      await this.openFinishMatchDialog();
     }
     this.punktzahl = -1;
     this.storeGame();
@@ -241,17 +241,20 @@ export class TafelComponent implements OnInit {
     });
   }
   async finishGame(){
-    console.log('All done!');
+    if (this.dataService.currentlyCash){
+      await this.finishMatch();
+      return;
+    }
     this.game.gamestate = Array(20).fill(-1);
     this.game.team_done = [false, false];
     this.storeGame();
     this.updateFields();
     if (this.game.totalpoints[0] >= this.game.tournamentWonWith || this.game.totalpoints[1] >= this.game.tournamentWonWith){
-      await this.finishMatch();
+      await this.openFinishMatchDialog();
     }
 
   }
-  async finishMatch(){
+  async openFinishMatchDialog(){
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -263,11 +266,12 @@ export class TafelComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
     await dialogRef.afterClosed().subscribe( async result => {
-      if (result === 'yes') {
-        const temp = {playernames: this.game.playernames, teamnames: this.game.teamnames, pointsPerMatch: this.game.pointsPerMatch, pointsPerCounterMatch: this.game.pointsPerCounterMatch, pointsPerGame: this.game.pointsPerGame, tournamentWonWith: this.game.tournamentWonWith, user: this.game.user};
-        console.log(temp);
+      if (result === 'yes') { await this.finishMatch(); }});
+  }
+  async finishMatch(){
+        const temp = {playernames: this.game.playernames, teamnames: this.game.teamnames, pointsPerMatch: this.game.pointsPerMatch, pointsPerCounterMatch: this.game.pointsPerCounterMatch, pointsPerGame: this.game.pointsPerGame, tournamentWonWith: this.game.tournamentWonWith, user: this.game.user, amountPer100: this.game.amountPer100, minimalAmount: this.game.minimalAmount};
         this.game.active = false;
-        this.game.endDate = this.getToday();
+        this.game.endDate = this.game.getToday();
         this.storeGame();
         this.dataService.gameId = '';
         this.game = new Game();
@@ -278,13 +282,13 @@ export class TafelComponent implements OnInit {
         this.game.pointsPerGame = temp.pointsPerGame;
         this.game.user = temp.user;
         this.game.tournamentWonWith = temp.tournamentWonWith;
+        this.game.minimalAmount = temp.minimalAmount;
+        this.game.amountPer100 = temp.amountPer100;
         this.storeGame();
         this.gameObservable.unsubscribe();
         await this.dataService.getGameId();
         this.gameObservable = this.getSubscription();
         this.updateFields();
-      }
-    });
   }
   updateFields(){
     this.summe = [0, 0];
@@ -395,21 +399,45 @@ export class TafelComponent implements OnInit {
     }
     return '2-2-2';
   }
+  getCashAmount(): number {
+      const amount = Math.abs((this.summe[0] - this.summe[1]) * this.game.amountPer100 / 100);
+      if (amount > this.game.minimalAmount) {
+        return amount;
+      }
+      return this.game.minimalAmount;
+  }
   async ngOnInit(){
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
+    await this.dataService.init(user.email);
     if (this.dataService.gameId.length > 0){
       this.game = await this.dataService.loadGame();
       this.updateFields();
     }
+    if (this.dataService.chosenGroup.length === 0){
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        title: 'Zur Zeit ist noch keine Gruppe ausgewählt. Bitte zu Settings wechseln und eine Gruppe erstellen oder auswählen.',
+        rightMessage: 'Ab zu Settings!',
+        leftMessage: 'Später! (nicht empfohlen)'
+      };
+      const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe( async result => {
+        if (result === 'yes'){
+          this.router.navigateByUrl('/settings');
+        }
+      });
+    }
     this.gameObservable = await this.getSubscription();
-    await this.dataService.getUserStorage(user.email);
-    await this.dataService.checkChosenGroup();
-    await this.dataService.getGameId();
+    if (this.dataService.currentlyCash){
+      this.game.pointsPerCounterMatch = 0;
+      this.game.pointsPerGame = 0;
+      this.game.pointsPerMatch = 0;
+      this.game.tournamentWonWith = 1000000;
+    }
     while (this.dataService.currentlyFour && (this.game.ausgeber === 2 || this.game.ausgeber === 5)){
       this.game.ausgeber = Math.floor(Math.random() * 6);
-      await this.storeGame();
     }
   }
 }

@@ -13,9 +13,7 @@ export class DataService{
   public currentlyFour: boolean;
   public currentlyCash: boolean;
   public userStorage = '';
-  constructor(public firestore: AngularFirestore) { }
-  getGames(){
-    return this.firestore.collection('games').snapshotChanges();
+  constructor(public firestore: AngularFirestore) {
   }
   async getAllUsers(): Promise<any>{
     return await this.firestore.collection('users')
@@ -84,22 +82,7 @@ export class DataService{
       return '';
     }
   }
-  async getAllGames(): Promise<any>{
-    return await this.firestore.collection('games')
-      .snapshotChanges().pipe(first()).toPromise();
-  }
-/*async getGameId(user: string){
-    let allGames: any = null;
-    allGames = await this.getAllGames();
-    if (allGames.length > 0 && this.gameId.length === 0) {
-      for (const game of allGames) {
-        if (this.getPropertyOfObservable(game, 'user') === user && this.getPropertyOfObservable(game, 'active') === true){
-          this.gameId = game.payload.doc.id;
-          break;
-        }
-      }
-    }
-  }*/
+
   async getGameId() {
       let g = [];
       await this.firestore.collection('groups').doc(this.chosenGroup).ref.get().then((u) => {
@@ -119,57 +102,10 @@ export class DataService{
         }
       }
   }
-  async getAllGamesOfUser(user: string){
-    const toReturn = [];
-    let allGames: any = null;
-    allGames = await this.getAllGames();
-    console.log(allGames);
-    if (allGames.length > 0) {
-      for (const game of allGames) {
-        if (this.getPropertyOfObservable(game, 'user') === user){
-          toReturn.push(game);
-        }
-      }
-    }
-    return toReturn;
-  }
   async loadGame(){
     let toReturn = new Game();
     await this.firestore.collection('games').doc(this.gameId).snapshotChanges().subscribe(a => { toReturn = a.payload.data() as Game; });
     return toReturn;
-    /*let allGames = null;
-    let gameFromData = null;
-    allGames = await this.getAllGames();
-    if (allGames){
-      for (const game of allGames){
-        if (this.gameId === game.payload.doc.id){
-          gameFromData = game;
-          break;
-        }
-      }
-    }
-    if (gameFromData){
-      return new Game({
-        gamestate: this.getPropertyOfObservable(gameFromData, 'gamestate'),
-        edit_mode: this.getPropertyOfObservable(gameFromData, 'edit_mode'),
-        correction_mode : this.getPropertyOfObservable(gameFromData, 'correction_mode'),
-        teamnames : this.getPropertyOfObservable(gameFromData, 'teamnames'),
-        playernames : this.getPropertyOfObservable(gameFromData, 'playernames'),
-        ausgeber : this.getPropertyOfObservable(gameFromData, 'ausgeber'),
-        team_done : this.getPropertyOfObservable(gameFromData, 'team_done'),
-        totalpoints : this.getPropertyOfObservable(gameFromData, 'totalpoints'),
-        active : this.getPropertyOfObservable(gameFromData, 'active'),
-        user : this.getPropertyOfObservable(gameFromData, 'user'),
-        pointsPerGame : this.getPropertyOfObservable(gameFromData, 'pointsPerGame'),
-        pointsPerMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerMatch'),
-        pointsPerCounterMatch : this.getPropertyOfObservable(gameFromData, 'pointsPerCounterMatch'),
-        tournamentWonWith: this.getPropertyOfObservable(gameFromData, 'tournamentWonWith'),
-        paidOn : this.getPropertyOfObservable(gameFromData, 'paidOn'),
-        startDate: this.getPropertyOfObservable(gameFromData, 'startDate'),
-        endDate: this.getPropertyOfObservable(gameFromData, 'endDate')
-      });
-    }
-    return null;*/
   }
   getGameObservable(){
     return this.firestore.collection('games').doc(this.gameId).snapshotChanges();
@@ -240,14 +176,41 @@ export class DataService{
   }
   async checkChosenGroup(){
     await this.firestore.collection('users').doc(this.userStorage).ref.get().then((u) => {
-      this.chosenGroup = u.data()['chosenGroup'];
-    });
-    this.firestore.collection('groups').doc(this.chosenGroup).snapshotChanges().subscribe(
-      a => {
-        this.currentlyFour = a.payload.data()['fourPlayers'];
-        this.currentlyCash = a.payload.data()['cashGame'];
+      try {
+        this.chosenGroup = u.data()['chosenGroup'];
       }
-    );
+      catch (e) {
+        if (e instanceof TypeError){
+          return;
+        }
+      }
+    });
+    if (this.chosenGroup.length > 0) {
+      this.firestore.collection('groups').doc(this.chosenGroup).snapshotChanges().subscribe(
+        a => {
+          this.currentlyFour = a.payload.data()['fourPlayers'];
+          this.currentlyCash = a.payload.data()['cashGame'];
+        }
+      );
+    }
+  }
+  async deleteGroup(id: string){
+    if (id === this.chosenGroup) {
+      console.log('Ausgewählte Gruppe nicht löschbar');
+      // TODO: Warnmäldig
+      return;
+    }
+    await this.firestore.collection('groups').doc(id).delete();
+    let g = await this.readGroups();
+    g = g.filter(obj => obj !== id);
+    await this.firestore.collection('users').doc(this.userStorage).update({groups: g});
+  }
+  async init(user: string){
+    await this.getUserStorage(user);
+    await this.checkChosenGroup();
+    if (this.chosenGroup.length > 0) {
+      await this.getGameId();
+    }
   }
 }
 

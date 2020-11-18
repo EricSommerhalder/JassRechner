@@ -5,6 +5,8 @@ import * as firebase from "firebase";
 import {Router} from "@angular/router";
 import {AuthService} from '../auth.service';
 import {User} from "firebase";
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
 
 class DisplayGame {
   teamNameA: string;
@@ -33,13 +35,26 @@ class DisplayGame {
 })
 export class HistoryComponent implements OnInit {
   games: DisplayGame[] = [];
-  constructor(public dataService: DataService, public router: Router, public authService: AuthService) {}
+  constructor(public dataService: DataService, public router: Router, public authService: AuthService, private dialog: MatDialog) {}
 
   async ngOnInit() {
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
-    await this.dataService.getUserStorage(user.email);
-    await this.dataService.checkChosenGroup();
+    await this.dataService.init(user.email);
+    if (this.dataService.chosenGroup.length === 0){
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        title: 'Zur Zeit ist noch keine Gruppe ausgewählt. Bitte zu Settings wechseln und eine Gruppe erstellen oder auswählen.',
+        rightMessage: 'Ab zu Settings!',
+        leftMessage: 'Später! (nicht empfohlen)'
+      };
+      const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe( async result => {
+        if (result === 'yes'){
+          this.router.navigateByUrl('/settings');
+        }
+      });
+    }
     await this.getTable();
     this.games.sort( (a, b) => {
       const aString = a.startedOn.substr(6) + a.startedOn.substr(3, 2) + a.startedOn.substr(0, 2);
@@ -54,7 +69,7 @@ export class HistoryComponent implements OnInit {
     });
   }
   async getTable(){
-    const user: User = await this.authService.getUserAsync() as User;
+    /*const user: User = await this.authService.getUserAsync() as User;
     const userEmail = user.email;
     const rawData = await this.dataService.getAllGamesOfUser(userEmail);
     console.log(rawData);
@@ -71,7 +86,7 @@ export class HistoryComponent implements OnInit {
       toPush.endedOn = await this.dataService.getPropertyOfObservable(game, 'endDate');
       toPush.paidOn = await this.dataService.getPropertyOfObservable(game, 'paidOn');
       this.games.push(toPush);
-    }
+    }*/
   }
   updatePaidOn(id: string, value: string){
     this.dataService.updateGameWithDict(id, {paidOn : value});

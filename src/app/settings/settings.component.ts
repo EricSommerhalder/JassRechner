@@ -80,6 +80,12 @@ export class SettingsComponent implements OnInit {
       case 4:
         this.game.tournamentWonWith = val;
         break;
+      case 5:
+        this.game.amountPer100  = val;
+        break;
+      case 6:
+        this.game.minimalAmount = val;
+        break;
       default:
         break;
     }
@@ -155,17 +161,38 @@ export class SettingsComponent implements OnInit {
   createGroup(name: string) {
     //TODO warnmäldige
     if (name === '') {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        title: 'Bitte einen Gruppennamen eingeben',
+        leftMessage: 'Alles klar!',
+        rightMessage: ''
+      };
+      this.dialog.open(PopupdialogComponent, dialogConfig);
       return;
     }
     if (this.fourPlayers === '') {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        title: 'Bitte Spieleranzahl aussuchen',
+        leftMessage: 'Alles klar!',
+        rightMessage: ''
+      };
+      this.dialog.open(PopupdialogComponent, dialogConfig);
       return;
     }
     if (this.cash === '') {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        title: 'Bitte Spielart aussuchen',
+        leftMessage: 'Alles klar!',
+        rightMessage: ''
+      };
+      this.dialog.open(PopupdialogComponent, dialogConfig);
       return;
     }
     this.dataService.createGroup(name, this.fourPlayers === '4', this.cash === 'cash');
     this.gameObservable = this.dataService.getGameObservable();
-    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable');});
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable'); });
   }
   async groupChanged(id: string) {
     await this.dataService.changeGroup(id);
@@ -174,13 +201,26 @@ export class SettingsComponent implements OnInit {
 
   }
 
+  deleteGroup(id: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: 'Gruppe wirklich löschen?',
+      leftMessage: 'Nein!',
+      rightMessage: 'Jepp!'
+    };
+    const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe( async result => {
+      if (result === 'yes'){
+        this.groups = this.groups.filter(obj => obj.id !== id);
+        await this.dataService.deleteGroup(id);
+      }
+    });
+  }
   async ngOnInit() {
-    console.log('Reached Settings');
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
-    await this.dataService.getUserStorage(user.email);
-    await this.dataService.checkChosenGroup();
+    await this.dataService.init(user.email);
     this.getGroupNames();
     if (this.dataService.gameId.length === 0){
       await this.dataService.getGameId();

@@ -16,6 +16,8 @@ interface constructorHelper{
   paidOn: string;
   startDate: string;
   endDate: string;
+  amountPer100: number;
+  minimalAmount: number;
 }
 
 export class Game {
@@ -36,6 +38,8 @@ export class Game {
   paidOn: string;
   startDate: string;
   endDate: string;
+  amountPer100: number;
+  minimalAmount: number;
   constructor(helper?: constructorHelper) {
     this.gamestate = helper && helper.gamestate || [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
     this.edit_mode = helper && helper.edit_mode || false;
@@ -54,6 +58,8 @@ export class Game {
     this.paidOn = helper && helper.paidOn || '';
     this.startDate = helper && helper.startDate || this.getToday();
     this.endDate = helper && helper.endDate || '';
+    this.amountPer100 = helper && helper.amountPer100 || 5;
+    this.minimalAmount = helper && helper.minimalAmount || 5;
   }
   getToday(){
     const date = new Date();
