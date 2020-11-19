@@ -444,9 +444,9 @@ td:nth-child(2), td:nth-child(3) {
 .footer {
   grid-area: footer;
 }
-/*.counted_points {
-  font-size: 14px;
-}*/
+.counted_points {
+  font-size: 24px;
+}
 
 /*RESPONSIVE STUFF*/
 @media screen and (max-width: 1320px) {
@@ -464,6 +464,12 @@ td:nth-child(2), td:nth-child(3) {
   }
 }
 
+@media screen and (max-width: 900px) {
+  .counted_points {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 750px) {
 
   .wrapper, .mobile {
@@ -472,10 +478,6 @@ td:nth-child(2), td:nth-child(3) {
 
   .main {
     margin: 0 10px;
-  }
-
-  .counted_points {
-    display: none;
   }
 
   nav, .leftside, .rightside, .footer {
