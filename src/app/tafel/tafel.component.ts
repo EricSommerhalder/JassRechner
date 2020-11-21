@@ -401,7 +401,7 @@ export class TafelComponent implements OnInit {
     return '2-2-2';
   }
   getCashAmount(): number {
-      const amount = Math.round((this.summe[0] - this.summe[1]) * this.game.amountPer100 / 100);
+      const amount = Math.abs(Math.round((this.summe[0] - this.summe[1]) * this.game.amountPer100 / 100));
       if (amount > this.game.minimalAmount) {
         return amount;
       }
