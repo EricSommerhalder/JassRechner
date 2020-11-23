@@ -3,6 +3,8 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {Game} from './game.model';
 import {first} from 'rxjs/operators';
 import {User} from 'firebase';
+import {init} from 'protractor/built/launcher';
+import {BehaviorSubject, observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,9 @@ export class DataService{
   public currentlyFour: boolean;
   public currentlyCash: boolean;
   public userStorage = '';
+  public chosenGroupSubject: BehaviorSubject<string>;
   constructor(public firestore: AngularFirestore) {
+    this.chosenGroupSubject = new BehaviorSubject<string>('');
   }
   async getAllUsers(): Promise<any>{
     return await this.firestore.collection('users')
@@ -31,19 +35,17 @@ export class DataService{
       }
     }
   }
-  createGame(game: Game, groupId: string){
+  async createGame(game: Game, groupId: string){
     let data = {};
     for (const [key, value] of Object.entries(game)){
       data[key] = value;
     }
-    return new Promise<any>(async (resolve, reject) => {
-      this.firestore
+    await this.firestore
         .collection('games')
         .add(data)
         .then(async res => {
           await this.addGameToGroup(res.id, groupId);
-        }, err => reject(err));
-      await this.getGameId();
+          await this.getGameId();
     });
   }
   async addGameToGroup(gameId: string, groupId: string) {
@@ -88,14 +90,14 @@ export class DataService{
       await this.firestore.collection('groups').doc(this.chosenGroup).ref.get().then((u) => {
         if ('games' in u.data()) {
           g = u.data()['games'];
-          console.log(g);
         }
         else {console.log('No games yet'); }
       });
+      console.log(g);
       for (const game of g) {
         let act = false;
         await this.firestore.collection('games').doc(game).ref.get().then((u) => {
-            act = u.data()['active'];
+          act = u.data()['active'];
         });
         if (act) {
           this.gameId = game;
@@ -134,7 +136,6 @@ export class DataService{
     this.chosenGroup = id;
     this.firestore.collection('groups').doc(this.chosenGroup).snapshotChanges().subscribe(
       a => {
-        console.log('setting to:', a.payload.data());
         this.currentlyFour = a.payload.data()['fourPlayers'];
         this.currentlyCash = a.payload.data()['cashGame']
       }
@@ -195,6 +196,26 @@ export class DataService{
       );
     }
   }
+  getChosenGroupObs(): void {
+    this.firestore.collection('users').doc(this.userStorage).snapshotChanges().subscribe(
+      async (user) => {
+        this.chosenGroup = user.payload.data()['chosenGroup'];
+        this.chosenGroupSubject.next(user.payload.data()['chosenGroup']);
+        if (this.chosenGroup.length > 0) {
+          this.firestore.collection('groups').doc(this.chosenGroup).snapshotChanges().subscribe(
+            a => {
+              this.currentlyFour = a.payload.data()['fourPlayers'];
+              this.currentlyCash = a.payload.data()['cashGame'];
+            }
+          );
+          await this.getGameId();
+        }
+      }
+    );
+  }
+  checkGroupChange(){
+    return this.chosenGroupSubject.asObservable();
+  }
   async deleteGroup(id: string){
     if (id === this.chosenGroup) {
       console.log('Ausgewählte Gruppe nicht löschbar');
@@ -209,6 +230,7 @@ export class DataService{
   async init(user: string){
     await this.getUserStorage(user);
     await this.checkChosenGroup();
+    this.getChosenGroupObs();
     if (this.chosenGroup.length > 0) {
       await this.getGameId();
     }
