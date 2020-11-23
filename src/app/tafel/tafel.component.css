@@ -158,7 +158,7 @@ input {
 .itemk {
   grid-column: 1 / 4;
   grid-row: 11 / 12;
-  border-bottom: 2px solid antiquewhite;
+  border-bottom: 4px solid antiquewhite;
 }
 
 .iteml {
