@@ -12,33 +12,48 @@
   </nav>
   <main>
     <div class="verlauf">
+      <div *ngFor="let group of groups">
+        <h2>{{group.name}}</h2>
+        <h3 *ngIf="group.cash">Cash game</h3>
+        <h3 *ngIf="!group.cash">Turnier</h3>
     <table>
       <tr>
         <td></td>
         <td>Name</td>
         <td>Punkte</td>
         <td>Name</td>
-        <td>Punkte</td>
-        <td>Begonnen am</td>
-        <td>Beendet am</td>
-        <td>Eingelöst am</td>
+        <td>Punkte
+
+        <td *ngIf="!group.cash">Begonnen am</td>
+        <td *ngIf="group.cash">Gespielt am</td>
+
+        <td *ngIf="!group.cash">Beendet am</td>
+
+        <td *ngIf="group.cash">Verliererteam</td>
+        <td *ngIf="group.cash">Zu bezahlen</td>
+        <td>Notizen</td>
       </tr>
-      <tr *ngFor="let game of games; let i = index">
-        <td>Turnier {{games.length - i}}</td>
+      <tr *ngFor="let game of group.games; let i = index">
+        <td *ngIf="!group.cash">Turnier {{group.games.length - i}}</td>
+        <td *ngIf="group.cash">Spiel {{group.games.length - i}}</td>
         <td>{{game.teamNameA}}</td>
         <td>{{game.pointsTeamA}}</td>
         <td>{{game.teamNameB}}</td>
         <td>{{game.pointsTeamB}}</td>
+
         <td>{{game.startedOn}}</td>
-        <td>{{game.endedOn}}</td>
-        <td>
 
-            <input placeholder="Datum" #paidOnInput matInput [value]="game.paidOn" (keyup)="updatePaidOn(game.gameId, paidOnInput.value)">
+        <td *ngIf="!group.cash">{{game.endedOn}}</td>
 
-
-        </td>
+        <td *ngIf="group.cash && !game.active">{{game.verliererTeam}}</td>
+        <td *ngIf="group.cash && game.active"></td>
+        <td *ngIf="group.cash && !game.active">{{game.toPay}}</td>
+        <td *ngIf="group.cash && game.active"></td>
+        <td><input placeholder="Notizen" #paidOnInput matInput [value]="game.paidOn" (keyup)="updatePaidOn(game.gameId, paidOnInput.value)"></td>
       </tr>
     </table>
+        <br>
+      </div>
     </div>
   </main>
   <footer></footer>

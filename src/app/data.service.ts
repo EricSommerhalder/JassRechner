@@ -93,7 +93,6 @@ export class DataService{
         }
         else {console.log('No games yet'); }
       });
-      console.log(g);
       for (const game of g) {
         let act = false;
         await this.firestore.collection('games').doc(game).ref.get().then((u) => {

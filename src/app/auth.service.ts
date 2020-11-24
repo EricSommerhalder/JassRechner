@@ -7,7 +7,6 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from './popupdialog/popupdialog.component';
 import {User} from 'firebase';
 import {DataService} from './data.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -65,7 +64,7 @@ export class AuthService {
       if (firebase.auth().currentUser) {
         this.afAuth.signOut();
         resolve();
-        this.dataService.gameId = '';
+        window.sessionStorage.clear();
         this.router.navigateByUrl('/login');
       } else {
         reject();

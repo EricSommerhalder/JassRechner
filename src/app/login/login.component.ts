@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from "firebase";
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PopupdialogComponent} from '../popupdialog/popupdialog.component';
+import {DataService} from '../data.service';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 
 @Component({
@@ -22,7 +24,8 @@ export class LoginComponent implements OnInit{
     private router: Router,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    private deviceService: DeviceDetectorService
   ) {
     this.createForm();
   }
@@ -50,7 +53,12 @@ export class LoginComponent implements OnInit{
   tryLogin(value){
     this.authService.doLogin(value)
       .then(res => {
-        this.router.navigate(['/tafel']);
+        if (this.deviceService.isDesktop()) {
+          this.router.navigate(['/settings']);
+        }
+        else {
+          this.router.navigate(['/tafel']);
+        }
       }, err => {
         console.log(err);
         this.errorMessage = err.message;
