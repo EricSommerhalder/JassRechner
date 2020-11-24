@@ -41,12 +41,12 @@ export class SettingsComponent implements OnInit {
   cash = '';
   constructor(public authService: AuthService, public router: Router, public dataService: DataService, public dialog: MatDialog) { }
 
-  storeGame(){
+  async storeGame(){
     if (this.dataService.gameId.length > 0){
       this.dataService.updateGame(this.dataService.gameId, this.game);
     }
     else{
-      this.dataService.createGame(this.game, this.dataService.chosenGroup);
+      await this.dataService.createGame(this.game, this.dataService.chosenGroup);
     }
   }
   updateNumberProperty(identifier: number, value: string){
@@ -153,7 +153,6 @@ export class SettingsComponent implements OnInit {
                   }
                   const g = new Group(b.payload.data()['name'], b.payload.id);
                   this.groups.push(g);
-                  console.log('Push by:', b.payload.id);
                 });
           }
         });
@@ -192,12 +191,12 @@ export class SettingsComponent implements OnInit {
     }
     this.dataService.createGroup(name, this.fourPlayers === '4', this.cash === 'cash');
     this.gameObservable = this.dataService.getGameObservable();
-    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable'); });
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); });
   }
   async groupChanged(id: string) {
     await this.dataService.changeGroup(id);
     this.gameObservable = this.dataService.getGameObservable();
-    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable');});
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); });
 
   }
 
@@ -229,7 +228,7 @@ export class SettingsComponent implements OnInit {
       this.game = await this.dataService.loadGame();
     }
     this.gameObservable = this.dataService.getGameObservable();
-    this.gameObservable.subscribe(a => {this.game = a.payload.data(); console.log('Updated from observable');});
+    this.gameObservable.subscribe(a => {this.game = a.payload.data(); });
   }
 
 }

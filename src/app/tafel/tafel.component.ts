@@ -135,13 +135,13 @@ export class TafelComponent implements OnInit {
       await this.openFinishMatchDialog();
     }
     this.punktzahl = -1;
-    this.storeGame();
+    await this.storeGame();
   }
-  editButtonClicked(){
+  async editButtonClicked(){
     if (!this.game.correction_mode) {
       this.game.edit_mode = !this.game.edit_mode;
     }
-    this.storeGame();
+    await this.storeGame();
   }
   checkDone(){
     let i = 0;
@@ -215,12 +215,12 @@ export class TafelComponent implements OnInit {
       }
     }
   }
-  storeGame(){
+  async storeGame(){
     if (this.dataService.gameId.length > 0){
       this.dataService.updateGame(this.dataService.gameId, this.game);
     }
     else{
-      this.dataService.createGame(this.game, this.dataService.chosenGroup);
+      await this.dataService.createGame(this.game, this.dataService.chosenGroup);
     }
   }
   async openFinishGameDialog(){
@@ -247,7 +247,7 @@ export class TafelComponent implements OnInit {
     }
     this.game.gamestate = Array(20).fill(-1);
     this.game.team_done = [false, false];
-    this.storeGame();
+    await this.storeGame();
     this.updateFields();
     if (this.game.totalpoints[0] >= this.game.tournamentWonWith || this.game.totalpoints[1] >= this.game.tournamentWonWith){
       await this.openFinishMatchDialog();
@@ -272,7 +272,7 @@ export class TafelComponent implements OnInit {
         const temp = {playernames: this.game.playernames, teamnames: this.game.teamnames, pointsPerMatch: this.game.pointsPerMatch, pointsPerCounterMatch: this.game.pointsPerCounterMatch, pointsPerGame: this.game.pointsPerGame, tournamentWonWith: this.game.tournamentWonWith, user: this.game.user, amountPer100: this.game.amountPer100, minimalAmount: this.game.minimalAmount};
         this.game.active = false;
         this.game.endDate = this.getToday();
-        this.storeGame();
+        await this.storeGame();
         this.dataService.gameId = '';
         this.game = new Game();
         this.game.playernames = temp.playernames;
@@ -284,8 +284,7 @@ export class TafelComponent implements OnInit {
         this.game.tournamentWonWith = temp.tournamentWonWith;
         this.game.minimalAmount = temp.minimalAmount;
         this.game.amountPer100 = temp.amountPer100;
-        this.storeGame();
-        this.gameObservable.unsubscribe();
+        await this.storeGame();
         await this.dataService.getGameId();
         console.log(this.dataService.gameId);
         this.gameObservable = this.getSubscription();
@@ -320,7 +319,7 @@ export class TafelComponent implements OnInit {
       i++;
     }
   }
-  abortGame(){
+  async abortGame(){
     if (this.game.team_done[0] && this.game.team_done[1]) {
       if (this.summe[0] > this.summe[1]){
         this.game.totalpoints[0] -= this.game.pointsPerGame;
@@ -348,7 +347,7 @@ export class TafelComponent implements OnInit {
     this.game.team_done[0] = false;
     this.game.team_done[1] = false;
     this.game.ausgeber = Math.floor(Math.random() * 6);
-    this.storeGame();
+    await this.storeGame();
     this.updateFields();
   }
   async openAbortGameDialog(){
@@ -364,7 +363,7 @@ export class TafelComponent implements OnInit {
     const dialogRef = this.dialog.open(PopupdialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe( async result => {
       if (result === 'yes'){
-        this.abortGame();
+        await this.abortGame();
       }
     });
   }
@@ -372,25 +371,13 @@ export class TafelComponent implements OnInit {
     const date = new Date();
     return date.getDate().toString().padStart(2, '0') + '.' + (date.getMonth() + 1).toString().padStart(2, '0') + '.' + date.getFullYear();
   }
-  async updateSub() {
-    this.gameObservable.unsubscribe();
-    await this.dataService.getGameId();
-    this.gameObservable = await this.getSubscription();
-  }
   getSubscription(){
     return this.dataService.getGameObservable().subscribe(async a => {
-      console.log('Changed to subscription with ID:', a.payload.id);
       this.game = a.payload.data() as Game;
       this.updateFields();
       if (!this.game.active) {
-        // this.gameObservable.unsubscribe();
-        console.log('Caught inactive');
-        /*await this.dataService.getGameId(this.game.user);
-        console.log('Changed Game ID to', this.dataService.gameId);
+        await this.dataService.getGameId();
         this.gameObservable = await this.getSubscription();
-         */
-        window.location.reload();
-        // await this.updateSub();
       }
       });
   }
@@ -431,6 +418,11 @@ export class TafelComponent implements OnInit {
       });
     }
     this.gameObservable = await this.getSubscription();
+    this.dataService.checkGroupChange().subscribe(
+      value => {
+        this.getSubscription();
+      }
+    );
     if (this.dataService.currentlyCash){
       this.game.pointsPerCounterMatch = 0;
       this.game.pointsPerGame = 0;
