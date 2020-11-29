@@ -106,7 +106,7 @@ export class DataService{
   }
   async loadGame(){
     let toReturn = new Game();
-    await this.firestore.collection('games').doc(this.gameId).snapshotChanges().subscribe(a => { toReturn = a.payload.data() as Game; });
+    await this.firestore.collection('games').doc(this.gameId).snapshotChanges().subscribe(a => { toReturn = a.payload.data() as Game; console.log(toReturn.amountPer100);});
     return toReturn;
   }
   getGameObservable(){

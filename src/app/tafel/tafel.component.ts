@@ -221,6 +221,7 @@ export class TafelComponent implements OnInit {
     }
   }
   async storeGame(){
+    console.log('Storing game:', this.game);
     if (this.dataService.gameId.length > 0){
       this.dataService.updateGame(this.dataService.gameId, this.game);
     }
@@ -400,6 +401,7 @@ export class TafelComponent implements OnInit {
       return this.game.minimalAmount;
   }
   async ngOnInit(){
+    console.log(this.game.amountPer100);
     this.authService.checkLoggedIn();
     const user: User = await this.authService.getUserAsync() as User;
     this.game.user = user.email;
@@ -437,6 +439,5 @@ export class TafelComponent implements OnInit {
     while (this.dataService.currentlyFour && (this.game.ausgeber === 2 || this.game.ausgeber === 5)){
       this.game.ausgeber = Math.floor(Math.random() * 6);
     }
-    await this.storeGame();
   }
 }
