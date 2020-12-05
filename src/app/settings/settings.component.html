@@ -39,10 +39,10 @@
       <input type="button"class="player_leeren" (click)="emptyPlayerFields()" value="refresh">
     </div>
     <div *ngIf="dataService.currentlyFour" class="seatorder_4">
-      <input #playerNameA1 class="player_a1" (keyup)="game.playernames[0] = playerNameA1.value; storeGame()" [placeholder]="game.playernames[0] === 'Spieler A1' ? game.teamnames[0] + ' 1' : game.playernames[0]">
-      <input #playerNameA2 class="player_a2_4" (keyup)="game.playernames[1] = playerNameA2.value; storeGame()" [placeholder]="game.playernames[1] === 'Spieler A2' ? game.teamnames[0] + ' 2' : game.playernames[1]">
-      <input #playerNameB1 class="player_b1_4" (keyup)="game.playernames[3] = playerNameB1.value; storeGame()" [placeholder]="game.playernames[3] === 'Spieler B1' ? game.teamnames[1] + ' 1' : game.playernames[3]">
-      <input #playerNameB2 class="player_b2_4" (keyup)="game.playernames[4] = playerNameB2.value; storeGame()" [placeholder]="game.playernames[4] === 'Spieler B2' ? game.teamnames[1] + ' 2' : game.playernames[4]">
+      <input #playerNameA1_4 class="player_a1" (keyup)="game.playernames[0] = playerNameA1_4.value; storeGame()" [placeholder]="game.playernames[0] === 'Spieler A1' ? game.teamnames[0] + ' 1' : game.playernames[0]">
+      <input #playerNameA2_4 class="player_a2_4" (keyup)="game.playernames[1] = playerNameA2_4.value; storeGame()" [placeholder]="game.playernames[1] === 'Spieler A2' ? game.teamnames[0] + ' 2' : game.playernames[1]">
+      <input #playerNameB1_4 class="player_b1_4" (keyup)="game.playernames[3] = playerNameB1_4.value; storeGame()" [placeholder]="game.playernames[3] === 'Spieler B1' ? game.teamnames[1] + ' 1' : game.playernames[3]">
+      <input #playerNameB2_4 class="player_b2_4" (keyup)="game.playernames[4] = playerNameB2_4.value; storeGame()" [placeholder]="game.playernames[4] === 'Spieler B2' ? game.teamnames[1] + ' 2' : game.playernames[4]">
       <input type="button"class="player_leeren" (click)="emptyPlayerFields()" value="refresh">
     </div>
     </section>

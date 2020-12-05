@@ -34,6 +34,11 @@ export class SettingsComponent implements OnInit {
   @ViewChild('playerNameB1') playerNameB1: ElementRef;
   @ViewChild('playerNameB2') playerNameB2: ElementRef;
   @ViewChild('playerNameB3') playerNameB3: ElementRef;
+  @ViewChild('playerNameA1_4') playerNameA1_4: ElementRef;
+  @ViewChild('playerNameA2_4') playerNameA2_4: ElementRef;
+  @ViewChild('playerNameB1_4') playerNameB1_4: ElementRef;
+  @ViewChild('playerNameB2_4') playerNameB2_4: ElementRef;
+
   game: Game = new Game();
   groups: Group[] = [];
   public fourPlayers = '';
@@ -99,12 +104,19 @@ export class SettingsComponent implements OnInit {
       this.game.playernames[i - 1] = 'Spieler B' + (i - 3).toString();
     }
     this.storeGame();
-    this.playerNameA1.nativeElement.value = '';
-    this.playerNameA2.nativeElement.value = '';
-    this.playerNameA3.nativeElement.value = '';
-    this.playerNameB1.nativeElement.value = '';
-    this.playerNameB2.nativeElement.value = '';
-    this.playerNameB3.nativeElement.value = '';
+    if (!this.dataService.currentlyFour){
+      this.playerNameA1.nativeElement.value = '';
+      this.playerNameA2.nativeElement.value = '';
+      this.playerNameA3.nativeElement.value = '';
+      this.playerNameB1.nativeElement.value = '';
+      this.playerNameB2.nativeElement.value = '';
+      this.playerNameB3.nativeElement.value = '';
+    } else {
+      this.playerNameA1_4.nativeElement.value = '';
+      this.playerNameA2_4.nativeElement.value = '';
+      this.playerNameB1_4.nativeElement.value = '';
+      this.playerNameB2_4.nativeElement.value = '';
+    }
   }
   async fireChangePassword(oldPassword, newPassword, confirmNewPassword){
     if (newPassword !== confirmNewPassword){

@@ -82,6 +82,12 @@ export class HistoryComponent implements OnInit {
       group.games.sort((a, b) => {
         const aString = a.startedOn.substr(6) + a.startedOn.substr(3, 2) + a.startedOn.substr(0, 2);
         const bString = b.startedOn.substr(6) + b.startedOn.substr(3, 2) + b.startedOn.substr(0, 2);
+        if (a.active && !b.active){
+          return - 1;
+        }
+        if (b.active && !a.active){
+          return 1;
+        }
         if (aString > bString) {
           return -1;
         }
@@ -127,11 +133,11 @@ export class HistoryComponent implements OnInit {
           toPush.endedOn = data['endDate'];
           toPush.paidOn = data['paidOn'];
           toPush.active = data.active;
-          const amount = Math.abs(Math.round(toPush.pointsTeamA - toPush.pointsTeamB * data.amountPer100 / 100));
+          const amount = Math.abs(Math.round((toPush.pointsTeamA - toPush.pointsTeamB) * data.amountPer100 / 100));
           if (amount > data.minimalAmount) {
             toPush.toPay = amount;
           } else {
-            toPush.toPay = data.minimalAmout;
+            toPush.toPay = data.minimalAmount;
           }
         });
         if (toPush.pointsTeamA > toPush.pointsTeamB) {
