@@ -23,7 +23,7 @@
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
     "@okta/okta-angular": "1.2.1",
-    "bootstrap": "4.1.1",
+    "bootstrap": "4.3.1",
     "firebase": "^7.14.6",
     "ngx-bootstrap": "^5.1.0",
     "ngx-device-detector": "^2.0.1",
